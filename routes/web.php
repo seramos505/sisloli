@@ -48,6 +48,4 @@ Route::put('/producto/activar', 'ProductoController@activar');
 
 Auth::routes();
 
-
-
 Route::get('/home', 'HomeController@index')->name('home');
