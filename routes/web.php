@@ -46,7 +46,7 @@ Route::put('/producto/actualizar', 'ProductoController@update');
 Route::put('/producto/desactivar', 'ProductoController@desactivar');
 Route::put('/producto/activar', 'ProductoController@activar');
 
-//autenticacion
+//autenticacion Cambios PC
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
