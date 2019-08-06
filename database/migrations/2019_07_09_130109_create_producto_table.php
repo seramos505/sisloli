@@ -22,7 +22,7 @@ class CreateProductoTable extends Migration
             $table->string('codigo', 50)->nullable();
             $table->string('nombre', 100)->unique();
             $table->decimal('precio_venta', 11, 2);
-            $table->integer('stock');
+            $table->integer('stock')->nullable();
             $table->string('descripcion', 256)->nullable();
             $table->boolean('condicion')->default(1);
             $table->timestamps();

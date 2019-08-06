@@ -46,6 +46,8 @@ Route::put('/producto/actualizar', 'ProductoController@update');
 Route::put('/producto/desactivar', 'ProductoController@desactivar');
 Route::put('/producto/activar', 'ProductoController@activar');
 
+Route::get('/orden', function () { return view('admin.orden'); })->name('orden');
+
 //autenticacion Cambios PC
 Auth::routes();
 

@@ -104,7 +104,9 @@ to get the desired effect
             window.Permissions = [];
         @endauth
     </script>
-    
+
+    <script src="{{asset("assets/js/scripts.js")}}"></script>  
+      
     <!-- SCRIPTS -->
     <script src="js/app.js"></script>
 

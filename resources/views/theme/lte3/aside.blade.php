@@ -21,11 +21,18 @@
 
     <!-- Sidebar Menu -->
     <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">        
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-        <li class="nav-item has-treeview menu-open">
-          <a href="#" class="nav-link active">
+        @foreach ($menusComposer as $key => $item)
+          @if ($item["menu_id"] != 0)
+            @break
+          @endif
+          @include("theme.$theme.menu-item", ["item" => $item])
+        @endforeach    
+
+        <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
             <i class="nav-icon fas fa-clipboard-list"></i>
             <p>
               Catalogo
@@ -34,25 +41,25 @@
           </a>
           <ul class="nav nav-treeview ml-4">
             <li class="nav-item">
-              <a href="{{route('producto')}}" class="nav-link">
+              <a href="{{route('producto')}}" class="nav-link {{getMenuActivo('producto')}}">
                 <i class="fab fa-product-hunt nav-icon"></i>
                 <p>Productos</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('categoria')}}" class="nav-link active">
+              <a href="{{route('categoria')}}" class="nav-link  {{getMenuActivo('categoria')}}">
                 <i class="fas fa-clipboard-check nav-icon"></i>
                 <p>Categorías</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('sabor')}}" class="nav-link">
+              <a href="{{route('sabor')}}" class="nav-link  {{getMenuActivo('sabor')}}">
                 <i class="fas fa-ice-cream nav-icon"></i>
                 <p>Sabores</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="{{route('tamano')}}" class="nav-link">
+              <a href="{{route('tamano')}}" class="nav-link  {{getMenuActivo('tamano')}}">
                 <i class="fas fa-ruler nav-icon"></i>
                 <p>Tamaños</p>
               </a>
@@ -70,7 +77,7 @@
           </a>
           <ul class="nav nav-treeview ml-4">
             <li class="nav-item">
-              <a href="pages/charts/chartjs.html" class="nav-link">
+              <a href="{{route('orden')}}" class="nav-link {{getMenuActivo('orden')}}">
                 <i class="fas fa-cart-arrow-down nav-icon"></i>
                 <p>Ordenes</p>
               </a>
