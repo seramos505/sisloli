@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Models\Admin;
+use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
+    use HasRoles;
+
     protected $table = "menu";
     protected $fillable = ['nombre', 'url', 'icono'];
     protected $guarded = ['id'];

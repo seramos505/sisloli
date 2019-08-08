@@ -22,7 +22,7 @@ class ProductoController extends Controller
             ->select('producto.id','producto.idcategoria','producto.idtamano','producto.idsabor','producto.nombre',
             'categoria.nombre as nombre_categoria','tamano.nombre as nombre_tamano','sabor.nombre as nombre_sabor',
             'producto.precio_venta','producto.descripcion','producto.condicion')
-            ->orderBy('producto.id', 'desc')->paginate(3);
+            ->orderBy('producto.id', 'desc')->paginate(5);
         }
         else{
             $productos = Producto::join('categoria','producto.idcategoria','=','categoria.id')
@@ -32,7 +32,7 @@ class ProductoController extends Controller
             'categoria.nombre as nombre_categoria','tamano.nombre as nombre_tamano','sabor.nombre as nombre_sabor',
             'producto.precio_venta','producto.descripcion','producto.condicion')
             ->where('producto.'.$criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('producto.id', 'desc')->paginate(3);
+            ->orderBy('producto.id', 'desc')->paginate(5);
         }
         
 

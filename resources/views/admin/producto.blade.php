@@ -4,15 +4,12 @@
 @endsection
 @section('contenido')
     <div class="row">
-        <div class="col-lg-12 px-0">
-                
-
-                @can('Agregar Producto')
-                    con permiso
-                @else
-                    sin permiso                    
-                @endcan
-            <producto></producto>
+        <div class="col-lg-12 px-0">  
+            @can('listar-producto')
+                <producto></producto>
+            @else
+                No Tiene Permiso para ver los Productos                    
+            @endcan
         </div>        
     </div>
 @endsection

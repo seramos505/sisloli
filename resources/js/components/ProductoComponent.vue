@@ -10,6 +10,7 @@
 
           
           <button
+            v-can="'nuevo-producto'"
             type="button"
             @click="abrirModal('producto','registrar')"
             class="btn btn-success float-right"
@@ -60,6 +61,7 @@
                 <tr v-for="producto in arrayProducto" :key="producto.id">
                   <td style="width: 10px;">
                     <button
+                      v-can="'editar-producto'"
                       type="button"
                       @click="abrirModal('producto','actualizar',producto)"
                       class="btn btn-warning btn-sm"
@@ -71,6 +73,7 @@
                   <td style="width: 10px;">
                     <template v-if="producto.condicion">
                       <button
+                        v-can="'desactivar-producto'"
                         type="button"
                         class="btn btn-danger btn-sm"
                         @click="desactivarproducto(producto.id)"
@@ -81,6 +84,7 @@
                     </template>
                     <template v-else>
                       <button
+                        v-can="'activar-producto'"
                         type="button"
                         class="btn btn-info btn-sm"
                         @click="activarproducto(producto.id)"
@@ -110,7 +114,7 @@
           </div>
           <nav>
             <ul class="pagination">
-              <li class="page-item" v-if="pagination.current_page > 1">
+              <li class="page-item" :class="[pagination.current_page == 1 ? 'disabled' : '']">
                 <a
                   class="page-link"
                   href="#"
@@ -130,7 +134,7 @@
                   v-text="page"
                 ></a>
               </li>
-              <li class="page-item" v-if="pagination.current_page < pagination.last_page">
+              <li class="page-item" :class="[pagination.current_page == pagination.last_page ? 'disabled' : '']">
                 <a
                   class="page-link"
                   href="#"
@@ -260,7 +264,6 @@
       <!-- /.modal-dialog -->
     </div>
     <!--Fin del modal-->
-    <div  v-can="'Agregar Producto'">You can edit posts.</div>
   </main>
 </template>
 
@@ -409,15 +412,15 @@ export default {
       axios
         .post("producto/registrar", {
           idcategoria: this.idcategoria,
-                    idtamano: this.idtamano,
+          idtamano: this.idtamano,
           idsabor: this.idsabor,
-                    nombre: this.nombre,
-                    precio_venta: this.precio_venta,
-                    descripcion: this.descripcion
+          nombre: this.nombre,
+          precio_venta: this.precio_venta,
+          descripcion: this.descripcion
         })
         .then(function(response) {
           me.cerrarModal();
-          me.listarproducto(1, "", "nombre");
+          me.listarproducto(me.pagination.current_page, "", "nombre");
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -443,16 +446,17 @@ export default {
       axios
         .put("producto/actualizar", {
           idcategoria: this.idcategoria,
-                    idtamano: this.idtamano,
+          idtamano: this.idtamano,
           idsabor: this.idsabor,
-                    nombre: this.nombre,
-                    precio_venta: this.precio_venta,
-                    descripcion: this.descripcion,
+          nombre: this.nombre,
+          precio_venta: this.precio_venta,
+          descripcion: this.descripcion,
           id: this.producto_id
         })
         .then(function(response) {
           me.cerrarModal();
-          me.listarproducto(1, "", "nombre");
+          me.listarproducto(me.pagination.current_page, "", "nombre");
+          
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -491,7 +495,7 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarproducto(1, "", "nombre");
+              me.listarproducto(me.pagination.current_page, "", "nombre");
               Swal.fire(
                 "Desactivado!",
                 "El registro ha sido desactivado con éxito.",
@@ -531,7 +535,7 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarproducto(1, "", "nombre");
+              me.listarproducto(me.pagination.current_page, "", "nombre");
               Swal.fire(
                 "Activado!",
                 "El registro ha sido activado con éxito.",

@@ -2627,6 +2627,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -2746,7 +2749,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         descripcion: this.descripcion
       }).then(function (response) {
         me.cerrarModal();
-        me.listarproducto(1, "", "nombre");
+        me.listarproducto(me.pagination.current_page, "", "nombre");
         var Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -2777,7 +2780,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         id: this.producto_id
       }).then(function (response) {
         me.cerrarModal();
-        me.listarproducto(1, "", "nombre");
+        me.listarproducto(me.pagination.current_page, "", "nombre");
         var Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -2814,7 +2817,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           axios.put("producto/desactivar", {
             id: id
           }).then(function (response) {
-            me.listarproducto(1, "", "nombre");
+            me.listarproducto(me.pagination.current_page, "", "nombre");
             Swal.fire("Desactivado!", "El registro ha sido desactivado con éxito.", "success");
           })["catch"](function (error) {
             console.log(error);
@@ -2845,7 +2848,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           axios.put("producto/activar", {
             id: id
           }).then(function (response) {
-            me.listarproducto(1, "", "nombre");
+            me.listarproducto(me.pagination.current_page, "", "nombre");
             Swal.fire("Activado!", "El registro ha sido activado con éxito.", "success");
           })["catch"](function (error) {
             console.log(error);
@@ -39762,6 +39765,14 @@ var render = function() {
           _c(
             "button",
             {
+              directives: [
+                {
+                  name: "can",
+                  rawName: "v-can",
+                  value: "nuevo-producto",
+                  expression: "'nuevo-producto'"
+                }
+              ],
               staticClass: "btn btn-success float-right",
               attrs: { type: "button" },
               on: {
@@ -39889,6 +39900,14 @@ var render = function() {
                         _c(
                           "button",
                           {
+                            directives: [
+                              {
+                                name: "can",
+                                rawName: "v-can",
+                                value: "editar-producto",
+                                expression: "'editar-producto'"
+                              }
+                            ],
                             staticClass: "btn btn-warning btn-sm",
                             attrs: { type: "button", title: "Editar producto" },
                             on: {
@@ -39914,6 +39933,14 @@ var render = function() {
                                 _c(
                                   "button",
                                   {
+                                    directives: [
+                                      {
+                                        name: "can",
+                                        rawName: "v-can",
+                                        value: "desactivar-producto",
+                                        expression: "'desactivar-producto'"
+                                      }
+                                    ],
                                     staticClass: "btn btn-danger btn-sm",
                                     attrs: {
                                       type: "button",
@@ -39934,6 +39961,14 @@ var render = function() {
                                 _c(
                                   "button",
                                   {
+                                    directives: [
+                                      {
+                                        name: "can",
+                                        rawName: "v-can",
+                                        value: "activar-producto",
+                                        expression: "'activar-producto'"
+                                      }
+                                    ],
                                     staticClass: "btn btn-info btn-sm",
                                     attrs: {
                                       type: "button",
@@ -40010,28 +40045,33 @@ var render = function() {
               "ul",
               { staticClass: "pagination" },
               [
-                _vm.pagination.current_page > 1
-                  ? _c("li", { staticClass: "page-item" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "page-link",
-                          attrs: { href: "#" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.cambiarPagina(
-                                _vm.pagination.current_page - 1,
-                                _vm.buscar,
-                                _vm.criterio
-                              )
-                            }
+                _c(
+                  "li",
+                  {
+                    staticClass: "page-item",
+                    class: [_vm.pagination.current_page == 1 ? "disabled" : ""]
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "page-link",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.cambiarPagina(
+                              _vm.pagination.current_page - 1,
+                              _vm.buscar,
+                              _vm.criterio
+                            )
                           }
-                        },
-                        [_vm._v("Ant")]
-                      )
-                    ])
-                  : _vm._e(),
+                        }
+                      },
+                      [_vm._v("Ant")]
+                    )
+                  ]
+                ),
                 _vm._v(" "),
                 _vm._l(_vm.pagesNumber, function(page) {
                   return _c(
@@ -40061,28 +40101,37 @@ var render = function() {
                   )
                 }),
                 _vm._v(" "),
-                _vm.pagination.current_page < _vm.pagination.last_page
-                  ? _c("li", { staticClass: "page-item" }, [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "page-link",
-                          attrs: { href: "#" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.cambiarPagina(
-                                _vm.pagination.current_page + 1,
-                                _vm.buscar,
-                                _vm.criterio
-                              )
-                            }
+                _c(
+                  "li",
+                  {
+                    staticClass: "page-item",
+                    class: [
+                      _vm.pagination.current_page == _vm.pagination.last_page
+                        ? "disabled"
+                        : ""
+                    ]
+                  },
+                  [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "page-link",
+                        attrs: { href: "#" },
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            return _vm.cambiarPagina(
+                              _vm.pagination.current_page + 1,
+                              _vm.buscar,
+                              _vm.criterio
+                            )
                           }
-                        },
-                        [_vm._v("Sig")]
-                      )
-                    ])
-                  : _vm._e()
+                        }
+                      },
+                      [_vm._v("Sig")]
+                    )
+                  ]
+                )
               ],
               2
             )
@@ -40515,21 +40564,6 @@ var render = function() {
           ])
         ])
       ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "can",
-            rawName: "v-can",
-            value: "Agregar Producto",
-            expression: "'Agregar Producto'"
-          }
-        ]
-      },
-      [_vm._v("You can edit posts.")]
     )
   ])
 }
