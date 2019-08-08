@@ -19,10 +19,12 @@
           No Login
         @else
           <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <small class="float-right">
           <a href="{{ route('logout') }}" onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-            Cerrar Sesion
+            <i class="fas fa-power-off"></i> Cerrar Sesion
           </a>
+        </small>
           <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             @csrf
           </form>
