@@ -5,7 +5,7 @@
 @section('contenido')
     <div class="row">
         <div class="col-lg-12 px-0">
-            aqui las ordenes
+            <orden></orden>
         </div>        
     </div>
 @endsection

@@ -35,6 +35,8 @@ Vue.component('categoria', require('./components/CategoriaComponent.vue').defaul
 Vue.component('sabor', require('./components/SaborComponent.vue').default);
 Vue.component('tamano', require('./components/TamanoComponent.vue').default);
 Vue.component('producto', require('./components/ProductoComponent.vue').default);
+Vue.component('orden', require('./components/OrdenComponent.vue').default);
+
 
 
 

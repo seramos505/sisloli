@@ -134,7 +134,7 @@
       <!-- Fin ejemplo de tabla Listado -->
     </div>
     <!--Inicio del modal agregar/actualizar-->
-    <div class="modal fade" :class="{'show mostrar' : modal}" id="add_post_model">
+    <div class="modal fade" id="modalCU">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -470,7 +470,7 @@ export default {
       this.descripcion = "";
       this.errorCategoria = 0;
       this.errorMostrarMsjCategoria = [];
-      $("#add_post_model").modal("hide");
+      $("#modalCU").modal("hide");
     },
     abrirModal(modelo, accion, data = []) {
       switch (modelo) {
@@ -482,7 +482,7 @@ export default {
               this.nombre = "";
               this.descripcion = "";
               this.tipoAccion = 1;
-              $("#add_post_model").modal("show");
+              $("#modalCU").modal("show");
               break;
             }
             case "actualizar": {
@@ -493,7 +493,7 @@ export default {
               this.categoria_id = data["id"];
               this.nombre = data["nombre"];
               this.descripcion = data["descripcion"];
-              $("#add_post_model").modal("show");
+              $("#modalCU").modal("show");
               break;
             }
           }

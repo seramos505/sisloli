@@ -45,8 +45,19 @@ Route::post('/producto/registrar', 'ProductoController@store');
 Route::put('/producto/actualizar', 'ProductoController@update');
 Route::put('/producto/desactivar', 'ProductoController@desactivar');
 Route::put('/producto/activar', 'ProductoController@activar');
+//Route::get('/producto/buscarProducto', 'ProductoController@buscarProducto');
+//Route::get('/producto/listarProducto', 'ProductoController@listarProducto');
+Route::get('/producto/listarProductoOrden', 'ProductoController@listarProductoOrden');
+Route::get('/producto/buscarProductoOrden', 'ProductoController@buscarProductoOrden');
+Route::get('/producto/listarPdf', 'ProductoController@listarPdf')->name('productos_pdf');
 
 Route::get('/orden', function () { return view('admin.orden'); })->name('orden');
+Route::get('/orden/listar', 'OrdenController@listar');
+Route::post('/orden/registrar', 'OrdenController@store');
+Route::put('/orden/desactivar', 'OrdenController@desactivar');
+Route::get('/orden/obtenerCabecera', 'OrdenController@obtenerCabecera');
+Route::get('/orden/obtenerDetalles', 'OrdenController@obtenerDetalles');
+Route::get('/orden/pdf/{id}', 'OrdenController@pdf')->name('orden_pdf');
 
 //autenticacion Cambios PC
 Auth::routes();

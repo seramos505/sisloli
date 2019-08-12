@@ -6,9 +6,7 @@
         <div class="card-header">
           <h3 class="float-left">
             <i class="fas fa-th-list"></i> Productos
-          </h3>
-
-          
+          </h3>          
           <button
             v-can="'nuevo-producto'"
             type="button"
