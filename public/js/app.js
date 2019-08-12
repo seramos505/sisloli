@@ -2777,6 +2777,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2862,7 +2865,7 @@ __webpack_require__.r(__webpack_exports__);
       //return moment(date).format('LLL')
       //return moment.locale("de").format('LLL');
       moment.locale('es');
-      return moment(date).format('LLL a');
+      return moment(date).format('DD/MM/YYYY hh:mm a');
     },
     listarOrden: function listarOrden(page, buscar, criterio) {
       var me = this;
@@ -2907,6 +2910,7 @@ __webpack_require__.r(__webpack_exports__);
           me.producto = me.arrayProducto[0]["nombre"];
           me.idproducto = me.arrayProducto[0]["id"];
           me.precio = me.arrayProducto[0]["precio_venta"];
+          me.cantidad = 1;
         } else {
           me.producto = "No existe este producto";
           me.idproducto = 0;
@@ -40532,7 +40536,7 @@ var render = function() {
               "button",
               {
                 staticClass: "btn btn-success float-right",
-                attrs: { type: "button" },
+                attrs: { type: "button", disabled: _vm.listado == 0 },
                 on: {
                   click: function($event) {
                     return _vm.mostrarDetalle()
@@ -40891,12 +40895,12 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "form-group row border" }, [
-                    _c("div", { staticClass: "col-md-4" }, [
+                  _c("div", { staticClass: "form-group row border py-2" }, [
+                    _c("div", { staticClass: "col-12 col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _vm._m(2),
                         _vm._v(" "),
-                        _c("div", { staticClass: "form-inline" }, [
+                        _c("div", { staticClass: "d-flex" }, [
                           _c("input", {
                             directives: [
                               {
@@ -40948,34 +40952,34 @@ var render = function() {
                               }
                             },
                             [_vm._v("...")]
-                          ),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.producto,
-                                expression: "producto"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: { type: "text", readonly: "" },
-                            domProps: { value: _vm.producto },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.producto = $event.target.value
-                              }
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.producto,
+                              expression: "producto"
                             }
-                          })
-                        ])
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", readonly: "" },
+                          domProps: { value: _vm.producto },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.producto = $event.target.value
+                            }
+                          }
+                        })
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-2" }, [
+                    _c("div", { staticClass: "col-4 col-md-2" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _vm._m(3),
                         _vm._v(" "),
@@ -41003,7 +41007,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-2" }, [
+                    _c("div", { staticClass: "col-4 col-md-2" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _vm._m(4),
                         _vm._v(" "),
@@ -41031,7 +41035,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-2" }, [
+                    _c("div", { staticClass: "col-4 col-md-2" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", [_vm._v("Descuento")]),
                         _vm._v(" "),
@@ -41059,13 +41063,16 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-2" }, [
+                    _c("div", { staticClass: "col-12 col-md-2" }, [
                       _c("div", { staticClass: "form-group" }, [
+                        _c("label", { staticClass: "d-none" }, [
+                          _vm._v("ddd  ")
+                        ]),
+                        _vm._v(" "),
                         _c(
                           "button",
                           {
-                            staticClass:
-                              "btn btn-success form-control btnagregar",
+                            staticClass: "btn btn-success w-100",
                             on: {
                               click: function($event) {
                                 return _vm.agregarDetalle()
@@ -41078,7 +41085,7 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "form-group row border" }, [
+                  _c("div", { staticClass: "form-group row" }, [
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -41261,7 +41268,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
-                                          "$ " +
+                                          "C$ " +
                                             _vm._s(
                                               (_vm.totalParcial = (
                                                 _vm.total - _vm.totalImpuesto
@@ -41284,7 +41291,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
-                                          "$ " +
+                                          "C$ " +
                                             _vm._s(
                                               (_vm.totalImpuesto = (
                                                 (_vm.total * _vm.impuesto) /
@@ -41308,7 +41315,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
-                                          "$ " +
+                                          "C$ " +
                                             _vm._s(
                                               (_vm.total = _vm.calcularTotal)
                                             )
@@ -41425,7 +41432,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
-                                          "$ " +
+                                          "C$ " +
                                             _vm._s(
                                               (_vm.totalParcial = (
                                                 _vm.total - _vm.totalImpuesto
@@ -41448,7 +41455,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
-                                          "$ " +
+                                          "C$ " +
                                             _vm._s(
                                               (_vm.totalImpuesto = (
                                                 _vm.total * _vm.impuesto
@@ -41470,7 +41477,7 @@ var render = function() {
                                       _vm._m(13),
                                       _vm._v(" "),
                                       _c("td", [
-                                        _vm._v("$ " + _vm._s(_vm.total))
+                                        _vm._v("C$ " + _vm._s(_vm.total))
                                       ])
                                     ]
                                   )
@@ -41737,7 +41744,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("h3", { staticClass: "float-left" }, [
-      _c("i", { staticClass: "fas fa-th-list" }),
+      _c("i", { staticClass: "fas fa-cart-plus" }),
       _vm._v(" Ordenes\n        ")
     ])
   },
@@ -41792,15 +41799,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
-        _c("th", [_vm._v("Opciones")]),
+        _c("th"),
         _vm._v(" "),
         _c("th", [_vm._v("Producto")]),
         _vm._v(" "),
         _c("th", [_vm._v("Precio")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Cantidad")]),
+        _c("th", [_vm._v("Cant.")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Descuento")]),
+        _c("th", [_vm._v("Desc.")]),
         _vm._v(" "),
         _c("th", [_vm._v("Subtotal")])
       ])
@@ -41898,13 +41905,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
-        _c("th", [_vm._v("Opciones")]),
+        _c("th"),
         _vm._v(" "),
         _c("th", [_vm._v("Nombre")]),
         _vm._v(" "),
         _c("th", [_vm._v("Categoría")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Precio Producto")]),
+        _c("th", [_vm._v("Precio")]),
         _vm._v(" "),
         _c("th", [_vm._v("Estado")])
       ])

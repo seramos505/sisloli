@@ -5,9 +5,11 @@
       <div class="card">
         <div class="card-header">
           <h3 class="float-left">
-            <i class="fas fa-th-list"></i> Ordenes
+            <i class="fas fa-cart-plus"></i> Ordenes
           </h3>
-          <button type="button" @click="mostrarDetalle()" class="btn btn-success float-right">
+          <button type="button" @click="mostrarDetalle()" class="btn btn-success float-right"
+          
+          v-bind:disabled="listado==0">
             <i class="fas fa-plus-circle"></i>&nbsp;Nueva Orden
           </button>
         </div>
@@ -135,14 +137,14 @@
                 </div>
               </div>
             </div>
-            <div class="form-group row border">
-              <div class="col-md-4">
+            <div class="form-group row border py-2">
+              <div class="col-12 col-md-4">
                 <div class="form-group">
                   <label>
                     Producto
                     <span style="color: red;">*</span>
                   </label>
-                  <div class="form-inline">
+                  <div class="d-flex">
                     <input
                       type="text"
                       class="form-control"
@@ -151,11 +153,11 @@
                       placeholder="Ingrese producto"
                     />
                     <button @click="abrirModal()" class="btn btn-primary">...</button>
-                    <input type="text" readonly class="form-control" v-model="producto" />
                   </div>
+                    <input type="text" readonly class="form-control" v-model="producto" />                  
                 </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-4 col-md-2">
                 <div class="form-group">
                   <label>
                     Precio
@@ -164,7 +166,7 @@
                   <input type="number" value="0" step="any" class="form-control" v-model="precio" />
                 </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-4 col-md-2">
                 <div class="form-group">
                   <label>
                     Cantidad
@@ -173,30 +175,31 @@
                   <input type="number" value="0" class="form-control" v-model="cantidad" />
                 </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-4 col-md-2">
                 <div class="form-group">
                   <label>Descuento</label>
                   <input type="number" value="0" class="form-control" v-model="descuento" />
                 </div>
               </div>
-              <div class="col-md-2">
+              <div class="col-12 col-md-2">
                 <div class="form-group">
-                  <button @click="agregarDetalle()" class="btn btn-success form-control btnagregar">
+                  <label class="d-none">ddd &nbsp;</label>
+                  <button @click="agregarDetalle()" class="btn btn-success w-100">
                     <i class="fas fa-plus-circle"></i>
                   </button>
                 </div>
               </div>
             </div>
-            <div class="form-group row border">
+            <div class="form-group row">
               <div class="table-responsive col-md-12">
                 <table class="table table-bordered table-striped table-sm">
                   <thead class="thead-dark">
                     <tr>
-                      <th>Opciones</th>
+                      <th></th>
                       <th>Producto</th>
                       <th>Precio</th>
-                      <th>Cantidad</th>
-                      <th>Descuento</th>
+                      <th>Cant.</th>
+                      <th>Desc.</th>
                       <th>Subtotal</th>
                     </tr>
                   </thead>
@@ -231,19 +234,19 @@
                       <td colspan="5" align="right">
                         <strong>Total Parcial:</strong>
                       </td>
-                      <td>$ {{totalParcial=(total-totalImpuesto).toFixed(2)}}</td>
+                      <td>C$ {{totalParcial=(total-totalImpuesto).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
                       <td colspan="5" align="right">
                         <strong>Total Impuesto:</strong>
                       </td>
-                      <td>$ {{totalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2)}}</td>
+                      <td>C$ {{totalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
                       <td colspan="5" align="right">
                         <strong>Total Neto:</strong>
                       </td>
-                      <td>$ {{total=calcularTotal}}</td>
+                      <td>C$ {{total=calcularTotal}}</td>
                     </tr>
                   </tbody>
                   <tbody v-else>
@@ -294,19 +297,19 @@
                       <td colspan="4" align="right">
                         <strong>Total Parcial:</strong>
                       </td>
-                      <td>$ {{totalParcial=(total-totalImpuesto).toFixed(2)}}</td>
+                      <td>C$ {{totalParcial=(total-totalImpuesto).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
                       <td colspan="4" align="right">
                         <strong>Total Impuesto:</strong>
                       </td>
-                      <td>$ {{totalImpuesto=(total*impuesto).toFixed(2)}}</td>
+                      <td>C$ {{totalImpuesto=(total*impuesto).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
                       <td colspan="4" align="right">
                         <strong>Total Neto:</strong>
                       </td>
-                      <td>$ {{total}}</td>
+                      <td>C$ {{total}}</td>
                     </tr>
                   </tbody>
                   <tbody v-else>
@@ -368,10 +371,10 @@
               <table class="table table-bordered table-striped table-hover table-sm">
                 <thead class="thead-dark">
                   <tr>
-                    <th>Opciones</th>
+                    <th></th>
                     <th>Nombre</th>
                     <th>Categoría</th>
-                    <th>Precio Producto</th>
+                    <th>Precio</th>
                     <th>Estado</th>
                   </tr>
                 </thead>
@@ -502,7 +505,7 @@ export default {
       //return moment(date).format('LLL')
       //return moment.locale("de").format('LLL');
       moment.locale('es');
-      return moment(date).format('LLL a')      
+      return moment(date).format('DD/MM/YYYY hh:mm a')      
     },
     listarOrden(page, buscar, criterio) {
       let me = this;
@@ -561,6 +564,7 @@ export default {
             me.producto = me.arrayProducto[0]["nombre"];
             me.idproducto = me.arrayProducto[0]["id"];
             me.precio = me.arrayProducto[0]["precio_venta"];
+            me.cantidad = 1;
           } else {
             me.producto = "No existe este producto";
             me.idproducto = 0;
