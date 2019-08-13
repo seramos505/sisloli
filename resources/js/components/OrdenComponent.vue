@@ -20,9 +20,7 @@
               <div class="col-md-6">
                 <div class="input-group">
                   <select class="form-control col-md-3" v-model="criterio">
-                    <option value="tipo_comprobante">Tipo Comprobante</option>
-                    <option value="num_comprobante">Número Comprobante</option>
-                    <option value="fecha_hora">Fecha-Hora</option>
+                    <option value="id">id</option>
                   </select>
                   <input
                     type="text"
@@ -129,6 +127,24 @@
         <template v-else-if="listado==0">
           <div class="card-body">
             <div class="form-group row border">
+              <div class="col-md-9">
+                  <div class="form-group">
+                      <label for="">Cliente(*)</label>
+                      <select class="form-control" v-model="idcliente">
+                        <option value="0" disabled>Seleccione el Cliente</option>
+                        <option
+                          v-for="cliente in arrayCliente"
+                          :key="cliente.id"
+                          :value="cliente.id"
+                          v-text="cliente.nombre"
+                        ></option>
+                      </select>
+                  </div>
+              </div>
+              <div class="col-md-3">
+                  <label for="">Impuesto(*)</label>
+                  <input type="text" class="form-control" v-model="impuesto">
+              </div>
               <div class="col-md-12">
                 <div v-show="errorOrden" class="form-group row div-error">
                   <div class="text-center text-error">
@@ -150,7 +166,7 @@
                       class="form-control"
                       v-model="codigo"
                       @keyup.enter="buscarProducto()"
-                      placeholder="Ingrese producto"
+                      placeholder="Ingrese Codigo Producto"
                     />
                     <button @click="abrirModal()" class="btn btn-primary">...</button>
                   </div>
@@ -183,7 +199,7 @@
               </div>
               <div class="col-12 col-md-2">
                 <div class="form-group">
-                  <label class="d-none">ddd &nbsp;</label>
+                  <label class="d-none d-sm-inline-block">&nbsp;</label>
                   <button @click="agregarDetalle()" class="btn btn-success w-100">
                     <i class="fas fa-plus-circle"></i>
                   </button>
@@ -446,7 +462,7 @@ export default {
         to: 0
       },
       offset: 3,
-      criterio: "fecha_hora",
+      criterio: "id",
       buscar: "",
       criterioA: "nombre",
       buscarA: "",
@@ -527,7 +543,21 @@ export default {
           console.log(error);
         });
     },
-    selectCliente(search, loading) {
+    selectCliente() {
+      let me = this;
+      var url = "cliente/selectCliente";
+      axios
+        .get(url)
+        .then(function(response) {
+          //console.log(response);
+          var respuesta = response.data;
+          me.arrayCliente = respuesta.categorias;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    /*selectCliente(search, loading) {
       let me = this;
       loading(true);
       var url = "cliente/selectCliente?filtro=" + search;
@@ -548,7 +578,7 @@ export default {
       let me = this;
       me.loading = true;
       me.idcliente = val1.id;
-    },
+    },*/
 
     buscarProducto() {
       let me = this;
@@ -715,6 +745,7 @@ export default {
       me.cantidad = 0;
       me.precio = 0;
       me.arrayDetalle = [];
+      this.selectCliente();
     },
     ocultarDetalle() {
       this.listado = 1;
@@ -733,10 +764,10 @@ export default {
           var respuesta = response.data;
           arrayOrdenT = respuesta.orden;
 
-          me.cliente = arrayOrdenT[0]["nombre"];
+          /*me.cliente = arrayOrdenT[0]["nombre"];
           me.tipo_comprobante = arrayOrdenT[0]["tipo_comprobante"];
           me.serie_comprobante = arrayOrdenT[0]["serie_comprobante"];
-          me.num_comprobante = arrayOrdenT[0]["num_comprobante"];
+          me.num_comprobante = arrayOrdenT[0]["num_comprobante"];*/
           me.impuesto = arrayOrdenT[0]["impuesto"];
           me.total = arrayOrdenT[0]["total"];
         })

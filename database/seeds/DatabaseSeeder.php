@@ -17,14 +17,18 @@ class DatabaseSeeder extends Seeder
             'tamano',
             'producto',
             'users',
-            'menu'
+            'menu',
+            'cliente',
+            'orden',
+            'orden_detalle'
         ]); 
         $this->call(SaborSeeder::class);
         $this->call(CategoriaSeeder::class);
         $this->call(TamanoSeeder::class);
         $this->call(ProductoSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(MenuSeeder::class);         
+        $this->call(MenuSeeder::class);
+        $this->call(ClienteSeeder::class);         
     }
 
     protected function truncateTablas(array $tablas)

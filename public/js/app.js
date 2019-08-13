@@ -2780,6 +2780,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2806,7 +2822,7 @@ __webpack_require__.r(__webpack_exports__);
         to: 0
       },
       offset: 3,
-      criterio: "fecha_hora",
+      criterio: "id",
       buscar: "",
       criterioA: "nombre",
       buscarA: "",
@@ -2878,27 +2894,40 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    selectCliente: function selectCliente(search, loading) {
+    selectCliente: function selectCliente() {
       var me = this;
-      loading(true);
-      var url = "cliente/selectCliente?filtro=" + search;
+      var url = "cliente/selectCliente";
       axios.get(url).then(function (response) {
         //console.log(response);
         var respuesta = response.data;
-
-        q: search;
-
-        me.arrayCliente = respuesta.clientes;
-        loading(false);
+        me.arrayCliente = respuesta.categorias;
       })["catch"](function (error) {
         console.log(error);
       });
     },
-    getDatosCliente: function getDatosCliente(val1) {
-      var me = this;
+
+    /*selectCliente(search, loading) {
+      let me = this;
+      loading(true);
+      var url = "cliente/selectCliente?filtro=" + search;
+      axios
+        .get(url)
+        .then(function(response) {
+          //console.log(response);
+          let respuesta = response.data;
+          q: search;
+          me.arrayCliente = respuesta.clientes;
+          loading(false);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    getDatosCliente(val1) {
+      let me = this;
       me.loading = true;
       me.idcliente = val1.id;
-    },
+    },*/
     buscarProducto: function buscarProducto() {
       var me = this;
       var url = "producto/buscarProductoOrden?filtro=" + me.codigo;
@@ -3046,6 +3075,7 @@ __webpack_require__.r(__webpack_exports__);
       me.cantidad = 0;
       me.precio = 0;
       me.arrayDetalle = [];
+      this.selectCliente();
     },
     ocultarDetalle: function ocultarDetalle() {
       this.listado = 1;
@@ -3059,10 +3089,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         arrayOrdenT = respuesta.orden;
-        me.cliente = arrayOrdenT[0]["nombre"];
+        /*me.cliente = arrayOrdenT[0]["nombre"];
         me.tipo_comprobante = arrayOrdenT[0]["tipo_comprobante"];
         me.serie_comprobante = arrayOrdenT[0]["serie_comprobante"];
-        me.num_comprobante = arrayOrdenT[0]["num_comprobante"];
+        me.num_comprobante = arrayOrdenT[0]["num_comprobante"];*/
+
         me.impuesto = arrayOrdenT[0]["impuesto"];
         me.total = arrayOrdenT[0]["total"];
       })["catch"](function (error) {
@@ -40585,20 +40616,8 @@ var render = function() {
                             }
                           },
                           [
-                            _c(
-                              "option",
-                              { attrs: { value: "tipo_comprobante" } },
-                              [_vm._v("Tipo Comprobante")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "option",
-                              { attrs: { value: "num_comprobante" } },
-                              [_vm._v("Número Comprobante")]
-                            ),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "fecha_hora" } }, [
-                              _vm._v("Fecha-Hora")
+                            _c("option", { attrs: { value: "id" } }, [
+                              _vm._v("id")
                             ])
                           ]
                         ),
@@ -40864,6 +40883,90 @@ var render = function() {
             ? [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group row border" }, [
+                    _c("div", { staticClass: "col-md-9" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Cliente(*)")
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select",
+                          {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.idcliente,
+                                expression: "idcliente"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            on: {
+                              change: function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.idcliente = $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              }
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { value: "0", disabled: "" } },
+                              [_vm._v("Seleccione el Cliente")]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.arrayCliente, function(cliente) {
+                              return _c("option", {
+                                key: cliente.id,
+                                domProps: {
+                                  value: cliente.id,
+                                  textContent: _vm._s(cliente.nombre)
+                                }
+                              })
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-3" }, [
+                      _c("label", { attrs: { for: "" } }, [
+                        _vm._v("Impuesto(*)")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.impuesto,
+                            expression: "impuesto"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.impuesto },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.impuesto = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
                     _c("div", { staticClass: "col-md-12" }, [
                       _c(
                         "div",
@@ -40913,7 +41016,7 @@ var render = function() {
                             staticClass: "form-control",
                             attrs: {
                               type: "text",
-                              placeholder: "Ingrese producto"
+                              placeholder: "Ingrese Codigo Producto"
                             },
                             domProps: { value: _vm.codigo },
                             on: {
@@ -41065,9 +41168,11 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-12 col-md-2" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", { staticClass: "d-none" }, [
-                          _vm._v("ddd  ")
-                        ]),
+                        _c(
+                          "label",
+                          { staticClass: "d-none d-sm-inline-block" },
+                          [_vm._v(" ")]
+                        ),
                         _vm._v(" "),
                         _c(
                           "button",

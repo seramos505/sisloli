@@ -51,6 +51,12 @@ Route::get('/producto/listarProductoOrden', 'ProductoController@listarProductoOr
 Route::get('/producto/buscarProductoOrden', 'ProductoController@buscarProductoOrden');
 Route::get('/producto/listarPdf', 'ProductoController@listarPdf')->name('productos_pdf');
 
+Route::get('/cliente', function () { return view('admin.cliente'); })->name('cliente');
+Route::get('/cliente/listar', 'ClienteController@listar');
+Route::post('/cliente/registrar', 'ClienteController@store');
+Route::put('/cliente/actualizar', 'ClienteController@update');
+Route::get('/cliente/selectCliente', 'ClienteController@selectCliente');
+
 Route::get('/orden', function () { return view('admin.orden'); })->name('orden');
 Route::get('/orden/listar', 'OrdenController@listar');
 Route::post('/orden/registrar', 'OrdenController@store');

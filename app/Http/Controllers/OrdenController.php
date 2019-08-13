@@ -25,14 +25,18 @@ class OrdenController extends Controller
          
         if ($buscar==''){
             $ordenes = Orden::join('users','orden.idusuario','=','users.id')
-            ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.total',
-            'orden.estado','users.name')
+            ->join('orden_detalle','orden.id','=','orden_detalle.idorden')
+            ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name',
+            DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total'))
+            ->groupBy('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name')
             ->orderBy('orden.id', 'desc')->paginate(5);
         }
         else{
             $ordenes = Orden::join('users','orden.idusuario','=','users.id')
-            ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.total',
-            'orden.estado','users.name')
+            ->join('orden_detalle','orden.id','=','orden_detalle.idorden')
+            ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name',
+            DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total'))
+            ->groupBy('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name')
             ->where('orden.'.$criterio, 'like', '%'. $buscar . '%')
             ->orderBy('orden.id', 'desc')->paginate(5);
         }
@@ -48,6 +52,36 @@ class OrdenController extends Controller
             ],
             'ordenes' => $ordenes
         ];
+    }
+
+    public function obtenerCabecera(Request $request){
+        //if (!$request->ajax()) return redirect('/');
+ 
+        $id = $request->id;
+        $orden = Orden::join('users','orden.idusuario','=','users.id')
+        ->join('orden_detalle','orden.id','=','orden_detalle.idorden')
+        ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name',
+        DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total'))
+        ->where('orden.id','=',$id)
+        ->groupBy('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name')
+        ->get();
+
+         //$orden = DB::select('select orden.id, orden.fecha_hora, orden.impuesto,
+         // SUM(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total, orden.estado, users.name from orden inner join users on orden.idusuario = users.id inner join orden_detalle on orden.id = orden_detalle.idorden where orden.id = ? order by orden.id desc limit 1', [12]);
+         
+        return ['orden' => $orden];
+    }
+    public function obtenerDetalles(Request $request){
+        //if (!$request->ajax()) return redirect('/');
+ 
+        $id = $request->id;
+        $detalles = OrdenDetalle::join('producto','orden_detalle.idproducto','=','producto.id')
+        ->select('orden_detalle.cantidad','orden_detalle.precio','orden_detalle.descuento',
+        'producto.nombre as producto')
+        ->where('orden_detalle.idorden','=',$id)
+        ->orderBy('orden_detalle.id', 'desc')->get();
+         
+        return ['detalles' => $detalles];
     }
 
     public function store(Request $request)
