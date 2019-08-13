@@ -2795,12 +2795,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       orden_id: 0,
-      idcliente: 0,
+      idcliente: 1,
       cliente: "",
       impuesto: 0.15,
       total: 0.0,
@@ -2900,7 +2899,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(url).then(function (response) {
         //console.log(response);
         var respuesta = response.data;
-        me.arrayCliente = respuesta.categorias;
+        me.arrayCliente = respuesta.clientes;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -40900,7 +40899,7 @@ var render = function() {
                                 expression: "idcliente"
                               }
                             ],
-                            staticClass: "form-control",
+                            staticClass: "form-control select2",
                             on: {
                               change: function($event) {
                                 var $$selectedVal = Array.prototype.filter
@@ -40917,24 +40916,16 @@ var render = function() {
                               }
                             }
                           },
-                          [
-                            _c(
-                              "option",
-                              { attrs: { value: "0", disabled: "" } },
-                              [_vm._v("Seleccione el Cliente")]
-                            ),
-                            _vm._v(" "),
-                            _vm._l(_vm.arrayCliente, function(cliente) {
-                              return _c("option", {
-                                key: cliente.id,
-                                domProps: {
-                                  value: cliente.id,
-                                  textContent: _vm._s(cliente.nombre)
-                                }
-                              })
+                          _vm._l(_vm.arrayCliente, function(cliente) {
+                            return _c("option", {
+                              key: cliente.id,
+                              domProps: {
+                                value: cliente.id,
+                                textContent: _vm._s(cliente.nombre)
+                              }
                             })
-                          ],
-                          2
+                          }),
+                          0
                         )
                       ])
                     ]),

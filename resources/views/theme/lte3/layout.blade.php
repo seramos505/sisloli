@@ -16,8 +16,13 @@
     <link rel="stylesheet" href="{{asset("assets/$theme/plugins/sweetalert2/sweetalert2.min.css")}}">
     <!-- Toastr -->
     <link rel="stylesheet" href="{{asset("assets/$theme/plugins/toastr/toastr.min.css")}}">
-    <!-- Theme style -->
+    <!-- Select2 -->    
+    <link rel="stylesheet" href="{{asset("assets/$theme/plugins/select2/css/select2.min.css")}}">
     
+    <!-- OPTIONAL CSS -->
+    @yield("css-optional")
+    
+    <!-- Theme style -->    
     <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.css")}}">
 
     <link rel="stylesheet" href="{{asset("assets/$theme/custom.css")}}">
@@ -80,6 +85,8 @@ to get the desired effect
 
     <!-- REQUIRED SCRIPTS -->
 
+    
+
     <!-- jQuery -->
     <script src="{{asset("assets/$theme/plugins/jquery/jquery.min.js")}}"></script>
     <!-- Bootstrap -->
@@ -91,12 +98,13 @@ to get the desired effect
     <!-- moment -->
     <script src="{{asset("assets/$theme/plugins/moment/moment.min.js")}}"></script>
     <script src="{{asset("assets/$theme/plugins/moment/locale/es.js")}}"></script>
-    <!-- AdminLTE -->
-    <script src="{{asset("assets/$theme/dist/js/adminlte.js")}}"></script>
-
+    
 
     <!-- OPTIONAL SCRIPTS -->
     @yield("scripts")
+
+    <!-- AdminLTE -->
+    <script src="{{asset("assets/$theme/dist/js/adminlte.js")}}"></script>
 
     <!-- CONSULTAR TODOS LOS PERMISOS QUE TIENE EL USUARIO -->
     <script>
@@ -107,11 +115,21 @@ to get the desired effect
             window.Permissions = [];
         @endauth
     </script>
+    
+
 
     <script src="{{asset("assets/js/scripts.js")}}"></script>  
       
     <!-- SCRIPTS -->
     <script src="js/app.js"></script>
+    <!-- Select2 -->
+    <script src="{{asset("assets/$theme/plugins/select2/js/select2.full.min.js")}}"></script>
+    <script>
+        $(function () {
+          //Initialize Select2 Elements
+          $('.select2').select2() 
+        })   
+    </script>
 
 
     

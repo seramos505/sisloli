@@ -130,8 +130,7 @@
               <div class="col-md-9">
                   <div class="form-group">
                       <label for="">Cliente(*)</label>
-                      <select class="form-control" v-model="idcliente">
-                        <option value="0" disabled>Seleccione el Cliente</option>
+                      <select class="form-control select2" v-model="idcliente">                        
                         <option
                           v-for="cliente in arrayCliente"
                           :key="cliente.id"
@@ -440,7 +439,7 @@ export default {
   data() {
     return {
       orden_id: 0,
-      idcliente: 0,
+      idcliente: 1,
       cliente: "",
       impuesto: 0.15,
       total: 0.0,
@@ -551,7 +550,7 @@ export default {
         .then(function(response) {
           //console.log(response);
           var respuesta = response.data;
-          me.arrayCliente = respuesta.categorias;
+          me.arrayCliente = respuesta.clientes;
         })
         .catch(function(error) {
           console.log(error);
@@ -737,7 +736,6 @@ export default {
     mostrarDetalle() {
       let me = this;
       me.listado = 0;
-
       me.impuesto = 0.15;
       me.total = 0.0;
       me.idproducto = 0;
