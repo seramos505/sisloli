@@ -128,8 +128,8 @@
           <div class="card-body">
             <div class="form-group row border">
               <div class="col-md-9">
-                  <div class="form-group">
-                      <label for="">Cliente(*)</label>
+                  <div class="form-group required">
+                      <label for="">Cliente</label>
                      
                       <select2 :options="arrayCliente" v-model="idcliente">
                               
@@ -137,8 +137,10 @@
                   </div>
               </div>
               <div class="col-md-3">
-                  <label for="">Impuesto(*)</label>
+                <div class="form-group required">
+                  <label for="">Impuesto</label>
                   <input type="text" class="form-control" v-model="impuesto">
+                </div>
               </div>
               <div class="col-md-12">
                 <div v-show="errorOrden" class="form-group row div-error">
