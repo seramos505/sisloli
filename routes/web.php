@@ -69,3 +69,5 @@ Route::get('/orden/pdf/{id}', 'OrdenController@pdf')->name('orden_pdf');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/select2', function () { return view('admin.select2'); })->name('select2');

@@ -130,14 +130,10 @@
               <div class="col-md-9">
                   <div class="form-group">
                       <label for="">Cliente(*)</label>
-                      <select class="form-control select2" v-model="idcliente">                        
-                        <option
-                          v-for="cliente in arrayCliente"
-                          :key="cliente.id"
-                          :value="cliente.id"
-                          v-text="cliente.nombre"
-                        ></option>
-                      </select>
+                     
+                      <select2 :options="arrayCliente" v-model="idcliente">
+                              
+                      </select2>
                   </div>
               </div>
               <div class="col-md-3">
@@ -549,13 +545,15 @@ export default {
         .get(url)
         .then(function(response) {
           //console.log(response);
-          var respuesta = response.data;
-          me.arrayCliente = respuesta.clientes;
+          //var respuesta = response.data;
+          me.arrayCliente = response.data;
         })
         .catch(function(error) {
           console.log(error);
         });
     },
+
+    
     /*selectCliente(search, loading) {
       let me = this;
       loading(true);

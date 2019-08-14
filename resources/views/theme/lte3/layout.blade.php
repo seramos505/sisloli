@@ -124,12 +124,7 @@ to get the desired effect
     <script src="js/app.js"></script>
     <!-- Select2 -->
     <script src="{{asset("assets/$theme/plugins/select2/js/select2.full.min.js")}}"></script>
-    <script>
-        $(function () {
-          //Initialize Select2 Elements
-          $('.select2').select2() 
-        })   
-    </script>
+
 
 
     

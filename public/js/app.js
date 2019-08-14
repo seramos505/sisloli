@@ -2342,9 +2342,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      idcliente: 1,
+      cliente: "",
+      arrayCliente: []
+    };
+  },
+  methods: {
+    selectCliente: function selectCliente() {
+      var me = this;
+      var url = "cliente/selectCliente";
+      axios.get(url).then(function (response) {
+        //var respuesta = response.data;
+        me.arrayCliente = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
   mounted: function mounted() {
-    console.log('Component mounted.');
+    this.selectCliente();
   }
 });
 
@@ -2359,10 +2384,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -2898,8 +2919,8 @@ __webpack_require__.r(__webpack_exports__);
       var url = "cliente/selectCliente";
       axios.get(url).then(function (response) {
         //console.log(response);
-        var respuesta = response.data;
-        me.arrayCliente = respuesta.clientes;
+        //var respuesta = response.data;
+        me.arrayCliente = response.data;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -4667,7 +4688,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//import Select2 from 'select2';
+//import Select from 'select2';
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['options', 'value'],
   mounted: function mounted() {
@@ -40552,32 +40573,41 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Example Component")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _c(
+              "div",
+              { staticClass: "form-group" },
+              [
+                _c("label", { attrs: { for: "" } }),
+                _vm._v(" "),
+                _c("select2", {
+                  attrs: { options: _vm.arrayCliente },
+                  model: {
+                    value: _vm.cliente,
+                    callback: function($$v) {
+                      _vm.cliente = $$v
+                    },
+                    expression: "cliente"
+                  }
+                })
+              ],
+              1
+            )
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -40929,51 +40959,27 @@ var render = function() {
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group row border" }, [
                     _c("div", { staticClass: "col-md-9" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Cliente(*)")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.idcliente,
-                                expression: "idcliente"
-                              }
-                            ],
-                            staticClass: "form-control select2",
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.idcliente = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              }
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Cliente(*)")
+                          ]),
+                          _vm._v(" "),
+                          _c("select2", {
+                            attrs: { options: _vm.arrayCliente },
+                            model: {
+                              value: _vm.idcliente,
+                              callback: function($$v) {
+                                _vm.idcliente = $$v
+                              },
+                              expression: "idcliente"
                             }
-                          },
-                          _vm._l(_vm.arrayCliente, function(cliente) {
-                            return _c("option", {
-                              key: cliente.id,
-                              domProps: {
-                                value: cliente.id,
-                                textContent: _vm._s(cliente.nombre)
-                              }
-                            })
-                          }),
-                          0
-                        )
-                      ])
+                          })
+                        ],
+                        1
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-3" }, [

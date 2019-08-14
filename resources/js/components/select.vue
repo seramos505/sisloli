@@ -4,7 +4,7 @@
   </select>
 </template>
 <script>
-//import Select2 from 'select2';
+//import Select from 'select2';
 export default {
   props: ['options', 'value'],
   mounted: function () {
