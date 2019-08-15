@@ -58,9 +58,10 @@ class OrdenController extends Controller
         //if (!$request->ajax()) return redirect('/');
  
         $id = $request->id;
-        $orden = Orden::join('users','orden.idusuario','=','users.id')
+        $orden = Orden::join('cliente','orden.idcliente','=','cliente.id')
+        ->join('users','orden.idusuario','=','users.id')
         ->join('orden_detalle','orden.id','=','orden_detalle.idorden')
-        ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name',
+        ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name','cliente.nombre as cliente',
         DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total'))
         ->where('orden.id','=',$id)
         ->groupBy('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name')
@@ -91,7 +92,8 @@ class OrdenController extends Controller
         try{
             DB::beginTransaction();
  
-            $orden = new Orden();
+            $orden = new Orden();   
+            $orden->idcliente = $request->idcliente;
             $orden->idusuario = \Auth::user()->id;
             $orden->fecha_hora = Carbon::now()->format('Y-m-d H:i:s');
             $orden->impuesto = $request->impuesto;

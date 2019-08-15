@@ -167,7 +167,9 @@
                   />
                 </div>
               </div>
-              <div class="alert alert-danger" v-if="errorMostrarMsjCategoria.length > 0">
+              <div class="alert alert-danger alert-dismissible" v-if="errorMostrarMsjCategoria.length > 0">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <h4><i class="icon fa fa-ban"></i> El fomurlario contiene errores</h4>
                 <ul>
                   <li v-for="error in errorMostrarMsjCategoria">{{ error }}</li>
                 </ul>
@@ -215,7 +217,6 @@ export default {
       modal: 0,
       tituloModal: "",
       tipoAccion: 0,
-      errorCategoria: 0,
       errorMostrarMsjCategoria: [],
       pagination: {
         total: 0,
@@ -451,24 +452,19 @@ export default {
       });
     },
     validarCategoria() {
-      this.errorCategoria = 0;
       this.errorMostrarMsjCategoria = [];
-
       if (!this.nombre)
         this.errorMostrarMsjCategoria.push(
           "El nombre de la categoría no puede estar vacío."
         );
-
-      if (this.errorMostrarMsjCategoria.length) this.errorCategoria = 1;
-
-      return this.errorCategoria;
+        if (this.errorMostrarMsjCategoria.length) return 1;
+      
     },
     cerrarModal() {
       //this.modal = 0;
       this.tituloModal = "";
       this.nombre = "";
       this.descripcion = "";
-      this.errorCategoria = 0;
       this.errorMostrarMsjCategoria = [];
       $("#modalCU").modal("hide");
     },

@@ -7,9 +7,12 @@
           <h3 class="float-left">
             <i class="fas fa-cart-plus"></i> Ordenes
           </h3>
-          <button type="button" @click="mostrarDetalle()" class="btn btn-success float-right"
-          
-          v-bind:disabled="listado==0">
+          <button
+            type="button"
+            @click="mostrarDetalle()"
+            class="btn btn-success float-right"
+            v-bind:disabled="listado==0"
+          >
             <i class="fas fa-plus-circle"></i>&nbsp;Nueva Orden
           </button>
         </div>
@@ -60,17 +63,13 @@
                       >
                         <i class="fas fa-eye"></i>
                       </button>
-                      </td>
-                      <td style="width: 10px;">
-                      <button
-                        type="button"
-                        @click="pdfOrden(orden.id)"
-                        class="btn btn-info btn-sm"
-                      >
+                    </td>
+                    <td style="width: 10px;">
+                      <button type="button" @click="pdfOrden(orden.id)" class="btn btn-info btn-sm">
                         <i class="fas fa-file-pdf"></i>
                       </button>
-                      </td>
-                      <td style="width: 10px;">
+                    </td>
+                    <td style="width: 10px;">
                       <template v-if="orden.estado=='Registrado'">
                         <button
                           type="button"
@@ -125,28 +124,32 @@
         <!--Fin Listado-->
         <!-- Detalle-->
         <template v-else-if="listado==0">
+          <div class="col-12 mb-2 alert alert-danger" v-if="errorMostrarMsjOrden.length > 0">
+            <ul>
+              <li v-for="error in errorMostrarMsjOrden">{{ error }}</li>
+            </ul>
+          </div>
           <div class="card-body">
             <div class="form-group row border">
               <div class="col-md-9">
-                  <div class="form-group">
-                      <label for="">Cliente <i class="required-entry">*</i></label>                     
-                      <select2 :options="arrayCliente" v-model="idcliente">                              
-                      </select2>
-                  </div>
+                <div class="form-group">
+                  <label for>
+                    Cliente
+                    <i class="required-entry">*</i>
+                  </label>
+                  <select2 :options="arrayCliente" v-model="idcliente"></select2>
+                </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group ">
-                  <label for="">Impuesto <i class="required-entry">*</i></label>
-                  <input type="text" class="form-control" v-model="impuesto">
+                <div class="form-group">
+                  <label for>
+                    Impuesto
+                    <i class="required-entry">*</i>
+                  </label>
+                  <input type="text" class="form-control" v-model="impuesto" />
                 </div>
-              </div>
-              <div class="col-md-12">
-                <div v-show="errorOrden" class="form-group row div-error">
-                  <div class="text-center text-error">
-                    <div v-for="error in errorMostrarMsjOrden" :key="error" v-text="error"></div>
-                  </div>
-                </div>
-              </div>
+              </div>             
+              
             </div>
             <div class="form-group row border py-2">
               <div class="col-12 col-md-4">
@@ -165,7 +168,7 @@
                     />
                     <button @click="abrirModal()" class="btn btn-primary">...</button>
                   </div>
-                    <input type="text" readonly class="form-control" v-model="producto" />                  
+                  <input type="text" readonly class="form-control" v-model="producto" />
                 </div>
               </div>
               <div class="col-4 col-md-2">
@@ -285,6 +288,18 @@
         <template v-else-if="listado==2">
           <div class="card-body">
             <div class="form-group row border">
+              <div class="col-md-9">
+                <div class="form-group">
+                  <label for>Cliente</label>
+                  <p v-text="cliente"></p>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for>Impuesto</label>
+                <p v-text="impuesto"></p>
+              </div>
+            </div>
+            <div class="form-group row">
               <div class="table-responsive col-md-12">
                 <table class="table table-bordered table-striped table-sm">
                   <thead class="thead-dark">
@@ -435,7 +450,7 @@ export default {
   data() {
     return {
       orden_id: 0,
-      idcliente: 1,
+      idcliente: 0,
       cliente: "",
       impuesto: 0.15,
       total: 0.0,
@@ -446,7 +461,6 @@ export default {
       arrayDetalle: [],
       listado: 1,
       tituloModal: "",
-      errorOrden: 0,
       errorMostrarMsjOrden: [],
       pagination: {
         total: 0,
@@ -512,11 +526,11 @@ export default {
     }
   },
   methods: {
-    fecha(date){
+    fecha(date) {
       //return moment(date).format('LLL')
       //return moment.locale("de").format('LLL');
-      moment.locale('es');
-      return moment(date).format('DD/MM/YYYY hh:mm a')      
+      moment.locale("es");
+      return moment(date).format("DD/MM/YYYY hh:mm a");
     },
     listarOrden(page, buscar, criterio) {
       let me = this;
@@ -552,30 +566,6 @@ export default {
           console.log(error);
         });
     },
-
-    
-    /*selectCliente(search, loading) {
-      let me = this;
-      loading(true);
-      var url = "cliente/selectCliente?filtro=" + search;
-      axios
-        .get(url)
-        .then(function(response) {
-          //console.log(response);
-          let respuesta = response.data;
-          q: search;
-          me.arrayCliente = respuesta.clientes;
-          loading(false);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
-    getDatosCliente(val1) {
-      let me = this;
-      me.loading = true;
-      me.idcliente = val1.id;
-    },*/
 
     buscarProducto() {
       let me = this;
@@ -695,6 +685,7 @@ export default {
 
       axios
         .post("orden/registrar", {
+          idcliente: this.idcliente,
           impuesto: this.impuesto,
           total: this.total,
           data: this.arrayDetalle
@@ -718,18 +709,16 @@ export default {
     },
     validarOrden() {
       let me = this;
-      me.errorOrden = 0;
       me.errorMostrarMsjOrden = [];
       var art;
+
+      if (me.idcliente == 0)
+        me.errorMostrarMsjOrden.push("Seleccione un Cliente");
 
       if (!me.impuesto)
         me.errorMostrarMsjOrden.push("Ingrese el impuesto de compra");
       if (me.arrayDetalle.length <= 0)
         me.errorMostrarMsjOrden.push("Ingrese detalles");
-
-      if (me.errorMostrarMsjOrden.length) me.errorOrden = 1;
-
-      return me.errorOrden;
     },
     mostrarDetalle() {
       let me = this;
@@ -741,6 +730,7 @@ export default {
       me.cantidad = 0;
       me.precio = 0;
       me.arrayDetalle = [];
+      me.errorMostrarMsjOrden = [];
       this.selectCliente();
     },
     ocultarDetalle() {
@@ -760,10 +750,11 @@ export default {
           var respuesta = response.data;
           arrayOrdenT = respuesta.orden;
 
-          /*me.cliente = arrayOrdenT[0]["nombre"];
+          /*
           me.tipo_comprobante = arrayOrdenT[0]["tipo_comprobante"];
           me.serie_comprobante = arrayOrdenT[0]["serie_comprobante"];
           me.num_comprobante = arrayOrdenT[0]["num_comprobante"];*/
+          me.cliente = arrayOrdenT[0]["cliente"];
           me.impuesto = arrayOrdenT[0]["impuesto"];
           me.total = arrayOrdenT[0]["total"];
         })

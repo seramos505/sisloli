@@ -2044,6 +2044,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2054,7 +2056,6 @@ __webpack_require__.r(__webpack_exports__);
       modal: 0,
       tituloModal: "",
       tipoAccion: 0,
-      errorCategoria: 0,
       errorMostrarMsjCategoria: [],
       pagination: {
         total: 0,
@@ -2260,18 +2261,15 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     validarCategoria: function validarCategoria() {
-      this.errorCategoria = 0;
       this.errorMostrarMsjCategoria = [];
       if (!this.nombre) this.errorMostrarMsjCategoria.push("El nombre de la categoría no puede estar vacío.");
-      if (this.errorMostrarMsjCategoria.length) this.errorCategoria = 1;
-      return this.errorCategoria;
+      if (this.errorMostrarMsjCategoria.length) return 1;
     },
     cerrarModal: function cerrarModal() {
       //this.modal = 0;
       this.tituloModal = "";
       this.nombre = "";
       this.descripcion = "";
-      this.errorCategoria = 0;
       this.errorMostrarMsjCategoria = [];
       $("#modalCU").modal("hide");
     },
@@ -2816,11 +2814,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       orden_id: 0,
-      idcliente: 1,
+      idcliente: 0,
       cliente: "",
       impuesto: 0.15,
       total: 0.0,
@@ -2831,7 +2844,6 @@ __webpack_require__.r(__webpack_exports__);
       arrayDetalle: [],
       listado: 1,
       tituloModal: "",
-      errorOrden: 0,
       errorMostrarMsjOrden: [],
       pagination: {
         total: 0,
@@ -2900,8 +2912,8 @@ __webpack_require__.r(__webpack_exports__);
     fecha: function fecha(date) {
       //return moment(date).format('LLL')
       //return moment.locale("de").format('LLL');
-      moment.locale('es');
-      return moment(date).format('DD/MM/YYYY hh:mm a');
+      moment.locale("es");
+      return moment(date).format("DD/MM/YYYY hh:mm a");
     },
     listarOrden: function listarOrden(page, buscar, criterio) {
       var me = this;
@@ -2925,29 +2937,6 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-
-    /*selectCliente(search, loading) {
-      let me = this;
-      loading(true);
-      var url = "cliente/selectCliente?filtro=" + search;
-      axios
-        .get(url)
-        .then(function(response) {
-          //console.log(response);
-          let respuesta = response.data;
-          q: search;
-          me.arrayCliente = respuesta.clientes;
-          loading(false);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-    },
-    getDatosCliente(val1) {
-      let me = this;
-      me.loading = true;
-      me.idcliente = val1.id;
-    },*/
     buscarProducto: function buscarProducto() {
       var me = this;
       var url = "producto/buscarProductoOrden?filtro=" + me.codigo;
@@ -3057,6 +3046,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var me = this;
       axios.post("orden/registrar", {
+        idcliente: this.idcliente,
         impuesto: this.impuesto,
         total: this.total,
         data: this.arrayDetalle
@@ -3077,13 +3067,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     validarOrden: function validarOrden() {
       var me = this;
-      me.errorOrden = 0;
       me.errorMostrarMsjOrden = [];
       var art;
+      if (me.idcliente == 0) me.errorMostrarMsjOrden.push("Seleccione un Cliente");
       if (!me.impuesto) me.errorMostrarMsjOrden.push("Ingrese el impuesto de compra");
       if (me.arrayDetalle.length <= 0) me.errorMostrarMsjOrden.push("Ingrese detalles");
-      if (me.errorMostrarMsjOrden.length) me.errorOrden = 1;
-      return me.errorOrden;
     },
     mostrarDetalle: function mostrarDetalle() {
       var me = this;
@@ -3095,6 +3083,7 @@ __webpack_require__.r(__webpack_exports__);
       me.cantidad = 0;
       me.precio = 0;
       me.arrayDetalle = [];
+      me.errorMostrarMsjOrden = [];
       this.selectCliente();
     },
     ocultarDetalle: function ocultarDetalle() {
@@ -3109,11 +3098,12 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         arrayOrdenT = respuesta.orden;
-        /*me.cliente = arrayOrdenT[0]["nombre"];
+        /*
         me.tipo_comprobante = arrayOrdenT[0]["tipo_comprobante"];
         me.serie_comprobante = arrayOrdenT[0]["serie_comprobante"];
         me.num_comprobante = arrayOrdenT[0]["num_comprobante"];*/
 
+        me.cliente = arrayOrdenT[0]["cliente"];
         me.impuesto = arrayOrdenT[0]["impuesto"];
         me.total = arrayOrdenT[0]["total"];
       })["catch"](function (error) {
@@ -40450,15 +40440,34 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _vm.errorMostrarMsjCategoria.length > 0
-                  ? _c("div", { staticClass: "alert alert-danger" }, [
-                      _c(
-                        "ul",
-                        _vm._l(_vm.errorMostrarMsjCategoria, function(error) {
-                          return _c("li", [_vm._v(_vm._s(error))])
-                        }),
-                        0
-                      )
-                    ])
+                  ? _c(
+                      "div",
+                      { staticClass: "alert alert-danger alert-dismissible" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "close",
+                            attrs: {
+                              type: "button",
+                              "data-dismiss": "alert",
+                              "aria-hidden": "true"
+                            }
+                          },
+                          [_vm._v("×")]
+                        ),
+                        _vm._v(" "),
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c(
+                          "ul",
+                          _vm._l(_vm.errorMostrarMsjCategoria, function(error) {
+                            return _c("li", [_vm._v(_vm._s(error))])
+                          }),
+                          0
+                        )
+                      ]
+                    )
                   : _vm._e()
               ]
             )
@@ -40549,6 +40558,15 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Estado")])
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h4", [
+      _c("i", { staticClass: "icon fa fa-ban" }),
+      _vm._v(" El fomurlario contiene errores")
     ])
   }
 ]
@@ -40956,6 +40974,22 @@ var render = function() {
               ]
             : _vm.listado == 0
             ? [
+                _vm.errorMostrarMsjOrden.length > 0
+                  ? _c(
+                      "div",
+                      { staticClass: "col-12 mb-2 alert alert-danger" },
+                      [
+                        _c(
+                          "ul",
+                          _vm._l(_vm.errorMostrarMsjOrden, function(error) {
+                            return _c("li", [_vm._v(_vm._s(error))])
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group row border" }, [
                     _c("div", { staticClass: "col-md-9" }, [
@@ -40981,7 +41015,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-3" }, [
-                      _c("div", { staticClass: "form-group " }, [
+                      _c("div", { staticClass: "form-group" }, [
                         _vm._m(3),
                         _vm._v(" "),
                         _c("input", {
@@ -41006,36 +41040,6 @@ var render = function() {
                           }
                         })
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-12" }, [
-                      _c(
-                        "div",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.errorOrden,
-                              expression: "errorOrden"
-                            }
-                          ],
-                          staticClass: "form-group row div-error"
-                        },
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "text-center text-error" },
-                            _vm._l(_vm.errorMostrarMsjOrden, function(error) {
-                              return _c("div", {
-                                key: error,
-                                domProps: { textContent: _vm._s(error) }
-                              })
-                            }),
-                            0
-                          )
-                        ]
-                      )
                     ])
                   ]),
                   _vm._v(" "),
@@ -41515,6 +41519,28 @@ var render = function() {
             ? [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group row border" }, [
+                    _c("div", { staticClass: "col-md-9" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Cliente")
+                        ]),
+                        _vm._v(" "),
+                        _c("p", {
+                          domProps: { textContent: _vm._s(_vm.cliente) }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-3" }, [
+                      _c("label", { attrs: { for: "" } }, [_vm._v("Impuesto")]),
+                      _vm._v(" "),
+                      _c("p", {
+                        domProps: { textContent: _vm._s(_vm.impuesto) }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group row" }, [
                     _c("div", { staticClass: "table-responsive col-md-12" }, [
                       _c(
                         "table",
@@ -41917,7 +41943,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "" } }, [
-      _vm._v("Cliente "),
+      _vm._v("\n                  Cliente\n                  "),
       _c("i", { staticClass: "required-entry" }, [_vm._v("*")])
     ])
   },
@@ -41926,7 +41952,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "" } }, [
-      _vm._v("Impuesto "),
+      _vm._v("\n                  Impuesto\n                  "),
       _c("i", { staticClass: "required-entry" }, [_vm._v("*")])
     ])
   },
