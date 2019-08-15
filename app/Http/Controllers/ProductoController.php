@@ -60,14 +60,14 @@ class ProductoController extends Controller
             $productos = Producto::join('categoria','producto.idcategoria','=','categoria.id')
             ->select('producto.id','producto.idcategoria','producto.codigo','producto.nombre','categoria.nombre as nombre_categoria','producto.precio_venta','producto.stock','producto.descripcion','producto.condicion')
             //->where('producto.stock','>','0')
-            ->orderBy('producto.id', 'desc')->paginate(10);
+            ->orderBy('producto.id', 'desc')->paginate(5);
         }
         else{
             $productos = Producto::join('categoria','producto.idcategoria','=','categoria.id')
             ->select('producto.id','producto.idcategoria','producto.codigo','producto.nombre','categoria.nombre as nombre_categoria','producto.precio_venta','producto.stock','producto.descripcion','producto.condicion')
             ->where('producto.'.$criterio, 'like', '%'. $buscar . '%')
             //->where('producto.stock','>','0')
-            ->orderBy('producto.id', 'desc')->paginate(10);
+            ->orderBy('producto.id', 'desc')->paginate(5);
         }
 
         return ['productos' => $productos];

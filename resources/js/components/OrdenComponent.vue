@@ -128,17 +128,15 @@
           <div class="card-body">
             <div class="form-group row border">
               <div class="col-md-9">
-                  <div class="form-group required">
-                      <label for="">Cliente</label>
-                     
-                      <select2 :options="arrayCliente" v-model="idcliente">
-                              
+                  <div class="form-group">
+                      <label for="">Cliente <i class="required-entry">*</i></label>                     
+                      <select2 :options="arrayCliente" v-model="idcliente">                              
                       </select2>
                   </div>
               </div>
               <div class="col-md-3">
-                <div class="form-group required">
-                  <label for="">Impuesto</label>
+                <div class="form-group ">
+                  <label for="">Impuesto <i class="required-entry">*</i></label>
                   <input type="text" class="form-control" v-model="impuesto">
                 </div>
               </div>
@@ -155,7 +153,7 @@
                 <div class="form-group">
                   <label>
                     Producto
-                    <span style="color: red;">*</span>
+                    <i class="required-entry">*</i>
                   </label>
                   <div class="d-flex">
                     <input
@@ -174,7 +172,7 @@
                 <div class="form-group">
                   <label>
                     Precio
-                    <span style="color: red;">*</span>
+                    <i class="required-entry">*</i>
                   </label>
                   <input type="number" value="0" step="any" class="form-control" v-model="precio" />
                 </div>
@@ -183,7 +181,7 @@
                 <div class="form-group">
                   <label>
                     Cantidad
-                    <span style="color: red;">*</span>
+                    <i class="required-entry">*</i>
                   </label>
                   <input type="number" value="0" class="form-control" v-model="cantidad" />
                 </div>
@@ -703,7 +701,7 @@ export default {
         })
         .then(function(response) {
           me.listado = 1;
-          me.listarOrden(1, "", "fecha_hora");
+          me.listarOrden(1, "", "id");
           me.total = 0.0;
           me.idproducto = 0;
           me.producto = "";

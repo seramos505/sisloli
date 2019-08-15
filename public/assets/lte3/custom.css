@@ -36,4 +36,8 @@
   }
   .select2 {
     width: 100% !important;
-}
+  }
+  .required-entry {
+    color: #e02b27;
+    font-size: 1.2rem;
+  }

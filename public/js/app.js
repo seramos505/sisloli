@@ -3062,7 +3062,7 @@ __webpack_require__.r(__webpack_exports__);
         data: this.arrayDetalle
       }).then(function (response) {
         me.listado = 1;
-        me.listarOrden(1, "", "fecha_hora");
+        me.listarOrden(1, "", "id");
         me.total = 0.0;
         me.idproducto = 0;
         me.producto = "";
@@ -40963,9 +40963,7 @@ var render = function() {
                         "div",
                         { staticClass: "form-group" },
                         [
-                          _c("label", { attrs: { for: "" } }, [
-                            _vm._v("Cliente(*)")
-                          ]),
+                          _vm._m(2),
                           _vm._v(" "),
                           _c("select2", {
                             attrs: { options: _vm.arrayCliente },
@@ -40983,31 +40981,31 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-3" }, [
-                      _c("label", { attrs: { for: "" } }, [
-                        _vm._v("Impuesto(*)")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.impuesto,
-                            expression: "impuesto"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text" },
-                        domProps: { value: _vm.impuesto },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                      _c("div", { staticClass: "form-group " }, [
+                        _vm._m(3),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.impuesto,
+                              expression: "impuesto"
                             }
-                            _vm.impuesto = $event.target.value
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.impuesto },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.impuesto = $event.target.value
+                            }
                           }
-                        }
-                      })
+                        })
+                      ])
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-12" }, [
@@ -41044,7 +41042,7 @@ var render = function() {
                   _c("div", { staticClass: "form-group row border py-2" }, [
                     _c("div", { staticClass: "col-12 col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _vm._m(2),
+                        _vm._m(4),
                         _vm._v(" "),
                         _c("div", { staticClass: "d-flex" }, [
                           _c("input", {
@@ -41127,7 +41125,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-4 col-md-2" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _vm._m(3),
+                        _vm._m(5),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -41155,7 +41153,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-4 col-md-2" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _vm._m(4),
+                        _vm._m(6),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -41242,7 +41240,7 @@ var render = function() {
                             "table table-bordered table-striped table-sm"
                         },
                         [
-                          _vm._m(5),
+                          _vm._m(7),
                           _vm._v(" "),
                           _vm.arrayDetalle.length
                             ? _c(
@@ -41412,7 +41410,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm._m(6),
+                                      _vm._m(8),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
@@ -41435,7 +41433,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm._m(7),
+                                      _vm._m(9),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
@@ -41459,7 +41457,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm._m(8),
+                                      _vm._m(10),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
@@ -41474,7 +41472,7 @@ var render = function() {
                                 ],
                                 2
                               )
-                            : _c("tbody", [_vm._m(9)])
+                            : _c("tbody", [_vm._m(11)])
                         ]
                       )
                     ])
@@ -41525,7 +41523,7 @@ var render = function() {
                             "table table-bordered table-striped table-sm"
                         },
                         [
-                          _vm._m(10),
+                          _vm._m(12),
                           _vm._v(" "),
                           _vm.arrayDetalle.length
                             ? _c(
@@ -41576,7 +41574,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm._m(11),
+                                      _vm._m(13),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
@@ -41599,7 +41597,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm._m(12),
+                                      _vm._m(14),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v(
@@ -41622,7 +41620,7 @@ var render = function() {
                                       }
                                     },
                                     [
-                                      _vm._m(13),
+                                      _vm._m(15),
                                       _vm._v(" "),
                                       _c("td", [
                                         _vm._v("C$ " + _vm._s(_vm.total))
@@ -41632,7 +41630,7 @@ var render = function() {
                                 ],
                                 2
                               )
-                            : _c("tbody", [_vm._m(14)])
+                            : _c("tbody", [_vm._m(16)])
                         ]
                       )
                     ])
@@ -41799,7 +41797,7 @@ var render = function() {
                     "table table-bordered table-striped table-hover table-sm"
                 },
                 [
-                  _vm._m(15),
+                  _vm._m(17),
                   _vm._v(" "),
                   _c(
                     "tbody",
@@ -41918,9 +41916,27 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "" } }, [
+      _vm._v("Cliente "),
+      _c("i", { staticClass: "required-entry" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "" } }, [
+      _vm._v("Impuesto "),
+      _c("i", { staticClass: "required-entry" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("label", [
       _vm._v("\n                  Producto\n                  "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+      _c("i", { staticClass: "required-entry" }, [_vm._v("*")])
     ])
   },
   function() {
@@ -41929,7 +41945,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _vm._v("\n                  Precio\n                  "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+      _c("i", { staticClass: "required-entry" }, [_vm._v("*")])
     ])
   },
   function() {
@@ -41938,7 +41954,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", [
       _vm._v("\n                  Cantidad\n                  "),
-      _c("span", { staticStyle: { color: "red" } }, [_vm._v("*")])
+      _c("i", { staticClass: "required-entry" }, [_vm._v("*")])
     ])
   },
   function() {
