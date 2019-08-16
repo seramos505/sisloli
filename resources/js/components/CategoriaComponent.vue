@@ -167,9 +167,7 @@
                   />
                 </div>
               </div>
-              <div class="alert alert-danger alert-dismissible" v-if="errorMostrarMsjCategoria.length > 0">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <h4><i class="icon fa fa-ban"></i> El fomurlario contiene errores</h4>
+              <div class="alert alert-danger" v-if="errorMostrarMsjCategoria.length > 0">         
                 <ul>
                   <li v-for="error in errorMostrarMsjCategoria">{{ error }}</li>
                 </ul>

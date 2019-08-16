@@ -83,9 +83,6 @@ to get the desired effect
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
-
-    
-
     <!-- jQuery -->
     <script src="{{asset("assets/$theme/plugins/jquery/jquery.min.js")}}"></script>
     <!-- Bootstrap -->
@@ -98,13 +95,14 @@ to get the desired effect
     <script src="{{asset("assets/$theme/plugins/moment/moment.min.js")}}"></script>
     <script src="{{asset("assets/$theme/plugins/moment/locale/es.js")}}"></script>
     
-
-    <!-- OPTIONAL SCRIPTS -->
-    @yield("scripts")
-
     <!-- AdminLTE -->
     <script src="{{asset("assets/$theme/dist/js/adminlte.js")}}"></script>
-
+    <script src="{{asset("assets/js/scripts.js")}}"></script>
+    <!-- SCRIPTS -->
+    <script src="js/app.js"></script>
+    <!-- Select2 -->
+    <script src="{{asset("assets/$theme/plugins/select2/js/select2.full.min.js")}}"></script>
+    
     <!-- CONSULTAR TODOS LOS PERMISOS QUE TIENE EL USUARIO -->
     <script>
         @auth
@@ -114,18 +112,7 @@ to get the desired effect
             window.Permissions = [];
         @endauth
     </script>
-    
-
-
-    <script src="{{asset("assets/js/scripts.js")}}"></script>  
-      
-    <!-- SCRIPTS -->
-    <script src="js/app.js"></script>
-    <!-- Select2 -->
-    <script src="{{asset("assets/$theme/plugins/select2/js/select2.full.min.js")}}"></script>
-
-
-
-    
+    <!-- OPTIONAL SCRIPTS -->
+    @yield("scripts")
 </body>
 </html>

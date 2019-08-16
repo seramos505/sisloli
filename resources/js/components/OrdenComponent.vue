@@ -124,7 +124,7 @@
         <!--Fin Listado-->
         <!-- Detalle-->
         <template v-else-if="listado==0">
-          <div class="col-12 mb-2 alert alert-danger" v-if="errorMostrarMsjOrden.length > 0">
+          <div class="m-2 alert alert-danger" v-if="errorMostrarMsjOrden.length > 0">
             <ul>
               <li v-for="error in errorMostrarMsjOrden">{{ error }}</li>
             </ul>
@@ -638,6 +638,7 @@ export default {
           me.cantidad = 0;
           me.precio = 0;
           me.descuento = 0;
+          me.errorMostrarMsjOrden = [];
         }
       }
     },
@@ -657,6 +658,7 @@ export default {
           precio: data["precio_venta"],
           descuento: 0
         });
+        me.errorMostrarMsjOrden = [];
       }
     },
     listarProducto(buscar, criterio) {
@@ -719,6 +721,8 @@ export default {
         me.errorMostrarMsjOrden.push("Ingrese el impuesto de compra");
       if (me.arrayDetalle.length <= 0)
         me.errorMostrarMsjOrden.push("Ingrese detalles");
+
+      if (this.errorMostrarMsjOrden.length) return 1;
     },
     mostrarDetalle() {
       let me = this;

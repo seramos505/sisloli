@@ -42,11 +42,11 @@
                 @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    <div class="alert-text">
+                    <ul>
                         @foreach ($errors->all() as $error)
-                        <span>{{ $error }}</span>
+                        <li>{{ $error }}</li>
                         @endforeach
-                    </div>
+                    </ul>
                 </div>
                 @endif
                 <form action="{{route('login')}}" method="POST" autocomplete="off">
@@ -70,8 +70,8 @@
                     </div>
                     <div class="row">
                         <!-- /.col -->
-                        <div class="col-4">
-                            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                        <div class="col">
+                            <button type="submit" class="btn btn-lg btn-primary btn-block text-uppercase">Entrar</button>
                         </div>
                         <!-- /.col -->
                     </div>

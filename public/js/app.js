@@ -2044,8 +2044,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -3006,6 +3004,7 @@ __webpack_require__.r(__webpack_exports__);
           me.cantidad = 0;
           me.precio = 0;
           me.descuento = 0;
+          me.errorMostrarMsjOrden = [];
         }
       }
     },
@@ -3027,6 +3026,7 @@ __webpack_require__.r(__webpack_exports__);
           precio: data["precio_venta"],
           descuento: 0
         });
+        me.errorMostrarMsjOrden = [];
       }
     },
     listarProducto: function listarProducto(buscar, criterio) {
@@ -3072,6 +3072,7 @@ __webpack_require__.r(__webpack_exports__);
       if (me.idcliente == 0) me.errorMostrarMsjOrden.push("Seleccione un Cliente");
       if (!me.impuesto) me.errorMostrarMsjOrden.push("Ingrese el impuesto de compra");
       if (me.arrayDetalle.length <= 0) me.errorMostrarMsjOrden.push("Ingrese detalles");
+      if (this.errorMostrarMsjOrden.length) return 1;
     },
     mostrarDetalle: function mostrarDetalle() {
       var me = this;
@@ -40440,34 +40441,15 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _vm.errorMostrarMsjCategoria.length > 0
-                  ? _c(
-                      "div",
-                      { staticClass: "alert alert-danger alert-dismissible" },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "close",
-                            attrs: {
-                              type: "button",
-                              "data-dismiss": "alert",
-                              "aria-hidden": "true"
-                            }
-                          },
-                          [_vm._v("×")]
-                        ),
-                        _vm._v(" "),
-                        _vm._m(2),
-                        _vm._v(" "),
-                        _c(
-                          "ul",
-                          _vm._l(_vm.errorMostrarMsjCategoria, function(error) {
-                            return _c("li", [_vm._v(_vm._s(error))])
-                          }),
-                          0
-                        )
-                      ]
-                    )
+                  ? _c("div", { staticClass: "alert alert-danger" }, [
+                      _c(
+                        "ul",
+                        _vm._l(_vm.errorMostrarMsjCategoria, function(error) {
+                          return _c("li", [_vm._v(_vm._s(error))])
+                        }),
+                        0
+                      )
+                    ])
                   : _vm._e()
               ]
             )
@@ -40558,15 +40540,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Estado")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [
-      _c("i", { staticClass: "icon fa fa-ban" }),
-      _vm._v(" El fomurlario contiene errores")
     ])
   }
 ]
@@ -40975,19 +40948,15 @@ var render = function() {
             : _vm.listado == 0
             ? [
                 _vm.errorMostrarMsjOrden.length > 0
-                  ? _c(
-                      "div",
-                      { staticClass: "col-12 mb-2 alert alert-danger" },
-                      [
-                        _c(
-                          "ul",
-                          _vm._l(_vm.errorMostrarMsjOrden, function(error) {
-                            return _c("li", [_vm._v(_vm._s(error))])
-                          }),
-                          0
-                        )
-                      ]
-                    )
+                  ? _c("div", { staticClass: "m-2 alert alert-danger" }, [
+                      _c(
+                        "ul",
+                        _vm._l(_vm.errorMostrarMsjOrden, function(error) {
+                          return _c("li", [_vm._v(_vm._s(error))])
+                        }),
+                        0
+                      )
+                    ])
                   : _vm._e(),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-body" }, [
