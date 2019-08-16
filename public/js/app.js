@@ -2827,6 +2827,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2857,6 +2888,14 @@ __webpack_require__.r(__webpack_exports__);
       criterioA: "nombre",
       buscarA: "",
       arrayProducto: [],
+      paginationP: {
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0
+      },
       idproducto: 0,
       codigo: "",
       producto: "",
@@ -2868,6 +2907,9 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     isActived: function isActived() {
       return this.pagination.current_page;
+    },
+    isActivedP: function isActivedP() {
+      return this.paginationP.current_page;
     },
     //Calcula los elementos de la paginación
     pagesNumber: function pagesNumber() {
@@ -2885,6 +2927,32 @@ __webpack_require__.r(__webpack_exports__);
 
       if (to >= this.pagination.last_page) {
         to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+
+      return pagesArray;
+    },
+    pagesNumberP: function pagesNumberP() {
+      if (!this.paginationP.to) {
+        return [];
+      }
+
+      var from = this.paginationP.current_page - this.offset;
+
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + this.offset * 2;
+
+      if (to >= this.paginationP.last_page) {
+        to = this.paginationP.last_page;
       }
 
       var pagesArray = [];
@@ -2965,6 +3033,13 @@ __webpack_require__.r(__webpack_exports__);
 
       me.listarOrden(page, buscar, criterio);
     },
+    cambiarPaginaP: function cambiarPaginaP(page, buscar, criterio) {
+      var me = this; //Actualiza la página actual
+
+      me.paginationP.current_page = page; //Envia la petición para visualizar la data de esa página
+
+      me.listarProducto(page, buscar, criterio);
+    },
     encuentra: function encuentra(id) {
       var sw = 0;
 
@@ -3029,12 +3104,13 @@ __webpack_require__.r(__webpack_exports__);
         me.errorMostrarMsjOrden = [];
       }
     },
-    listarProducto: function listarProducto(buscar, criterio) {
+    listarProducto: function listarProducto(page, buscar, criterio) {
       var me = this;
-      var url = "producto/listarProductoOrden?buscar=" + buscar + "&criterio=" + criterio;
+      var url = "producto/listarProductoOrden?page=" + page + "&buscar=" + buscar + "&criterio=" + criterio;
       axios.get(url).then(function (response) {
         var respuesta = response.data;
         me.arrayProducto = respuesta.productos.data;
+        me.paginationP = respuesta.pagination;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3130,6 +3206,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.tituloModal = "Seleccione los productos que desee";
       $("#modalCU").modal("show");
+      this.listarProducto(1, "", "");
     },
     desactivarOrden: function desactivarOrden(id) {
       var _this = this;
@@ -40866,28 +40943,35 @@ var render = function() {
                       "ul",
                       { staticClass: "pagination" },
                       [
-                        _vm.pagination.current_page > 1
-                          ? _c("li", { staticClass: "page-item" }, [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "page-link",
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.cambiarPagina(
-                                        _vm.pagination.current_page - 1,
-                                        _vm.buscar,
-                                        _vm.criterio
-                                      )
-                                    }
+                        _c(
+                          "li",
+                          {
+                            staticClass: "page-item",
+                            class: [
+                              _vm.pagination.current_page == 1 ? "disabled" : ""
+                            ]
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.cambiarPagina(
+                                      _vm.pagination.current_page - 1,
+                                      _vm.buscar,
+                                      _vm.criterio
+                                    )
                                   }
-                                },
-                                [_vm._v("Ant")]
-                              )
-                            ])
-                          : _vm._e(),
+                                }
+                              },
+                              [_vm._v("Ant")]
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
                         _vm._l(_vm.pagesNumber, function(page) {
                           return _c(
@@ -40917,28 +41001,38 @@ var render = function() {
                           )
                         }),
                         _vm._v(" "),
-                        _vm.pagination.current_page < _vm.pagination.last_page
-                          ? _c("li", { staticClass: "page-item" }, [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "page-link",
-                                  attrs: { href: "#" },
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      return _vm.cambiarPagina(
-                                        _vm.pagination.current_page + 1,
-                                        _vm.buscar,
-                                        _vm.criterio
-                                      )
-                                    }
+                        _c(
+                          "li",
+                          {
+                            staticClass: "page-item",
+                            class: [
+                              _vm.pagination.current_page ==
+                              _vm.pagination.last_page
+                                ? "disabled"
+                                : ""
+                            ]
+                          },
+                          [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "page-link",
+                                attrs: { href: "#" },
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    return _vm.cambiarPagina(
+                                      _vm.pagination.current_page + 1,
+                                      _vm.buscar,
+                                      _vm.criterio
+                                    )
                                   }
-                                },
-                                [_vm._v("Sig")]
-                              )
-                            ])
-                          : _vm._e()
+                                }
+                              },
+                              [_vm._v("Sig")]
+                            )
+                          ]
+                        )
                       ],
                       2
                     )
@@ -41027,7 +41121,7 @@ var render = function() {
                                 expression: "codigo"
                               }
                             ],
-                            staticClass: "form-control",
+                            staticClass: "form-control mr-1",
                             attrs: {
                               type: "text",
                               placeholder: "Ingrese Codigo Producto"
@@ -41081,7 +41175,7 @@ var render = function() {
                               expression: "producto"
                             }
                           ],
-                          staticClass: "form-control",
+                          staticClass: "form-control mt-1",
                           attrs: { type: "text", readonly: "" },
                           domProps: { value: _vm.producto },
                           on: {
@@ -41753,7 +41847,7 @@ var render = function() {
                         ) {
                           return null
                         }
-                        return _vm.listarProducto(_vm.buscarA, _vm.criterioA)
+                        return _vm.listarProducto(1, _vm.buscarA, _vm.criterioA)
                       },
                       input: function($event) {
                         if ($event.target.composing) {
@@ -41771,7 +41865,11 @@ var render = function() {
                       attrs: { type: "submit" },
                       on: {
                         click: function($event) {
-                          return _vm.listarProducto(_vm.buscarA, _vm.criterioA)
+                          return _vm.listarProducto(
+                            1,
+                            _vm.buscarA,
+                            _vm.criterioA
+                          )
                         }
                       }
                     },
@@ -41852,6 +41950,106 @@ var render = function() {
                     0
                   )
                 ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("nav", [
+              _c(
+                "ul",
+                { staticClass: "pagination" },
+                [
+                  _c(
+                    "li",
+                    {
+                      staticClass: "page-item",
+                      class: [
+                        _vm.paginationP.current_page == 1 ? "disabled" : ""
+                      ]
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "page-link",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.cambiarPaginaP(
+                                _vm.paginationP.current_page - 1,
+                                _vm.buscar,
+                                _vm.criterio
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Ant")]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.pagesNumberP, function(page) {
+                    return _c(
+                      "li",
+                      {
+                        key: page,
+                        staticClass: "page-item",
+                        class: [page == _vm.isActivedP ? "active" : ""]
+                      },
+                      [
+                        _c("a", {
+                          staticClass: "page-link",
+                          attrs: { href: "#" },
+                          domProps: { textContent: _vm._s(page) },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.cambiarPaginaP(
+                                page,
+                                _vm.buscar,
+                                _vm.criterio
+                              )
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      staticClass: "page-item",
+                      class: [
+                        _vm.paginationP.current_page ==
+                        _vm.paginationP.last_page
+                          ? "disabled"
+                          : ""
+                      ]
+                    },
+                    [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "page-link",
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.cambiarPaginaP(
+                                _vm.paginationP.current_page + 1,
+                                _vm.buscar,
+                                _vm.criterio
+                              )
+                            }
+                          }
+                        },
+                        [_vm._v("Sig")]
+                      )
+                    ]
+                  )
+                ],
+                2
               )
             ])
           ]),

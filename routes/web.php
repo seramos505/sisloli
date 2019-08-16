@@ -24,6 +24,9 @@ Route::group(['middleware'=>['auth']],function(){
 
     Route::post('seguridad/logout', 'Seguridad\LoginController@logout')->name('logout');
 
+    Route::get('/dashboard', function () { return view('admin.dashboard'); })->name('dashboard');
+
+
     Route::get('/categoria', function () { return view('admin.categoria'); })->name('categoria');
     Route::get('/categoria/listar', 'CategoriaController@listar');
     Route::post('/categoria/registrar', 'CategoriaController@store');

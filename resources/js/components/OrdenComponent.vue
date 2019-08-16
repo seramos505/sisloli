@@ -88,37 +88,37 @@
                 </tbody>
               </table>
             </div>
-            <nav>
-              <ul class="pagination">
-                <li class="page-item" v-if="pagination.current_page > 1">
-                  <a
-                    class="page-link"
-                    href="#"
-                    @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)"
-                  >Ant</a>
-                </li>
-                <li
-                  class="page-item"
-                  v-for="page in pagesNumber"
-                  :key="page"
-                  :class="[page == isActived ? 'active' : '']"
-                >
-                  <a
-                    class="page-link"
-                    href="#"
-                    @click.prevent="cambiarPagina(page,buscar,criterio)"
-                    v-text="page"
-                  ></a>
-                </li>
-                <li class="page-item" v-if="pagination.current_page < pagination.last_page">
-                  <a
-                    class="page-link"
-                    href="#"
-                    @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)"
-                  >Sig</a>
-                </li>
-              </ul>
-            </nav>
+         <nav>
+            <ul class="pagination">
+              <li class="page-item" :class="[pagination.current_page == 1 ? 'disabled' : '']">
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="cambiarPagina(pagination.current_page - 1,buscar,criterio)"
+                >Ant</a>
+              </li>
+              <li
+                class="page-item"
+                v-for="page in pagesNumber"
+                :key="page"
+                :class="[page == isActived ? 'active' : '']"
+              >
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="cambiarPagina(page,buscar,criterio)"
+                  v-text="page"
+                ></a>
+              </li>
+              <li class="page-item" :class="[pagination.current_page == pagination.last_page ? 'disabled' : '']">
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="cambiarPagina(pagination.current_page + 1,buscar,criterio)"
+                >Sig</a>
+              </li>
+            </ul>
+          </nav>
           </div>
         </template>
         <!--Fin Listado-->
@@ -148,8 +148,7 @@
                   </label>
                   <input type="text" class="form-control" v-model="impuesto" />
                 </div>
-              </div>             
-              
+              </div>
             </div>
             <div class="form-group row border py-2">
               <div class="col-12 col-md-4">
@@ -161,14 +160,14 @@
                   <div class="d-flex">
                     <input
                       type="text"
-                      class="form-control"
+                      class="form-control mr-1"
                       v-model="codigo"
                       @keyup.enter="buscarProducto()"
                       placeholder="Ingrese Codigo Producto"
                     />
                     <button @click="abrirModal()" class="btn btn-primary">...</button>
                   </div>
-                  <input type="text" readonly class="form-control" v-model="producto" />
+                  <input type="text" readonly class="form-control mt-1" v-model="producto" />
                 </div>
               </div>
               <div class="col-4 col-md-2">
@@ -379,13 +378,13 @@
                   <input
                     type="text"
                     v-model="buscarA"
-                    @keyup.enter="listarProducto(buscarA,criterioA)"
+                    @keyup.enter="listarProducto(1,buscarA,criterioA)"
                     class="form-control"
                     placeholder="Texto a buscar"
                   />
                   <button
                     type="submit"
-                    @click="listarProducto(buscarA,criterioA)"
+                    @click="listarProducto(1,buscarA,criterioA)"
                     class="btn btn-primary"
                   >
                     <i class="fas fa-search"></i> Buscar
@@ -430,6 +429,38 @@
                 </tbody>
               </table>
             </div>
+
+            <nav>
+            <ul class="pagination">
+              <li class="page-item" :class="[paginationP.current_page == 1 ? 'disabled' : '']">
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="cambiarPaginaP(paginationP.current_page - 1,buscar,criterio)"
+                >Ant</a>
+              </li>
+              <li
+                class="page-item"
+                v-for="page in pagesNumberP"
+                :key="page"
+                :class="[page == isActivedP ? 'active' : '']"
+              >
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="cambiarPaginaP(page,buscar,criterio)"
+                  v-text="page"
+                ></a>
+              </li>
+              <li class="page-item" :class="[paginationP.current_page == paginationP.last_page ? 'disabled' : '']">
+                <a
+                  class="page-link"
+                  href="#"
+                  @click.prevent="cambiarPaginaP(paginationP.current_page + 1,buscar,criterio)"
+                >Sig</a>
+              </li>
+            </ul>
+          </nav>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-info" @click="cerrarModal()">
@@ -476,6 +507,14 @@ export default {
       criterioA: "nombre",
       buscarA: "",
       arrayProducto: [],
+      paginationP: {
+        total: 0,
+        current_page: 0,
+        per_page: 0,
+        last_page: 0,
+        from: 0,
+        to: 0
+      },
       idproducto: 0,
       codigo: "",
       producto: "",
@@ -488,6 +527,10 @@ export default {
   computed: {
     isActived: function() {
       return this.pagination.current_page;
+    },
+
+    isActivedP: function() {
+      return this.paginationP.current_page;
     },
 
     //Calcula los elementos de la paginación
@@ -504,6 +547,29 @@ export default {
       var to = from + this.offset * 2;
       if (to >= this.pagination.last_page) {
         to = this.pagination.last_page;
+      }
+
+      var pagesArray = [];
+      while (from <= to) {
+        pagesArray.push(from);
+        from++;
+      }
+      return pagesArray;
+    },
+
+    pagesNumberP: function() {
+      if (!this.paginationP.to) {
+        return [];
+      }
+
+      var from = this.paginationP.current_page - this.offset;
+      if (from < 1) {
+        from = 1;
+      }
+
+      var to = from + this.offset * 2;
+      if (to >= this.paginationP.last_page) {
+        to = this.paginationP.last_page;
       }
 
       var pagesArray = [];
@@ -601,6 +667,13 @@ export default {
       //Envia la petición para visualizar la data de esa página
       me.listarOrden(page, buscar, criterio);
     },
+    cambiarPaginaP(page, buscar, criterio) {
+      let me = this;
+      //Actualiza la página actual
+      me.paginationP.current_page = page;
+      //Envia la petición para visualizar la data de esa página
+      me.listarProducto(page, buscar, criterio);
+    },
     encuentra(id) {
       var sw = 0;
       for (var i = 0; i < this.arrayDetalle.length; i++) {
@@ -661,10 +734,12 @@ export default {
         me.errorMostrarMsjOrden = [];
       }
     },
-    listarProducto(buscar, criterio) {
+    listarProducto(page, buscar, criterio) {
       let me = this;
       var url =
-        "producto/listarProductoOrden?buscar=" +
+        "producto/listarProductoOrden?page=" +
+        page +
+        "&buscar=" +
         buscar +
         "&criterio=" +
         criterio;
@@ -673,6 +748,7 @@ export default {
         .then(function(response) {
           var respuesta = response.data;
           me.arrayProducto = respuesta.productos.data;
+          me.paginationP = respuesta.pagination;
         })
         .catch(function(error) {
           console.log(error);
@@ -790,6 +866,7 @@ export default {
       //this.modal = 1;
       this.tituloModal = "Seleccione los productos que desee";
       $("#modalCU").modal("show");
+      this.listarProducto(1, "", "");
     },
 
     desactivarOrden(id) {

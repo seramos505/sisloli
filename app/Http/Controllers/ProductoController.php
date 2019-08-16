@@ -51,7 +51,7 @@ class ProductoController extends Controller
 
     public function listarProductoOrden(Request $request)
     {
-        if (!$request->ajax()) return redirect('/');
+        //if (!$request->ajax()) return redirect('/');
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;
@@ -70,7 +70,18 @@ class ProductoController extends Controller
             ->orderBy('producto.id', 'desc')->paginate(5);
         }
 
-        return ['productos' => $productos];
+        return [
+            'pagination' => [
+                'total'        => $productos->total(),
+                'current_page' => $productos->currentPage(),
+                'per_page'     => $productos->perPage(),
+                'last_page'    => $productos->lastPage(),
+                'from'         => $productos->firstItem(),
+                'to'           => $productos->lastItem(),
+            ],
+            'productos' => $productos
+        ];
+        //return ['productos' => $productos];
     }
     public function buscarProductoOrden(Request $request ){
         if (!$request->ajax()) return redirect('/');
