@@ -41,3 +41,8 @@
     color: #e02b27;
     font-size: 1.2rem;
   }
+  .btn-login {
+    color: #ffffff;
+    background-color: #e83e8c;
+    border-color: #b52265;
+  }

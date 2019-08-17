@@ -17,12 +17,7 @@
     <!-- Theme style -->
     <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.css")}}">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
+    <link rel="stylesheet" href="{{asset("assets/$theme/custom.css")}}">
 
     <!-- Google Font -->
     <link rel="stylesheet"
@@ -49,7 +44,7 @@
                     </ul>
                 </div>
                 @endif
-                <form action="{{route('login')}}" method="POST" autocomplete="off">
+                <form action="{{route('login-post')}}" method="POST" autocomplete="off">
                     @csrf
                     <div class="input-group mb-3">
                         <input type="email" name="email" class="form-control" value="{{old('email')}}"
@@ -71,7 +66,7 @@
                     <div class="row">
                         <!-- /.col -->
                         <div class="col">
-                            <button type="submit" class="btn btn-lg btn-primary btn-block text-uppercase">Entrar</button>
+                            <button type="submit" class="btn btn-lg btn-primary btn-block text-uppercase btn-login">Entrar</button>
                         </div>
                         <!-- /.col -->
                     </div>

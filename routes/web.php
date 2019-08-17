@@ -17,8 +17,9 @@
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/', 'Seguridad\LoginController@index')->name('login');
-    Route::post('seguridad/login', 'Seguridad\LoginController@login')->name('login');   
+    Route::post('seguridad/login', 'Seguridad\LoginController@login')->name('login-post');        
 });
+ 
 
 Route::group(['middleware'=>['auth']],function(){
 

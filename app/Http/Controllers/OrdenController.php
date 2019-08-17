@@ -25,19 +25,21 @@ class OrdenController extends Controller
          
         if ($buscar==''){
             $ordenes = Orden::join('users','orden.idusuario','=','users.id')
+            ->join('cliente','orden.idcliente','=','cliente.id')
             ->join('orden_detalle','orden.id','=','orden_detalle.idorden')
-            ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name',
+            ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name as user','cliente.nombre as cliente',
             DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total'))
             ->groupBy('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name')
             ->orderBy('orden.id', 'desc')->paginate(5);
         }
         else{
             $ordenes = Orden::join('users','orden.idusuario','=','users.id')
+            ->join('cliente','orden.idcliente','=','cliente.id')
             ->join('orden_detalle','orden.id','=','orden_detalle.idorden')
-            ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name',
+            ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name as user','cliente.nombre as cliente',
             DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total'))
             ->groupBy('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name')
-            ->where('orden.'.$criterio, 'like', '%'. $buscar . '%')
+            ->where($criterio, 'like', '%'. $buscar . '%')
             ->orderBy('orden.id', 'desc')->paginate(5);
         }
          

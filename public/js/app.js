@@ -2132,7 +2132,7 @@ __webpack_require__.r(__webpack_exports__);
         descripcion: this.descripcion
       }).then(function (response) {
         me.cerrarModal();
-        me.listarCategoria(1, "", "nombre");
+        me.listarCategoria(me.pagination.current_page, "", "nombre");
         var Toast = Swal.mixin({
           toast: true,
           position: "top-end",
@@ -2218,7 +2218,7 @@ __webpack_require__.r(__webpack_exports__);
           axios.put("categoria/desactivar", {
             id: id
           }).then(function (response) {
-            me.listarCategoria(1, "", "nombre");
+            me.listarCategoria(me.pagination.current_page, "", "nombre");
             Swal.fire("Desactivado!", "El registro ha sido desactivado con éxito.", "success");
           })["catch"](function (error) {
             console.log(error);
@@ -2249,7 +2249,7 @@ __webpack_require__.r(__webpack_exports__);
           axios.put("categoria/activar", {
             id: id
           }).then(function (response) {
-            me.listarCategoria(1, "", "nombre");
+            me.listarCategoria(me.pagination.current_page, "", "nombre");
             Swal.fire("Activado!", "El registro ha sido activado con éxito.", "success");
           })["catch"](function (error) {
             console.log(error);
@@ -2380,6 +2380,18 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3128,7 +3140,7 @@ __webpack_require__.r(__webpack_exports__);
         data: this.arrayDetalle
       }).then(function (response) {
         me.listado = 1;
-        me.listarOrden(1, "", "id");
+        me.listarOrden(me.pagination.current_page, "", "id");
         me.total = 0.0;
         me.idproducto = 0;
         me.producto = "";
@@ -3136,7 +3148,17 @@ __webpack_require__.r(__webpack_exports__);
         me.precio = 0;
         me.codigo = "";
         me.descuento = 0;
-        me.arrayDetalle = []; //window.open("orden/pdf/" + response.data.id);
+        me.arrayDetalle = [];
+        var Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 3000
+        });
+        Toast.fire({
+          type: "success",
+          title: "Orden Realizada con Exito"
+        }); //window.open("orden/pdf/" + response.data.id);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -3220,7 +3242,7 @@ __webpack_require__.r(__webpack_exports__);
         confirmButtonText: "Aceptar!",
         cancelButtonText: "Cancelar",
         confirmButtonClass: "btn btn-success",
-        cancelButtonClass: "btn btn-danger",
+        cancelButtonClass: "btn btn-danger  mr-3",
         buttonsStyling: false,
         reverseButtons: true
       }).then(function (result) {
@@ -3229,7 +3251,7 @@ __webpack_require__.r(__webpack_exports__);
           axios.put("orden/desactivar", {
             id: id
           }).then(function (response) {
-            me.listarOrden(1, "", "fecha_hora");
+            me.listarOrden(me.pagination.current_page, "", "fecha_hora");
             Swal.fire("Anulado!", "La orden ha sido anulado con éxito.", "success");
           })["catch"](function (error) {
             console.log(error);
@@ -40759,9 +40781,15 @@ var render = function() {
                             }
                           },
                           [
-                            _c("option", { attrs: { value: "id" } }, [
+                            _c("option", { attrs: { value: "orden.id" } }, [
                               _vm._v("id")
-                            ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "option",
+                              { attrs: { value: "cliente.nombre" } },
+                              [_vm._v("cliente")]
+                            )
                           ]
                         ),
                         _vm._v(" "),
@@ -40912,7 +40940,15 @@ var render = function() {
                               ),
                               _vm._v(" "),
                               _c("td", {
-                                domProps: { textContent: _vm._s(orden.name) }
+                                domProps: { textContent: _vm._s(orden.id) }
+                              }),
+                              _vm._v(" "),
+                              _c("td", {
+                                domProps: { textContent: _vm._s(orden.user) }
+                              }),
+                              _vm._v(" "),
+                              _c("td", {
+                                domProps: { textContent: _vm._s(orden.cliente) }
                               }),
                               _vm._v(" "),
                               _c("td", {
@@ -40927,9 +40963,23 @@ var render = function() {
                                 domProps: { textContent: _vm._s(orden.total) }
                               }),
                               _vm._v(" "),
-                              _c("td", {
-                                domProps: { textContent: _vm._s(orden.estado) }
-                              })
+                              _c("td", [
+                                orden.estado == "Registrado"
+                                  ? _c("div", [
+                                      _c(
+                                        "span",
+                                        { staticClass: "badge badge-success" },
+                                        [_vm._v(_vm._s(orden.estado))]
+                                      )
+                                    ])
+                                  : _c("div", [
+                                      _c(
+                                        "span",
+                                        { staticClass: "badge badge-danger" },
+                                        [_vm._v(_vm._s(orden.estado))]
+                                      )
+                                    ])
+                              ])
                             ])
                           }),
                           0
@@ -41582,7 +41632,7 @@ var render = function() {
             ? [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group row border" }, [
-                    _c("div", { staticClass: "col-md-9" }, [
+                    _c("div", { staticClass: "col-6 col-md-9" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "" } }, [
                           _vm._v("Cliente")
@@ -41594,7 +41644,7 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col-md-3" }, [
+                    _c("div", { staticClass: "col-6 col-md-3" }, [
                       _c("label", { attrs: { for: "" } }, [_vm._v("Impuesto")]),
                       _vm._v(" "),
                       _c("p", {
@@ -42095,7 +42145,11 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { colspan: "3" } }, [_vm._v("Opciones")]),
         _vm._v(" "),
+        _c("th", [_vm._v("ID")]),
+        _vm._v(" "),
         _c("th", [_vm._v("Usuario")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Cliente")]),
         _vm._v(" "),
         _c("th", [_vm._v("Fecha Hora")]),
         _vm._v(" "),

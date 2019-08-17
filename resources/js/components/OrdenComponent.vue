@@ -23,7 +23,8 @@
               <div class="col-md-6">
                 <div class="input-group">
                   <select class="form-control col-md-3" v-model="criterio">
-                    <option value="id">id</option>
+                    <option value="orden.id">id</option>
+                    <option value="cliente.nombre">cliente</option>
                   </select>
                   <input
                     type="text"
@@ -47,7 +48,9 @@
                 <thead class="thead-dark">
                   <tr>
                     <th colspan="3">Opciones</th>
-                    <th>Usuario</th>
+                    <th>ID</th>
+                    <th>Usuario</th>                    
+                    <th>Cliente</th>
                     <th>Fecha Hora</th>
                     <th>Total</th>
                     <th>Estado</th>
@@ -75,15 +78,24 @@
                           type="button"
                           class="btn btn-danger btn-sm"
                           @click="desactivarOrden(orden.id)"
-                        >
+                        > 
                           <i class="fas fa-trash-alt"></i>
                         </button>
                       </template>
                     </td>
-                    <td v-text="orden.name"></td>
+                    <td v-text="orden.id"></td>
+                    <td v-text="orden.user"></td>
+                    <td v-text="orden.cliente"></td>
                     <td v-text="fecha(orden.fecha_hora)"></td>
-                    <td v-text="orden.total"></td>
-                    <td v-text="orden.estado"></td>
+                    <td v-text="orden.total"></td>                    
+                    <td>
+                    <div v-if="orden.estado=='Registrado'">
+                      <span class="badge badge-success">{{orden.estado}}</span>
+                    </div>
+                    <div v-else>
+                      <span class="badge badge-danger">{{orden.estado}}</span>
+                    </div>
+                  </td>
                   </tr>
                 </tbody>
               </table>
@@ -287,13 +299,13 @@
         <template v-else-if="listado==2">
           <div class="card-body">
             <div class="form-group row border">
-              <div class="col-md-9">
+              <div class="col-6 col-md-9">
                 <div class="form-group">
                   <label for>Cliente</label>
                   <p v-text="cliente"></p>
                 </div>
               </div>
-              <div class="col-md-3">
+              <div class="col-6 col-md-3">
                 <label for>Impuesto</label>
                 <p v-text="impuesto"></p>
               </div>
@@ -758,9 +770,7 @@ export default {
       if (this.validarOrden()) {
         return;
       }
-
       let me = this;
-
       axios
         .post("orden/registrar", {
           idcliente: this.idcliente,
@@ -770,7 +780,7 @@ export default {
         })
         .then(function(response) {
           me.listado = 1;
-          me.listarOrden(1, "", "id");
+          me.listarOrden(me.pagination.current_page, "", "id");
           me.total = 0.0;
           me.idproducto = 0;
           me.producto = "";
@@ -779,6 +789,16 @@ export default {
           me.codigo = "";
           me.descuento = 0;
           me.arrayDetalle = [];
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000
+          });
+          Toast.fire({
+            type: "success",
+            title: "Orden Realizada con Exito"
+          });
           //window.open("orden/pdf/" + response.data.id);
         })
         .catch(function(error) {
@@ -879,9 +899,10 @@ export default {
         confirmButtonText: "Aceptar!",
         cancelButtonText: "Cancelar",
         confirmButtonClass: "btn btn-success",
-        cancelButtonClass: "btn btn-danger",
+        cancelButtonClass: "btn btn-danger  mr-3",
         buttonsStyling: false,
         reverseButtons: true
+      
       }).then(result => {
         if (result.value) {
           let me = this;
@@ -891,7 +912,7 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarOrden(1, "", "fecha_hora");
+              me.listarOrden(me.pagination.current_page, "", "fecha_hora");
               Swal.fire(
                 "Anulado!",
                 "La orden ha sido anulado con éxito.",
