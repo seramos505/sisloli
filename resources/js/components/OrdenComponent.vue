@@ -448,7 +448,7 @@
                 <a
                   class="page-link"
                   href="#"
-                  @click.prevent="cambiarPaginaP(paginationP.current_page - 1,buscar,criterio)"
+                  @click.prevent="cambiarPaginaP(paginationP.current_page - 1,buscarA,criterioA)"
                 >Ant</a>
               </li>
               <li
@@ -460,7 +460,7 @@
                 <a
                   class="page-link"
                   href="#"
-                  @click.prevent="cambiarPaginaP(page,buscar,criterio)"
+                  @click.prevent="cambiarPaginaP(page,buscarA,criterioA)"
                   v-text="page"
                 ></a>
               </li>
@@ -468,7 +468,7 @@
                 <a
                   class="page-link"
                   href="#"
-                  @click.prevent="cambiarPaginaP(paginationP.current_page + 1,buscar,criterio)"
+                  @click.prevent="cambiarPaginaP(paginationP.current_page + 1,buscarA,criterioA)"
                 >Sig</a>
               </li>
             </ul>
@@ -514,7 +514,7 @@ export default {
         to: 0
       },
       offset: 3,
-      criterio: "id",
+      criterio: "orden.id",
       buscar: "",
       criterioA: "nombre",
       buscarA: "",

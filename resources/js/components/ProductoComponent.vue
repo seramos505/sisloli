@@ -110,7 +110,8 @@
               </tbody>
             </table>
           </div>
-          <nav>
+          <pagination :pagination="pagination" :cambiarPagina="cambiarPagina" :buscar="buscar" :criterio="criterio"></pagination>
+          <!-- <nav>
             <ul class="pagination">
               <li class="page-item" :class="[pagination.current_page == 1 ? 'disabled' : '']">
                 <a
@@ -140,7 +141,7 @@
                 >Sig</a>
               </li>
             </ul>
-          </nav>
+          </nav> -->
         </div>
       </div>
       <!-- Fin ejemplo de tabla Listado -->

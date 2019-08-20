@@ -15,16 +15,16 @@ class SaborController extends Controller
      */
     public function listar(Request $request)
     {
-        if (!$request->ajax()) return redirect('/');
+        //if (!$request->ajax()) return redirect('/');
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;
         
         if ($buscar==''){
-            $sabores = Sabor::orderBy('id', 'desc')->paginate(15);
+            $sabores = Sabor::orderBy('id', 'desc')->paginate(1);
         }
         else{
-            $sabores = Sabor::where($criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'desc')->paginate(15);
+            $sabores = Sabor::where($criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'desc')->paginate(1);
         }
         
 

@@ -98,6 +98,7 @@
               </tbody>
             </table>
           </div>
+          <pagination></pagination>
           <nav>
             <ul class="pagination">
               <li class="page-item" v-if="pagination.current_page > 1">

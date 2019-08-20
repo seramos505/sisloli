@@ -55,14 +55,8 @@ to get the desired effect
                 <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Catalogo</h1>
-                    </div><!-- /.col -->
-                    <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-                        <li class="breadcrumb-item active">Dashboard v3</li>
-                    </ol>
-                    </div><!-- /.col -->
+                    <h1 class="m-0 text-dark">@yield('header')</h1>
+                    </div><!-- /.col -->                    
                 </div><!-- /.row -->
                 </div><!-- /.container-fluid -->
             </div>
@@ -98,11 +92,7 @@ to get the desired effect
     <!-- AdminLTE -->
     <script src="{{asset("assets/$theme/dist/js/adminlte.js")}}"></script>
     <script src="{{asset("assets/js/scripts.js")}}"></script>
-    <!-- SCRIPTS -->
-    <script src="js/app.js"></script>
-    <!-- Select2 -->
-    <script src="{{asset("assets/$theme/plugins/select2/js/select2.full.min.js")}}"></script>
-    
+
     <!-- CONSULTAR TODOS LOS PERMISOS QUE TIENE EL USUARIO -->
     <script>
         @auth
@@ -113,6 +103,14 @@ to get the desired effect
         @endauth
     </script>
     <!-- OPTIONAL SCRIPTS -->
+
+
+    <!-- SCRIPTS -->
+    <script src="js/app.js"></script>
+    <!-- Select2 -->
+    <script src="{{asset("assets/$theme/plugins/select2/js/select2.full.min.js")}}"></script>
+    
+
     @yield("scripts")
 </body>
 </html>
