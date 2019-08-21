@@ -66,7 +66,7 @@
                     <div class="row">
                         <!-- /.col -->
                         <div class="col">
-                            <button type="submit" class="btn btn-lg btn-primary btn-block text-uppercase btn-login">Entrar</button>
+                            <button type="submit" class="btn btn-lg btn-primary btn-block text-uppercase btn-login"><i class="fas fa-sign-in-alt"></i> Entrar</button>
                         </div>
                         <!-- /.col -->
                     </div>
