@@ -9,34 +9,9 @@
                with font-awesome or any other icon font library -->
        
         
-        <li v-for="item in arrayMenu" :key="item">
-         
-          <template v-if="item.submenu != []">{{item.nombre}}</template>
-          
-        </li>  
-
-
-        <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Catalago
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                  <router-link class="nav-link" :to="{name: 'categoria'}"><i class="far fa-circle nav-icon"></i> Categoria</router-link>
-                
-              </li>
-              <li class="nav-item">
-                  <router-link  class="nav-link" :to="{name: 'producto'}"><i class="far fa-circle nav-icon"></i> Producto</router-link>
-               
-              </li>
-              
-            </ul>
-          </li>
-
+        <template v-for="(item) in arrayMenu">          
+            <itemmenu :item="item" :key="item.id"></itemmenu>             
+        </template> 
 
       </ul>
     </nav>
@@ -57,7 +32,7 @@ export default {
  
  methods:{
    MostrarMenu(item){     
-     return "<li>" + item.nombre + "</li>"
+     return  item.nombre 
    },
     listarMenu(front) {
       let me = this;
