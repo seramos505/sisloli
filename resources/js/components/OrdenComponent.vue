@@ -721,7 +721,7 @@ export default {
         })
         .then(function(response) {
           me.listado = 1;
-          me.listarOrden(me.pagination.current_page, "", "id");
+          me.listarOrden(me.pagination.current_page, me.buscar, me.criterio);
           me.total = 0.0;
           me.idproducto = 0;
           me.producto = "";

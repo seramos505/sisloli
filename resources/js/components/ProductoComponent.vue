@@ -360,7 +360,7 @@ export default {
         })
         .then(function(response) {
           me.cerrarModal();
-          me.listarproducto(me.pagination.current_page, "", "nombre");
+          me.listarproducto(me.pagination.current_page, me.buscar, me.criterio);
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -395,7 +395,7 @@ export default {
         })
         .then(function(response) {
           me.cerrarModal();
-          me.listarproducto(me.pagination.current_page, "", "nombre");
+          me.listarproducto(me.pagination.current_page, me.buscar, me.criterio);
           
           const Toast = Swal.mixin({
             toast: true,
@@ -435,7 +435,7 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarproducto(me.pagination.current_page, "", "nombre");
+              me.listarproducto(me.pagination.current_page, me.buscar, me.criterio);
               Swal.fire(
                 "Desactivado!",
                 "El registro ha sido desactivado con éxito.",
@@ -475,7 +475,7 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarproducto(me.pagination.current_page, "", "nombre");
+              me.listarproducto(me.pagination.current_page, me.buscar, me.criterio);
               Swal.fire(
                 "Activado!",
                 "El registro ha sido activado con éxito.",

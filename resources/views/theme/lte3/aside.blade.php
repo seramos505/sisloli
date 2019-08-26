@@ -1,4 +1,6 @@
 <!-- Main Sidebar Container -->
+{{-- {{dd($menusComposer)}} --}}
+
 <aside class="main-sidebar elevation-4 sidebar-dark-info" style="background-color: #1f2d3d;">
   <!-- Brand Logo -->
   <a href="index3.html" class="brand-link navbar-info pl-1">
@@ -30,8 +32,10 @@
       </div>
     @endauth
     <!-- Sidebar Menu -->
+    @yield('menu')
     <nav class="mt-2">
-      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        
+      {{-- <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         @foreach ($menusComposer as $key => $item)
@@ -52,7 +56,7 @@
         </li>
 
 
-      </ul>
+      </ul> --}}
     </nav>
     <!-- /.sidebar-menu -->
   </div>
