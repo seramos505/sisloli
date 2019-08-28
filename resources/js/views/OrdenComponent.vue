@@ -1,5 +1,16 @@
 <template>
   <main class="main">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Ventas</h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
@@ -254,7 +265,7 @@
             </div>
             <div class="form-group row">
               <div class="col-md-12">
-                <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
+                <button type="button" @click="ocultarDetalle()" class="btn btn-danger">Cancelar Orden</button>
                 <button
                   type="button"
                   class="btn btn-primary"

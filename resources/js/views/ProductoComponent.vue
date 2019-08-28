@@ -116,7 +116,7 @@
       <!-- Fin ejemplo de tabla Listado -->
     </div>
     <!--Inicio del modal agregar/actualizar-->
-    <div class="modal fade" :class="{'show mostrar' : modal}">
+    <div class="modal fade"  id="modalCU">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -127,8 +127,8 @@
           </div>
           <div class="modal-body">
             <form action method="post" enctype="multipart/form-data" class="form-horizontal">
-              <div class="form-group row required">
-                <label class="col-md-3 form-control-label" for="text-input">Categoría</label>
+              <div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Categoría <i class="required-entry">*</i></label>
                 <div class="col-md-9">
                   <select class="form-control" v-model="idcategoria">
                     <option value="0" disabled>Seleccione la Categoría</option>
@@ -141,8 +141,8 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group row required">
-                <label class="col-md-3 form-control-label" for="text-input">Tamaño</label>
+              <div class="form-group row ">
+                <label class="col-md-3 form-control-label" for="text-input">Tamaño <i class="required-entry">*</i></label>
                 <div class="col-md-9">
                   <select class="form-control" v-model="idtamano">
                     <option value="0" disabled>Seleccione el Tamaño</option>
@@ -155,8 +155,8 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group row required">
-                <label class="col-md-3 form-control-label" for="text-input">Sabor</label>
+              <div class="form-group row ">
+                <label class="col-md-3 form-control-label" for="text-input">Sabor <i class="required-entry">*</i></label>
                 <div class="col-md-9">
                   <select class="form-control" v-model="idsabor">
                     <option value="0" disabled>Seleccione el Sabor</option>
@@ -169,8 +169,8 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group row required">
-                <label class="col-md-3 control-label" for="text-input">Nombre:</label>
+              <div class="form-group row ">
+                <label class="col-md-3 control-label" for="text-input">Nombre: <i class="required-entry">*</i></label>
                 <div class="col-md-9">
                   <input
                     type="text"
@@ -180,8 +180,8 @@
                   />
                 </div>
               </div>
-              <div class="form-group row required">
-                <label class="col-md-3 form-control-label" for="text-input">Precio Venta</label>
+              <div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">Precio Venta <i class="required-entry">*</i></label>
                 <div class="col-md-9">
                   <input type="number" v-model="precio_venta" class="form-control" placeholder />
                 </div>
@@ -515,8 +515,7 @@ export default {
 
       return this.errorProducto;
     },
-    cerrarModal() {
-      this.modal = 0;
+    cerrarModal() {      
       this.tituloModal = "";
       this.idcategoria = 0;
       this.nombre_categoria = "";
@@ -529,40 +528,39 @@ export default {
       this.descripcion = "";
       this.errorProducto = 0;
       this.errorMostrarMsjProducto = [];
+      $("#modalCU").modal("hide");
     },
     abrirModal(modelo, accion, data = []) {
       switch (modelo) {
         case "producto": {
           switch (accion) {
-            case "registrar": {
-              this.modal = 1;
+            case "registrar": {              
               this.tituloModal = "Registrar Producto";
               this.idcategoria=0;
-            this.nombre_categoria='';
-            this.idtamano=0;
-            this.nombre_tamano='';
-            this.idsabor=0;
-            this.nombre_sabor='';
-            this.nombre= '';
-            this.precio_venta=0;
-            this.descripcion = '';
+              this.nombre_categoria='';
+              this.idtamano=0;
+              this.nombre_tamano='';
+              this.idsabor=0;
+              this.nombre_sabor='';
+              this.nombre= '';
+              this.precio_venta=0;
+              this.descripcion = '';
               this.tipoAccion = 1;
+              $("#modalCU").modal("show");
               break;
             }
             case "actualizar": {
-              //console.log(data);
-              this.modal = 1;
+              //console.log(data);            
               this.tituloModal = "Actualizar Producto";
               this.tipoAccion = 2;
               this.producto_id = data["id"];
-                                this.idcategoria=data['idcategoria'];
-                                                                this.idtamano=data['idtamano'];
-
-                                this.idsabor=data['idsabor'];
-
-                                this.nombre = data['nombre'];
-                                this.precio_venta=data['precio_venta'];
-                                this.descripcion= data['descripcion'];
+              this.idcategoria=data['idcategoria'];
+              this.idtamano=data['idtamano'];
+              this.idsabor=data['idsabor'];
+              this.nombre = data['nombre'];
+              this.precio_venta=data['precio_venta'];
+              this.descripcion= data['descripcion'];
+              $("#modalCU").modal("show");
               break;
             }
           }

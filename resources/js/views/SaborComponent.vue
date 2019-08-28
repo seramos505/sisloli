@@ -104,7 +104,7 @@
       <!-- Fin ejemplo de tabla Listado -->
     </div>
     <!--Inicio del modal agregar/actualizar-->
-    <div class="modal fade" :class="{'show mostrar' : modal}">
+    <div class="modal fade" id="modalCU">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -115,8 +115,8 @@
           </div>
           <div class="modal-body">
             <form action method="post" enctype="multipart/form-data" class="form-horizontal">
-              <div class="form-group row required">
-                <label class="col-md-3 control-label" for="text-input">Nombre:</label>
+              <div class="form-group row ">
+                <label class="col-md-3 control-label" for="text-input">Nombre: <i class="required-entry">*</i></label>
                 <div class="col-md-9">
                   <input
                     type="text"
@@ -376,34 +376,34 @@ export default {
 
       return this.errorSabor;
     },
-    cerrarModal() {
-      this.modal = 0;
+    cerrarModal() {      
       this.tituloModal = "";
       this.nombre = "";
       this.descripcion = "";
       this.errorSabor = 0;
       this.errorMostrarMsjSabor = [];
+      $("#modalCU").modal("hide");
     },
     abrirModal(modelo, accion, data = []) {
       switch (modelo) {
         case "sabor": {
           switch (accion) {
-            case "registrar": {
-              this.modal = 1;
+            case "registrar": {              
               this.tituloModal = "Registrar Sabor";
               this.nombre = "";
               this.descripcion = "";
               this.tipoAccion = 1;
+              $("#modalCU").modal("show");
               break;
             }
             case "actualizar": {
-              //console.log(data);
-              this.modal = 1;
+              //console.log(data);              
               this.tituloModal = "Actualizar Sabor";
               this.tipoAccion = 2;
               this.sabor_id = data["id"];
               this.nombre = data["nombre"];
               this.descripcion = data["descripcion"];
+              $("#modalCU").modal("show");
               break;
             }
           }

@@ -115,8 +115,8 @@
           </div>
           <div class="modal-body">
             <form action method="post" enctype="multipart/form-data" class="form-horizontal">
-              <div class="form-group row required">
-                <label class="col-md-3 control-label" for="text-input">Nombre:</label>
+              <div class="form-group row">
+                <label class="col-md-3 control-label" for="text-input">Nombre: <i class="required-entry">*</i></label>
                 <div class="col-md-9">
                   <input
                     type="text"
