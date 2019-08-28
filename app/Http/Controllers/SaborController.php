@@ -21,10 +21,10 @@ class SaborController extends Controller
         $criterio = $request->criterio;
         
         if ($buscar==''){
-            $sabores = Sabor::orderBy('id', 'desc')->paginate(1);
+            $sabores = Sabor::orderBy('id', 'desc')->paginate(5);
         }
         else{
-            $sabores = Sabor::where($criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'desc')->paginate(1);
+            $sabores = Sabor::where($criterio, 'like', '%'. $buscar . '%')->orderBy('id', 'desc')->paginate(5);
         }
         
 

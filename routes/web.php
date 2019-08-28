@@ -11,52 +11,25 @@
 |
 */
 
-Route::get('/admin', 'SpaController@index')->name('admin');
-Route::get('/categoria', 'SpaController@index');
-Route::get('/producto', 'SpaController@index');
-Route::get('/tamano', 'SpaController@index');
-Route::get('/sabor', 'SpaController@index');
-Route::get('/orden', 'SpaController@index');
-
-
-
 
 Route::group(['middleware' => ['guest']], function () {
     Route::get('/', 'Seguridad\LoginController@index')->name('login');
     Route::post('seguridad/login', 'Seguridad\LoginController@login')->name('login-post');        
 });
-    Route::post('seguridad/logout', 'Seguridad\LoginController@logout')->name('logout');
-
-    Route::get('/menu/listar', 'MenuController@getMenu');
-
-    Route::get('/categoria/listar', 'CategoriaController@listar');
-    Route::post('/categoria/registrar', 'CategoriaController@store');
-    Route::put('/categoria/actualizar', 'CategoriaController@update');
-    Route::put('/categoria/desactivar', 'CategoriaController@desactivar');
-    Route::put('/categoria/activar', 'CategoriaController@activar');
-    Route::get('/categoria/selectCategoria', 'CategoriaController@selectCategoria');
-
-    Route::get('/producto/listar', 'ProductoController@listar');
-    Route::post('/producto/registrar', 'ProductoController@store');
-    Route::put('/producto/actualizar', 'ProductoController@update');
-    Route::put('/producto/desactivar', 'ProductoController@desactivar');
-    Route::put('/producto/activar', 'ProductoController@activar');
-    //Route::get('/producto/buscarProducto', 'ProductoController@buscarProducto');
-    //Route::get('/producto/listarProducto', 'ProductoController@listarProducto');
-    Route::get('/producto/listarProductoOrden', 'ProductoController@listarProductoOrden');
-    Route::get('/producto/buscarProductoOrden', 'ProductoController@buscarProductoOrden');
-    Route::get('/producto/listarPdf', 'ProductoController@listarPdf')->name('productos_pdf');
-
-
-
-
-
+ 
 
 Route::group(['middleware'=>['auth']],function(){
-    Route::get('/menu/listar', 'MenuController@getMenu');
-    Route::post('seguridad/logout', 'Seguridad\LoginController@logout')->name('logout');
-    Route::get('/dashboard', function () { return view('admin.dashboard'); })->name('dashboard');
+    Route::get('/admin', 'SpaController@index')->name('admin');    
+    Route::get('/categoria', 'SpaController@index');
+    Route::get('/producto', 'SpaController@index');
+    Route::get('/tamano', 'SpaController@index');
+    Route::get('/sabor', 'SpaController@index');
+    Route::get('/orden', 'SpaController@index');
 
+    Route::get('/menu/listar', 'MenuController@getMenu');
+    
+    Route::post('seguridad/logout', 'Seguridad\LoginController@logout')->name('logout');
+    
    // Route::get('/categoria', function () { return view('admin.categoria'); })->name('categoria');
     Route::get('/categoria/listar', 'CategoriaController@listar');
     Route::post('/categoria/registrar', 'CategoriaController@store');
@@ -108,9 +81,3 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/orden/pdf/{id}', 'OrdenController@pdf')->name('orden_pdf');
 });
 
-//autenticacion Cambios PC
-//Auth::routes();
-
-//Route::get('/home', 'HomeController@index')->name('home');
-
-//Route::get('/select2', function () { return view('admin.select2'); })->name('select2');

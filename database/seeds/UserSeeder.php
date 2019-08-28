@@ -47,12 +47,14 @@ class UserSeeder extends Seeder
         $role->givePermissionTo('editar-producto');
         $role->givePermissionTo('desactivar-producto');
         $role->givePermissionTo('activar-producto');
+        
         $user=User::find(1);   
         $user->assignRole($role);
 
         $role = Role::create(['name' => 'vendedor']);
         $role->givePermissionTo('listar-producto');
         $role->givePermissionTo('listar-categoria');
+        
         $user=User::find(2);   
         $user->assignRole($role);
 

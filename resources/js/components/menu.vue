@@ -49,6 +49,11 @@ export default {
   },
   mounted() {
     this.listarMenu(1);
+  },
+  updated(){
+    //console.log('updated');
+    $('ul.nav-sidebar').find('a.active').parents('li.nav-item').children('.nav-link').addClass('active');
+    $('ul.nav-sidebar').find('a.active').parents('li.nav-item').addClass('menu-open');  
   }
 };
 </script>

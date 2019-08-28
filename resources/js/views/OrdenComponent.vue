@@ -158,7 +158,7 @@
                     Precio
                     <i class="required-entry">*</i>
                   </label>
-                  <input type="number" value="0" step="any" class="form-control" v-model="precio" />
+                  <input type="number" value="0" min="1" step="any" class="form-control" v-model="precio" />
                 </div>
               </div>
               <div class="col-4 col-md-2">
@@ -167,13 +167,13 @@
                     Cantidad
                     <i class="required-entry">*</i>
                   </label>
-                  <input type="number" value="0" class="form-control" v-model="cantidad" />
+                  <input type="number" value="1" min="1" class="form-control" v-model="cantidad" />
                 </div>
               </div>
               <div class="col-4 col-md-2">
                 <div class="form-group">
                   <label>Descuento</label>
-                  <input type="number" value="0" class="form-control" v-model="descuento" />
+                  <input type="number" value="1" class="form-control" v-model="descuento" />
                 </div>
               </div>
               <div class="col-12 col-md-2">
@@ -211,14 +211,14 @@
                       </td>
                       <td v-text="detalle.producto"></td>
                       <td>
-                        <input v-model="detalle.precio" type="number" class="form-control" />
+                        <input v-model="detalle.precio" min="1" type="number" class="form-control" />
                       </td>
                       <td>
-                        <input v-model="detalle.cantidad" type="number" class="form-control" />
+                        <input v-model="detalle.cantidad" min="1" type="number" class="form-control" />
                       </td>
                       <td>
                         <span
-                          style="color:red;"
+                          style="color:red;"  
                           v-show="detalle.descuento>(detalle.precio*detalle.cantidad)"
                         >Descuento superior</span>
                         <input v-model="detalle.descuento" type="number" class="form-control" />
@@ -321,7 +321,7 @@
                   </tbody>
                   <tbody v-else>
                     <tr>
-                      <td colspan="5">No hay productos agregados</td>
+                      <td colspan="6">No hay productos agregados</td>
                     </tr>
                   </tbody>
                 </table>

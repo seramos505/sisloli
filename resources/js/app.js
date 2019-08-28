@@ -22,14 +22,14 @@ Vue.component('navigationmenu', require('./components/menu.vue').default);
 Vue.component('itemmenu', require('./components/item-menu.vue').default);
 
 Vue.use(VueRouter)
-import App from './components/App'
-import Categoria from './components/CategoriaComponent'
-import Producto from './components/ProductoComponent'
-import Sabor from './components/SaborComponent'
-import Tamano from './components/TamanoComponent'
-import Orden from './components/OrdenComponent'
+import App from './views/App'
+import Categoria from './views/CategoriaComponent'
+import Producto from './views/ProductoComponent'
+import Sabor from './views/SaborComponent'
+import Tamano from './views/TamanoComponent'
+import Orden from './views/OrdenComponent'
 
-import Nopage from './components/404Component'
+import Nopage from './views/404Component'
 
 
 const router=new VueRouter({
