@@ -14,7 +14,7 @@ class CreateSaborTable extends Migration
     public function up()
     {
         Schema::create('sabor', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('nombre', 50)->unique();
             $table->string('descripcion', 256)->nullable();
             $table->boolean('condicion')->default(1);

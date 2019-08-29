@@ -1,14 +1,11 @@
 <?php
 
 namespace App\Models\Admin;
-use Spatie\Permission\Traits\HasRoles;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Menu extends Model
 {
-    use HasRoles;
-
     protected $table = "menu";
     protected $fillable = ['nombre', 'url', 'icono'];
     protected $guarded = ['id'];
@@ -26,30 +23,38 @@ class Menu extends Model
 
     public function getPadres($front)
     {
-        if ($front) {
-            return $this->orderby('menu_id')
-                ->orderby('orden')
-                ->get()
-                ->toArray();
-        } else {
-            return $this->orderby('menu_id')
-                ->orderby('orden')
-                ->get()
-                ->toArray();
-        }
+        // if ($front) {
+        //     return $this->join('menu_rol','menu.id','=','menu_rol.menu_id')
+        //         ->where('menu_rol.rol_id', 3)
+        //         ->orderby('menu.menu_id')
+        //         ->orderby('menu.orden')
+        //         ->get()
+        //         ->toArray();
+        // } else {
+        //     return $this->orderby('menu_id')
+        //         ->orderby('orden')
+        //         ->get()
+        //         ->toArray();
+        // }
+        return $this->join('menu_rolss','menu.id','=','menu_rol.menu_id')
+        ->where('menu_rol.rol_id', 2)
+        ->orderby('menu.menu_id')
+        ->orderby('menu.orden')
+        ->get()
+        ->toArray();
     }
 
-    public static function getMenu($front = false)
-    {
-        $menus = new Menu();
-        $padres = $menus->getPadres($front);
-        $menuAll = [];
-        foreach ($padres as $line) {
-            if ($line['menu_id'] != 0)
-                break;
-            $item = [array_merge($line, ['submenu' => $menus->getHijos($padres, $line)])];
-            $menuAll = array_merge($menuAll, $item);
-        }
-        return $menuAll;
-    }
+    // public static function getMenu($front = false)
+    // {
+    //     $menus = new Menu();
+    //     $padres = $menus->getPadres($front);
+    //     $menuAll = [];
+    //     foreach ($padres as $line) {
+    //         if ($line['menu_id'] != 0)
+    //             break;
+    //         $item = [array_merge($line, ['submenu' => $menus->getHijos($padres, $line)])];
+    //         $menuAll = array_merge($menuAll, $item);
+    //     }
+    //     return $menuAll;
+    // }
 }

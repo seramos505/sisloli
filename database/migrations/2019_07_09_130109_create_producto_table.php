@@ -14,11 +14,11 @@ class CreateProductoTable extends Migration
     public function up()
     {
         Schema::create('producto', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            //$table->biginteger('idcategoria')->unsigned();
-            $table->unsignedBigInteger('idcategoria');
-            $table->biginteger('idtamano')->unsigned();
-            $table->biginteger('idsabor')->unsigned();
+            $table->increments('id');
+            //$table->integer('idcategoria')->unsigned();
+            $table->unsignedInteger('idcategoria');
+            $table->integer('idtamano')->unsigned();
+            $table->integer('idsabor')->unsigned();
             $table->string('codigo', 50)->nullable();
             $table->string('nombre', 100)->unique();
             $table->decimal('precio_venta', 11, 2);

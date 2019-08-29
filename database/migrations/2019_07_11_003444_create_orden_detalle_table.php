@@ -14,10 +14,10 @@ class CreateOrdenDetalleTable extends Migration
     public function up()
     {
         Schema::create('orden_detalle', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->biginteger('idorden')->unsigned();
+            $table->increments('id');
+            $table->integer('idorden')->unsigned();
             $table->foreign('idorden')->references('id')->on('orden')->onDelete('cascade');
-            $table->biginteger('idproducto')->unsigned();
+            $table->integer('idproducto')->unsigned();
             $table->foreign('idproducto')->references('id')->on('producto');
             $table->integer('cantidad');
             $table->decimal('precio', 11, 2);

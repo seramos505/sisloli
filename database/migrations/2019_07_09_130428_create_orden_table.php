@@ -14,10 +14,10 @@ class CreateOrdenTable extends Migration
     public function up()
     {
         Schema::create('orden', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->biginteger('idcliente')->unsigned()->default(1);
+            $table->increments('id');
+            $table->integer('idcliente')->unsigned()->default(1);
             $table->foreign('idcliente')->references('id')->on('cliente');
-            $table->biginteger('idusuario')->unsigned();
+            $table->integer('idusuario')->unsigned();
             $table->foreign('idusuario')->references('id')->on('users');
             $table->dateTime('fecha_hora');
             $table->decimal('impuesto', 4, 2);
