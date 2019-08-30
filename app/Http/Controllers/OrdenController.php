@@ -79,7 +79,7 @@ class OrdenController extends Controller
  
         $id = $request->id;
         $detalles = OrdenDetalle::join('producto','orden_detalle.idproducto','=','producto.id')
-        ->select('orden_detalle.cantidad','orden_detalle.precio','orden_detalle.descuento',
+        ->select('orden_detalle.cantidad','orden_detalle.precio','orden_detalle.descuento','orden_detalle.relleno',
         'producto.nombre as producto')
         ->where('orden_detalle.idorden','=',$id)
         ->orderBy('orden_detalle.id', 'desc')->get();
@@ -113,7 +113,8 @@ class OrdenController extends Controller
                 $detalle->idproducto = $det['idproducto'];
                 $detalle->cantidad = $det['cantidad'];
                 $detalle->precio = $det['precio'];
-                $detalle->descuento = $det['descuento'];         
+                $detalle->descuento = $det['descuento']; 
+                $detalle->relleno = $det['relleno'];         
                 $detalle->save();
             }          
            

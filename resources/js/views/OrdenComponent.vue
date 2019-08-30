@@ -58,9 +58,9 @@
               <table class="table table-bordered table-striped table-hover table-sm">
                 <thead class="thead-dark">
                   <tr>
-                    <th colspan="3">Opciones</th>
+                    <th colspan="2">Opciones</th>
                     <th>ID</th>
-                    <th>Usuario</th>                    
+                    <!-- <th>Usuario</th>-->
                     <th>Cliente</th>
                     <th>Fecha Hora</th>
                     <th>Total</th>
@@ -78,11 +78,11 @@
                         <i class="fas fa-eye"></i>
                       </button>
                     </td>
-                    <td style="width: 10px;">
+                    <!-- <td style="width: 10px;">
                       <button type="button" @click="pdfOrden(orden.id)" class="btn btn-info btn-sm">
                         <i class="fas fa-file-pdf"></i>
                       </button>
-                    </td>
+                    </td> -->
                     <td style="width: 10px;">
                       <template v-if="orden.estado=='Registrado'">
                         <button
@@ -95,7 +95,7 @@
                       </template>
                     </td>
                     <td v-text="orden.id"></td>
-                    <td v-text="orden.user"></td>
+                    <!-- <td v-text="orden.user"></td> -->
                     <td v-text="orden.cliente"></td>
                     <td v-text="fecha(orden.fecha_hora)"></td>
                     <td v-text="orden.total"></td>                    
@@ -130,7 +130,9 @@
                     Cliente
                     <i class="required-entry">*</i>
                   </label>
-                  <select2 :options="arrayCliente" v-model="idcliente"></select2>
+                  <select2 :options="arrayCliente" v-model="idcliente">
+                    <option value="3620194" selected="selected">select2/select2</option>
+                  </select2>
                 </div>
               </div>
               <div class="col-md-3">
@@ -190,7 +192,7 @@
               <div class="col-12 col-md-2">
                 <div class="form-group">
                   <label class="d-none d-sm-inline-block">&nbsp;</label>
-                  <button @click="agregarDetalle()" class="btn btn-success w-100">
+                  <button @click="agregarDetalle()" class="btn btn-success w-100" id="agregarDetalle">
                     <i class="fas fa-plus-circle"></i>
                   </button>
                 </div>
@@ -206,6 +208,7 @@
                       <th>Precio</th>
                       <th>Cant.</th>
                       <th>Desc.</th>
+                      <th>Relleno</th>
                       <th>Subtotal</th>
                     </tr>
                   </thead>
@@ -234,22 +237,26 @@
                         >Descuento superior</span>
                         <input v-model="detalle.descuento" type="number" class="form-control" />
                       </td>
+                      <td> 
+                        <switch-button v-model="detalle.relleno" color="#e83e8c"></switch-button>                                     
+                        
+                      </td>
                       <td>{{detalle.precio*detalle.cantidad-detalle.descuento}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="5" align="right">
+                      <td colspan="6" align="right">
                         <strong>Total Parcial:</strong>
                       </td>
                       <td>C$ {{totalParcial=(total-totalImpuesto).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="5" align="right">
+                      <td colspan="6" align="right">
                         <strong>Total Impuesto:</strong>
                       </td>
                       <td>C$ {{totalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="5" align="right">
+                      <td colspan="6" align="right">
                         <strong>Total Neto:</strong>
                       </td>
                       <td>C$ {{total=calcularTotal}}</td>
@@ -257,7 +264,7 @@
                   </tbody>
                   <tbody v-else>
                     <tr>
-                      <td colspan="6">No hay productos agregados</td>
+                      <td colspan="7">No hay productos agregados</td>
                     </tr>
                   </tbody>
                 </table>
@@ -300,6 +307,7 @@
                       <th>Precio</th>
                       <th>Cantidad</th>
                       <th>Descuento</th>
+                      <th>Relleno</th>
                       <th>Subtotal</th>
                     </tr>
                   </thead>
@@ -309,22 +317,30 @@
                       <td v-text="detalle.precio"></td>
                       <td v-text="detalle.cantidad"></td>
                       <td v-text="detalle.descuento"></td>
+                      <td>
+                        <template v-if="detalle.relleno">
+                          <span class="badge badge-success">Si</span>
+                        </template>
+                        <template v-else>
+                          <span class="badge badge-danger">No</span>
+                        </template>
+                      </td>
                       <td>{{detalle.precio*detalle.cantidad-detalle.descuento}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="4" align="right">
+                      <td colspan="5" align="right">
                         <strong>Total Parcial:</strong>
                       </td>
                       <td>C$ {{totalParcial=(total-totalImpuesto).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="4" align="right">
+                      <td colspan="5" align="right">
                         <strong>Total Impuesto:</strong>
                       </td>
                       <td>C$ {{totalImpuesto=(total*impuesto).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="4" align="right">
+                      <td colspan="5" align="right">
                         <strong>Total Neto:</strong>
                       </td>
                       <td>C$ {{total}}</td>
@@ -612,6 +628,7 @@ export default {
             me.idproducto = me.arrayProducto[0]["id"];
             me.precio = me.arrayProducto[0]["precio_venta"];
             me.cantidad = 1;
+            $("#agregarDetalle").focus();
           } else {
             me.producto = "No existe este producto";
             me.idproducto = 0;
@@ -667,7 +684,8 @@ export default {
             producto: me.producto,
             cantidad: me.cantidad,
             precio: me.precio,
-            descuento: me.descuento
+            descuento: me.descuento,
+            relleno:0,
           });
           me.codigo = "";
           me.idproducto = 0;
@@ -693,7 +711,8 @@ export default {
           producto: data["nombre"],
           cantidad: 1,
           precio: data["precio_venta"],
-          descuento: 0
+          descuento: 0,
+          relleno:0,
         });
         me.errorMostrarMsjOrden = [];
       }

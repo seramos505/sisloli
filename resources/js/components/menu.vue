@@ -36,7 +36,7 @@ export default {
    },
     listarMenu(front) {
       let me = this;
-      var url ="menu/listar?page=1";
+      var url ="menu/listar?front="+front;
       axios
         .get(url)
         .then(function(response) {

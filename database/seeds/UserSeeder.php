@@ -58,5 +58,21 @@ class UserSeeder extends Seeder
         $user=User::find(2);   
         $user->assignRole($role);
 
+        //Menu Roles
+        for ($i=1; $i <= 17 ; $i++) { 
+            DB::table('menu_rol')->insert([
+                'rol_id' => 1,
+                'menu_id' => $i,                
+            ]);
+        }
+        DB::table('menu_rol')->insert([
+            'rol_id' => 2,
+            'menu_id' => 2,                
+        ]);
+        DB::table('menu_rol')->insert([
+            'rol_id' => 2,
+            'menu_id' => 10,                
+        ]);
+
     }
 }

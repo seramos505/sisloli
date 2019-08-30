@@ -16,7 +16,7 @@
         </template> 
         <template v-else>             
             <router-link :to="{name: item.url}" class="nav-link">
-                <span class="d-block" v-on:click="expandmenu(item.menu_id)">
+                <span class="d-block" v-on:click="expandmenu(item.parent_menu)">
                     <i class="nav-icon" :class="[item.icono]"></i>
                     <p>{{item.nombre}}</p>  
                 </span>  

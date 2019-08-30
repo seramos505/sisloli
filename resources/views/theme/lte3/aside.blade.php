@@ -1,6 +1,6 @@
 <!-- Main Sidebar Container -->
 {{-- {{dd($menusComposer)}} --}}
-
+{{-- {{dd(Auth::user()->roles->pluck('id'))}}  --}}
 <aside class="main-sidebar elevation-4 sidebar-dark-info" style="background-color: #1f2d3d;">
   <!-- Brand Logo -->
   <a href="index3.html" class="brand-link navbar-info pl-1">
@@ -19,6 +19,7 @@
         </div>
         <div class="info">
           <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          
           <small class="float-right">
             <a href="{{ route('logout') }}" onclick="event.preventDefault();
                               document.getElementById('logout-form').submit();">
@@ -39,7 +40,7 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         @foreach ($menusComposer as $key => $item)
-        @if ($item["menu_id"] != 0)
+        @if ($item["parent_menu"] != 0)
         @break
         @endif
         @include("theme.$theme.menu-item", ["item" => $item])

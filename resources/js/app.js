@@ -20,6 +20,8 @@ Vue.component('select2', require('./components/select.vue').default);
 Vue.component('pagination', require('./components/pagination.vue').default);
 Vue.component('navigationmenu', require('./components/menu.vue').default);
 Vue.component('itemmenu', require('./components/item-menu.vue').default);
+Vue.component('switch-button', require('./components/switch-button.vue').default);
+
 
 Vue.use(VueRouter)
 import App from './views/App'
@@ -38,27 +40,27 @@ const router=new VueRouter({
     linkExactActiveClass: "exact-active",
     routes: [
         {
-            path: '/categoria',
+            path: 'categoria',
             name: 'categoria',
             component: Categoria
         },
         {
-            path: '/sabor',
+            path: 'sabor',
             name: 'sabor',
             component: Sabor
         }, 
         {
-            path: '/tamano',
+            path: 'tamano',
             name: 'tamano',
             component: Tamano
         }, 
         {
-            path: '/producto',
+            path: 'producto',
             name: 'producto',
             component: Producto
         }, 
         {
-            path: '/orden',
+            path: 'orden',
             name: 'orden',
             component: Orden
         },  

@@ -17,7 +17,7 @@ class MenuController extends Controller
         $padres = $menus->getPadres($front);
         $menuAll = [];
         foreach ($padres as $line) {
-            if ($line['menu_id'] != 0)
+            if ($line['parent_menu'] != 0)
                 break;
             $item = [array_merge($line, ['submenu' => $menus->getHijos($padres, $line)])];
             $menuAll = array_merge($menuAll, $item);
