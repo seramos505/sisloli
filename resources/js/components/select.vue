@@ -28,7 +28,6 @@ export default {
       // update options
       $(this.$el).empty().trigger('change').select2({ data: options });
       $(this.$el).val(1).trigger('change');
-
     }
   },
   destroyed: function () {
