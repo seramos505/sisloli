@@ -26,11 +26,16 @@ export default {
     },
     options: function (options) {
       // update options
-      $(this.$el).empty().trigger('change').select2({ data: options })
+      $(this.$el).empty().trigger('change').select2({ data: options });
+      $(this.$el).val(1).trigger('change');
+
     }
   },
   destroyed: function () {
     $(this.$el).off().select2('destroy')
+  },
+  update(){
+
   }
 }
 </script>

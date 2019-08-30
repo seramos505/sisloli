@@ -130,8 +130,7 @@
                     Cliente
                     <i class="required-entry">*</i>
                   </label>
-                  <select2 :options="arrayCliente" v-model="idcliente">
-                    <option value="3620194" selected="selected">select2/select2</option>
+                  <select2 :options="arrayCliente" v-model="idcliente" :value=2>                    
                   </select2>
                 </div>
               </div>
@@ -238,7 +237,7 @@
                         <input v-model="detalle.descuento" type="number" class="form-control" />
                       </td>
                       <td> 
-                        <switch-button v-model="detalle.relleno" color="#e83e8c"></switch-button>                                     
+                        <switch-button v-model="detalle.relleno" color="#e83e8c" v-if="detalle.precio>45"></switch-button>                                     
                         
                       </td>
                       <td>{{detalle.precio*detalle.cantidad-detalle.descuento}}</td>

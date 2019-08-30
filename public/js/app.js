@@ -2099,11 +2099,13 @@ __webpack_require__.r(__webpack_exports__);
       $(this.$el).empty().trigger('change').select2({
         data: _options
       });
+      $(this.$el).val(1).trigger('change');
     }
   },
   destroyed: function destroyed() {
     $(this.$el).off().select2('destroy');
-  }
+  },
+  update: function update() {}
 });
 
 /***/ }),
@@ -2630,7 +2632,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -41967,31 +41968,16 @@ var render = function() {
                         [
                           _vm._m(3),
                           _vm._v(" "),
-                          _c(
-                            "select2",
-                            {
-                              attrs: { options: _vm.arrayCliente },
-                              model: {
-                                value: _vm.idcliente,
-                                callback: function($$v) {
-                                  _vm.idcliente = $$v
-                                },
-                                expression: "idcliente"
-                              }
-                            },
-                            [
-                              _c(
-                                "option",
-                                {
-                                  attrs: {
-                                    value: "3620194",
-                                    selected: "selected"
-                                  }
-                                },
-                                [_vm._v("select2/select2")]
-                              )
-                            ]
-                          )
+                          _c("select2", {
+                            attrs: { options: _vm.arrayCliente, value: 2 },
+                            model: {
+                              value: _vm.idcliente,
+                              callback: function($$v) {
+                                _vm.idcliente = $$v
+                              },
+                              expression: "idcliente"
+                            }
+                          })
                         ],
                         1
                       )
@@ -42387,20 +42373,22 @@ var render = function() {
                                       _c(
                                         "td",
                                         [
-                                          _c("switch-button", {
-                                            attrs: { color: "#e83e8c" },
-                                            model: {
-                                              value: detalle.relleno,
-                                              callback: function($$v) {
-                                                _vm.$set(
-                                                  detalle,
-                                                  "relleno",
-                                                  $$v
-                                                )
-                                              },
-                                              expression: "detalle.relleno"
-                                            }
-                                          })
+                                          detalle.precio > 45
+                                            ? _c("switch-button", {
+                                                attrs: { color: "#e83e8c" },
+                                                model: {
+                                                  value: detalle.relleno,
+                                                  callback: function($$v) {
+                                                    _vm.$set(
+                                                      detalle,
+                                                      "relleno",
+                                                      $$v
+                                                    )
+                                                  },
+                                                  expression: "detalle.relleno"
+                                                }
+                                              })
+                                            : _vm._e()
                                         ],
                                         1
                                       ),

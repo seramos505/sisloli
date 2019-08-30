@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(CategoriaSeeder::class);
         $this->call(TamanoSeeder::class);
         $this->call(ProductoSeeder::class);
-        $this->call(UserSeeder::class);
         $this->call(MenuSeeder::class);
+        $this->call(UserSeeder::class);        
         $this->call(ClienteSeeder::class);         
     }
 
