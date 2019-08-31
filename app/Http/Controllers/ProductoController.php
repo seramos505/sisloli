@@ -10,7 +10,7 @@ class ProductoController extends Controller
 {
     public function listar(Request $request)
     {
-        //if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;
@@ -51,7 +51,7 @@ class ProductoController extends Controller
 
     public function listarProductoOrden(Request $request)
     {
-        //if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;

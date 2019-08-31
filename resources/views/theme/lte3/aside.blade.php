@@ -3,10 +3,10 @@
 {{-- {{dd(Auth::user()->roles->pluck('id'))}}  --}}
 <aside class="main-sidebar elevation-4 sidebar-dark-info" style="background-color: #1f2d3d;">
   <!-- Brand Logo -->
-  <a href="index3.html" class="brand-link navbar-info pl-1">
+  <div class="brand-link navbar-info pl-1">
     <img src="{{asset("assets/$theme/dist/img/logo-transparente.png")}}" alt="LOLI Logo" class="brand-image ml-0">
-    <span class="">RASPADOS LOLI</span>
-  </a>
+    <span class="">RASPADOS <b>LOLI</b></span>
+  </div>
 
   <!-- Sidebar -->
   <div class="sidebar">
@@ -14,11 +14,11 @@
     @auth 
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="{{asset("assets/$theme/dist/img")}}/{{ Auth::user()->image }}" class="img-circle elevation-2"
+          <img src="{{asset("images")}}/{{ Auth::user()->image }}" class="img-circle elevation-2"
             alt="User Image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">{{ Auth::user()->name }}</a>
+          <div class="text-white" class="d-block">{{ Auth::user()->name }}</div>
           
           <small class="float-right">
             <a href="{{ route('logout') }}" onclick="event.preventDefault();

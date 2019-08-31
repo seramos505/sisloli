@@ -7,21 +7,24 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 //PARA CONSULTAR EL ARRAY DE PERMISOS QUE SE CREO EN EL LAYOUT
-Vue.directive('can', function (el, binding, vnode) {
+import Permissions from './mixins/Permissions';
+Vue.mixin(Permissions);
 
-    if(Permissions.indexOf(binding.value) !== -1){
-       return vnode.elm.hidden = false;
-    }else{
-       return vnode.elm.hidden = true;
-    }
-})
+// Vue.directive('can', function (el, binding, vnode) {
+
+//     if(Permissions.indexOf(binding.value) !== -1){
+//        return vnode.elm.hidden = false;
+//     }else{
+//        return vnode.elm.hidden = true;
+//     }
+// })
+
 
 Vue.component('select2', require('./components/select.vue').default);
 Vue.component('pagination', require('./components/pagination.vue').default);
 Vue.component('navigationmenu', require('./components/menu.vue').default);
 Vue.component('itemmenu', require('./components/item-menu.vue').default);
 Vue.component('switch-button', require('./components/switch-button.vue').default);
-
 
 Vue.use(VueRouter)
 import App from './views/App'
@@ -35,32 +38,33 @@ import Nopage from './views/404Component'
 
 
 const router=new VueRouter({
+    //base: '/sisloli/public/',
     mode: 'history',
     linkActiveClass: "active",
     linkExactActiveClass: "exact-active",
     routes: [
         {
-            path: 'categoria',
+            path: '/categoria',
             name: 'categoria',
             component: Categoria
         },
         {
-            path: 'sabor',
+            path: '/sabor',
             name: 'sabor',
             component: Sabor
         }, 
         {
-            path: 'tamano',
+            path: '/tamano',
             name: 'tamano',
             component: Tamano
         }, 
         {
-            path: 'producto',
+            path: '/producto',
             name: 'producto',
             component: Producto
         }, 
         {
-            path: 'orden',
+            path: '/orden',
             name: 'orden',
             component: Orden
         },  

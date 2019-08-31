@@ -1,5 +1,5 @@
 <template>
-  <main class="main">
+  <main class="main" v-if="$can('listar-orden')">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">
@@ -18,7 +18,8 @@
           <h3 class="float-left">
             <i class="fas fa-cart-plus"></i> Ordenes
           </h3>
-          <button
+          <button            
+            v-if="$can('nuevo-orden')"
             type="button"
             @click="mostrarDetalle()"
             class="btn btn-success float-right"
@@ -71,6 +72,7 @@
                   <tr v-for="orden in arrayOrden" :key="orden.id">
                     <td style="width: 10px;">
                       <button
+                        v-if="$can('ver-orden')"
                         type="button"
                         @click="verOrden(orden.id)"
                         class="btn btn-success btn-sm"
@@ -86,6 +88,7 @@
                     <td style="width: 10px;">
                       <template v-if="orden.estado=='Registrado'">
                         <button
+                          v-if="$can('desactivar-orden')"
                           type="button"
                           class="btn btn-danger btn-sm"
                           @click="desactivarOrden(orden.id)"
@@ -482,6 +485,9 @@
     </div>
     <!--Fin del modal-->
   </main>
+  <main class="main" v-else>
+    No tiene acceso
+  </main> 
 </template>
 
 <script>

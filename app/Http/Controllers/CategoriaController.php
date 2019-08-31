@@ -15,7 +15,7 @@ class CategoriaController extends Controller
      */
     public function listar(Request $request)
     {
-        //if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;

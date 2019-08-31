@@ -1,5 +1,5 @@
 <template>
-  <main class="main">
+  <main class="main" v-if="$can('listar-sabor')">
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
@@ -8,6 +8,7 @@
             <i class="fas fa-th-list"></i> Sabores
           </h3>
           <button
+            v-if="$can('nuevo-sabor')"
             type="button"
             @click="abrirModal('sabor','registrar')"
             class="btn btn-success float-right"
@@ -54,6 +55,7 @@
                 <tr v-for="sabor in arraySabor" :key="sabor.id">
                   <td style="width: 10px;">
                     <button
+                      v-if="$can('editar-sabor')"
                       type="button"
                       @click="abrirModal('sabor','actualizar',sabor)"
                       class="btn btn-warning btn-sm"
@@ -65,6 +67,7 @@
                   <td style="width: 10px;">
                     <template v-if="sabor.condicion">
                       <button
+                        v-if="$can('desactivar-sabor')"
                         type="button"
                         class="btn btn-danger btn-sm"
                         @click="desactivarsabor(sabor.id)"
@@ -75,6 +78,7 @@
                     </template>
                     <template v-else>
                       <button
+                        v-if="$can('activar-sabor')"
                         type="button"
                         class="btn btn-info btn-sm"
                         @click="activarsabor(sabor.id)"
@@ -166,6 +170,9 @@
     </div>
     <!--Fin del modal-->
   </main>
+  <main class="main" v-else>
+    No tiene acceso
+  </main> 
 </template>
 
 <script>

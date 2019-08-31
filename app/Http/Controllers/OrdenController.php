@@ -18,7 +18,7 @@ class OrdenController extends Controller
      */
     public function listar(Request $request)
     {
-        //if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
  
         $buscar = $request->buscar;
         $criterio = $request->criterio;
@@ -57,7 +57,7 @@ class OrdenController extends Controller
     }
 
     public function obtenerCabecera(Request $request){
-        //if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
  
         $id = $request->id;
         $orden = Orden::join('cliente','orden.idcliente','=','cliente.id')
@@ -75,7 +75,7 @@ class OrdenController extends Controller
         return ['orden' => $orden];
     }
     public function obtenerDetalles(Request $request){
-        //if (!$request->ajax()) return redirect('/');
+        if (!$request->ajax()) return redirect('/');
  
         $id = $request->id;
         $detalles = OrdenDetalle::join('producto','orden_detalle.idproducto','=','producto.id')

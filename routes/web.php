@@ -24,14 +24,14 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/producto', 'SpaController@index');
     Route::get('/tamano', 'SpaController@index');
     Route::get('/sabor', 'SpaController@index');
-    Route::get('/orden', 'SpaController@index');
+    Route::get('/orden', 'SpaController@index')->name('orden');;
 
     Route::get('/menu/listar', 'MenuController@getMenu');
     
     Route::post('seguridad/logout', 'Seguridad\LoginController@logout')->name('logout');
     
    // Route::get('/categoria', function () { return view('admin.categoria'); })->name('categoria');
-    Route::get('/categoria/listar', 'CategoriaController@listar');
+    Route::get('/categoria/listar', 'CategoriaController@listar')->middleware('permission:listar-categoria');
     Route::post('/categoria/registrar', 'CategoriaController@store');
     Route::put('/categoria/actualizar', 'CategoriaController@update');
     Route::put('/categoria/desactivar', 'CategoriaController@desactivar');
@@ -39,7 +39,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/categoria/selectCategoria', 'CategoriaController@selectCategoria');
 
    // Route::get('/sabor', function () { return view('admin.sabor'); })->name('sabor');
-    Route::get('/sabor/listar', 'SaborController@listar');
+    Route::get('/sabor/listar', 'SaborController@listar')->middleware('permission:listar-sabor');
     Route::post('/sabor/registrar', 'SaborController@store');
     Route::put('/sabor/actualizar', 'SaborController@update');
     Route::put('/sabor/desactivar', 'SaborController@desactivar');
@@ -47,7 +47,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/sabor/selectSabor', 'SaborController@selectSabor');
 
    // Route::get('/tamano', function () { return view('admin.tamano'); })->name('tamano');
-    Route::get('/tamano/listar', 'TamanoController@listar');
+    Route::get('/tamano/listar', 'TamanoController@listar')->middleware('permission:listar-tamano');
     Route::post('/tamano/registrar', 'TamanoController@store');
     Route::put('/tamano/actualizar', 'TamanoController@update');
     Route::put('/tamano/desactivar', 'TamanoController@desactivar');
@@ -55,7 +55,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/tamano/selectTamano', 'TamanoController@selectTamano');
 
    // Route::get('/producto', function () { return view('admin.producto'); })->name('producto');
-    Route::get('/producto/listar', 'ProductoController@listar');
+    Route::get('/producto/listar', 'ProductoController@listar')->middleware('permission:listar-producto');
     Route::post('/producto/registrar', 'ProductoController@store');
     Route::put('/producto/actualizar', 'ProductoController@update');
     Route::put('/producto/desactivar', 'ProductoController@desactivar');
@@ -73,11 +73,10 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/cliente/selectCliente', 'ClienteController@selectCliente');
 
   //  Route::get('/orden', function () { return view('admin.orden'); })->name('orden');
-    Route::get('/orden/listar', 'OrdenController@listar');
+    Route::get('/orden/listar', 'OrdenController@listar')->middleware('permission:listar-orden');
     Route::post('/orden/registrar', 'OrdenController@store');
     Route::put('/orden/desactivar', 'OrdenController@desactivar');
-    Route::get('/orden/obtenerCabecera', 'OrdenController@obtenerCabecera');
-    Route::get('/orden/obtenerDetalles', 'OrdenController@obtenerDetalles');
-    Route::get('/orden/pdf/{id}', 'OrdenController@pdf')->name('orden_pdf');
+    Route::get('/orden/obtenerCabecera', 'OrdenController@obtenerCabecera')->middleware('permission:ver-orden');
+    Route::get('/orden/obtenerDetalles', 'OrdenController@obtenerDetalles')->middleware('permission:ver-orden'); 
 });
 

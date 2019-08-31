@@ -1,14 +1,14 @@
 <template>
-  <main class="main">
-    <div class="container-fluid">
+  <main class="main" v-if="$can('listar-producto')">
+    <div class="container-fluid" >
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
         <div class="card-header">
           <h3 class="float-left">
             <i class="fas fa-th-list"></i> Productos
           </h3>          
-          <button
-            v-can="'nuevo-producto'"
+          <button            
+            v-if="$can('nuevo-producto')"
             type="button"
             @click="abrirModal('producto','registrar')"
             class="btn btn-success float-right"
@@ -58,20 +58,20 @@
               <tbody>
                 <tr v-for="producto in arrayProducto" :key="producto.id">
                   <td style="width: 10px;">
-                    <button
-                      v-can="'editar-producto'"
+                    <button                      
+                      v-if="$can('editar-producto')"
                       type="button"
                       @click="abrirModal('producto','actualizar',producto)"
                       class="btn btn-warning btn-sm"
-                      title="Editar producto"
+                      title="Editar Producto"
                     >
                       <i class="fas fa-edit"></i>
                     </button>
                   </td>
                   <td style="width: 10px;">
                     <template v-if="producto.condicion">
-                      <button
-                        v-can="'desactivar-producto'"
+                      <button                        
+                        v-if="$can('desactivar-producto')"
                         type="button"
                         class="btn btn-danger btn-sm"
                         @click="desactivarproducto(producto.id)"
@@ -81,8 +81,8 @@
                       </button>
                     </template>
                     <template v-else>
-                      <button
-                        v-can="'activar-producto'"
+                      <button                        
+                        v-if="$can('activar-producto')"
                         type="button"
                         class="btn btn-info btn-sm"
                         @click="activarproducto(producto.id)"
@@ -233,6 +233,9 @@
     </div>
     <!--Fin del modal-->
   </main>
+  <main class="main" v-else>
+    No tiene acceso
+  </main> 
 </template>
 
 <script>

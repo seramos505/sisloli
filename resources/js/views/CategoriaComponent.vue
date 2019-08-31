@@ -1,5 +1,5 @@
 <template>
-  <main class="main">
+  <main class="main"  v-if="$can('listar-categoria')">
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
@@ -8,6 +8,7 @@
             <i class="fas fa-th-list"></i> Categorías
           </h3>
           <button
+            v-if="$can('nuevo-categoria')"
             type="button"
             @click="abrirModal('categoria','registrar')"
             class="btn btn-success float-right"
@@ -54,6 +55,7 @@
                 <tr v-for="categoria in arrayCategoria" :key="categoria.id">
                   <td style="width: 10px;">
                     <button
+                      v-if="$can('editar-categoria')"
                       type="button"
                       @click="abrirModal('categoria','actualizar',categoria)"
                       class="btn btn-warning btn-sm"
@@ -65,6 +67,7 @@
                   <td style="width: 10px;">
                     <template v-if="categoria.condicion">
                       <button
+                        v-if="$can('desactivar-categoria')"
                         type="button"
                         class="btn btn-danger btn-sm"
                         @click="desactivarCategoria(categoria.id)"
@@ -75,6 +78,7 @@
                     </template>
                     <template v-else>
                       <button
+                        v-if="$can('activar-categoria')"
                         type="button"
                         class="btn btn-info btn-sm"
                         @click="activarCategoria(categoria.id)"
@@ -172,6 +176,9 @@
     </div>
     <!--Fin del modal-->
   </main>
+  <main class="main" v-else>
+    No tiene acceso
+  </main> 
 </template>
 
 <script>

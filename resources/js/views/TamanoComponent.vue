@@ -1,5 +1,5 @@
 <template>
-  <main class="main">
+  <main class="main" v-if="$can('listar-tamano')">
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
@@ -8,6 +8,7 @@
             <i class="fas fa-th-list"></i> Tamaños
           </h3>
           <button
+            v-if="$can('nuevo-tamano')"
             type="button"
             @click="abrirModal('tamano','registrar')"
             class="btn btn-success float-right"
@@ -54,6 +55,7 @@
                 <tr v-for="tamano in arraytamano" :key="tamano.id">
                   <td style="width: 10px;">
                     <button
+                      v-if="$can('editar-tamano')"
                       type="button"
                       @click="abrirModal('tamano','actualizar',tamano)"
                       class="btn btn-warning btn-sm"
@@ -65,6 +67,7 @@
                   <td style="width: 10px;">
                     <template v-if="tamano.condicion">
                       <button
+                        v-if="$can('desactivar-tamano')"
                         type="button"
                         class="btn btn-danger btn-sm"
                         @click="desactivartamano(tamano.id)"
@@ -75,6 +78,7 @@
                     </template>
                     <template v-else>
                       <button
+                        v-if="$can('activar-tamano')"
                         type="button"
                         class="btn btn-info btn-sm"
                         @click="activartamano(tamano.id)"
@@ -166,6 +170,9 @@
     </div>
     <!--Fin del modal-->
   </main>
+  <main class="main" v-else>
+    No tiene acceso
+  </main> 
 </template>
 
 <script>
