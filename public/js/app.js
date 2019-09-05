@@ -2775,13 +2775,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       arrayIngresos: [],
       chartData: '',
-      FechaInicial: moment().format("YYYY-MM-DD 00:00:00"),
-      FechaFinal: moment().format("YYYY-MM-DD 23:00:00")
+      FechaInicial: moment().format("YYYY-MM-DD HH:mm:ss"),
+      FechaFinal: moment().subtract(6, 'days').format("YYYY-MM-DD HH:mm:ss")
     };
   },
   methods: {
@@ -42322,183 +42323,175 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("main", [
+    _vm._m(0),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _vm._v(
+      "\n  " + _vm._s(_vm.FechaInicial) + " to " + _vm._s(_vm.FechaFinal) + "\n"
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("main", [
-      _c("section", { staticClass: "content-header" }, [
-        _c("div", { staticClass: "container-fluid" }, [
-          _c("div", { staticClass: "row mb-2" }, [
-            _c("div", { staticClass: "col-sm-6" }, [
-              _c("h1", [_vm._v("Graficos")])
-            ])
+    return _c("section", { staticClass: "content-header" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("h1", [_vm._v("Graficos")])
           ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("section", { staticClass: "content" }, [
-        _c("div", { staticClass: "container-fluid" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "card card-danger" }, [
-                _c("div", { staticClass: "card-header" }, [
-                  _c("h3", { staticClass: "card-title" }, [
-                    _vm._v("Donut Chart")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-tools" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-tool",
-                        attrs: {
-                          type: "button",
-                          "data-card-widget": "collapse"
-                        }
-                      },
-                      [_c("i", { staticClass: "fas fa-minus" })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-card-widget": "remove" }
-                      },
-                      [_c("i", { staticClass: "fas fa-times" })]
-                    )
-                  ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", { staticClass: "content" }, [
+      _c("div", { staticClass: "container-fluid" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "card card-danger" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [
+                  _vm._v("Donut Chart")
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c("canvas", {
-                    staticStyle: { height: "230px", "min-height": "230px" },
-                    attrs: { id: "donutChart" }
-                  })
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-tool",
+                      attrs: { type: "button", "data-card-widget": "collapse" }
+                    },
+                    [_c("i", { staticClass: "fas fa-minus" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-tool",
+                      attrs: { type: "button", "data-card-widget": "remove" }
+                    },
+                    [_c("i", { staticClass: "fas fa-times" })]
+                  )
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card card-danger" }, [
-                _c("div", { staticClass: "card-header" }, [
-                  _c("h3", { staticClass: "card-title" }, [
-                    _vm._v("Pie Chart")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-tools" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-tool",
-                        attrs: {
-                          type: "button",
-                          "data-card-widget": "collapse"
-                        }
-                      },
-                      [_c("i", { staticClass: "fas fa-minus" })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-card-widget": "remove" }
-                      },
-                      [_c("i", { staticClass: "fas fa-times" })]
-                    )
-                  ])
-                ]),
+              _c("div", { staticClass: "card-body" }, [
+                _c("canvas", {
+                  staticStyle: { height: "230px", "min-height": "230px" },
+                  attrs: { id: "donutChart" }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "card card-danger" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [_vm._v("Pie Chart")]),
                 _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-tool",
+                      attrs: { type: "button", "data-card-widget": "collapse" }
+                    },
+                    [_c("i", { staticClass: "fas fa-minus" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-tool",
+                      attrs: { type: "button", "data-card-widget": "remove" }
+                    },
+                    [_c("i", { staticClass: "fas fa-times" })]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("canvas", {
+                  staticStyle: { height: "230px", "min-height": "230px" },
+                  attrs: { id: "pieChart" }
+                })
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "card card-info" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [_vm._v("Line Chart")]),
+                _vm._v(" "),
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-tool",
+                      attrs: { type: "button", "data-card-widget": "collapse" }
+                    },
+                    [_c("i", { staticClass: "fas fa-minus" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-tool",
+                      attrs: { type: "button", "data-card-widget": "remove" }
+                    },
+                    [_c("i", { staticClass: "fas fa-times" })]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "chart" }, [
                   _c("canvas", {
-                    staticStyle: { height: "230px", "min-height": "230px" },
-                    attrs: { id: "pieChart" }
+                    staticStyle: { height: "250px", "min-height": "250px" },
+                    attrs: { id: "lineChart" }
                   })
                 ])
               ])
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("div", { staticClass: "card card-info" }, [
-                _c("div", { staticClass: "card-header" }, [
-                  _c("h3", { staticClass: "card-title" }, [
-                    _vm._v("Line Chart")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-tools" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-tool",
-                        attrs: {
-                          type: "button",
-                          "data-card-widget": "collapse"
-                        }
-                      },
-                      [_c("i", { staticClass: "fas fa-minus" })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-card-widget": "remove" }
-                      },
-                      [_c("i", { staticClass: "fas fa-times" })]
-                    )
-                  ])
-                ]),
+            _c("div", { staticClass: "card card-success" }, [
+              _c("div", { staticClass: "card-header" }, [
+                _c("h3", { staticClass: "card-title" }, [_vm._v("Bar Chart")]),
                 _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c("div", { staticClass: "chart" }, [
-                    _c("canvas", {
-                      staticStyle: { height: "250px", "min-height": "250px" },
-                      attrs: { id: "lineChart" }
-                    })
-                  ])
+                _c("div", { staticClass: "card-tools" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-tool",
+                      attrs: { type: "button", "data-card-widget": "collapse" }
+                    },
+                    [_c("i", { staticClass: "fas fa-minus" })]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-tool",
+                      attrs: { type: "button", "data-card-widget": "remove" }
+                    },
+                    [_c("i", { staticClass: "fas fa-times" })]
+                  )
                 ])
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "card card-success" }, [
-                _c("div", { staticClass: "card-header" }, [
-                  _c("h3", { staticClass: "card-title" }, [
-                    _vm._v("Bar Chart")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "card-tools" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-tool",
-                        attrs: {
-                          type: "button",
-                          "data-card-widget": "collapse"
-                        }
-                      },
-                      [_c("i", { staticClass: "fas fa-minus" })]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-card-widget": "remove" }
-                      },
-                      [_c("i", { staticClass: "fas fa-times" })]
-                    )
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "card-body" }, [
-                  _c("div", { staticClass: "chart" }, [
-                    _c("canvas", {
-                      staticStyle: { height: "230px", "min-height": "230px" },
-                      attrs: { id: "barChart" }
-                    })
-                  ])
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "chart" }, [
+                  _c("canvas", {
+                    staticStyle: { height: "230px", "min-height": "230px" },
+                    attrs: { id: "barChart" }
+                  })
                 ])
               ])
             ])

@@ -104,6 +104,7 @@
       </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
+    {{FechaInicial}} to {{FechaFinal}}
   </main>
 </template>
 
@@ -114,8 +115,8 @@ export default {
     return {
       arrayIngresos: [],    
       chartData: '',
-      FechaInicial: moment().format("YYYY-MM-DD 00:00:00"),
-      FechaFinal: moment().format("YYYY-MM-DD 23:00:00"),
+      FechaInicial: moment().format("YYYY-MM-DD HH:mm:ss"),
+      FechaFinal: moment().subtract(6, 'days').format("YYYY-MM-DD HH:mm:ss"),
     };
   },
 
