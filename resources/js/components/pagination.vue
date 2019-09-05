@@ -60,7 +60,7 @@
 export default {
   data() {
     return {
-      offset: 3
+      offset: 2
     };
   },
   props: ["pagination", "cambiarPagina", "buscar", "criterio"],

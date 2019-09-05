@@ -28,13 +28,16 @@ Vue.component('switch-button', require('./components/switch-button.vue').default
 
 Vue.use(VueRouter)
 import App from './views/App'
-import Categoria from './views/CategoriaComponent'
-import Producto from './views/ProductoComponent'
-import Sabor from './views/SaborComponent'
-import Tamano from './views/TamanoComponent'
-import Orden from './views/OrdenComponent'
+import Categoria from './views/Categoria'
+import Producto from './views/Producto'
+import Sabor from './views/Sabor'
+import Tamano from './views/Tamano'
+import Orden from './views/Orden'
+import ventarango from './views/ventarango'
+import Dashboard from './views/Dashboard'
 
-import Nopage from './views/404Component'
+
+import Nopage from './views/404'
 
 
 const router=new VueRouter({
@@ -74,9 +77,9 @@ const router=new VueRouter({
             component: Nopage
         }, 
         {
-            path: '/venta-diario',
-            name: 'venta-diario',
-            component: Nopage
+            path: '/ventarango',
+            name: 'ventarango',
+            component: ventarango
         }, 
         {
             path: '/venta-mes',
@@ -107,7 +110,12 @@ const router=new VueRouter({
             path: '/ayuda',
             name: 'ayuda',
             component: Nopage
-        },   
+        },  
+        {
+            path: '/admin',
+            name: 'Dashboard',
+            component: Dashboard
+        }, 
     ]
 });
 

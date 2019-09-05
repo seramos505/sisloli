@@ -51,7 +51,7 @@ class ProductoController extends Controller
 
     public function listarProductoOrden(Request $request)
     {
-        if (!$request->ajax()) return redirect('/');
+        //if (!$request->ajax()) return redirect('/');
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;
@@ -60,6 +60,7 @@ class ProductoController extends Controller
             $productos = Producto::join('categoria','producto.idcategoria','=','categoria.id')
             ->select('producto.id','producto.idcategoria','producto.codigo','producto.nombre','categoria.nombre as nombre_categoria','producto.precio_venta','producto.stock','producto.descripcion','producto.condicion')
             //->where('producto.stock','>','0')
+            ->where('producto.condicion','=','1')
             ->orderBy('producto.id', 'desc')->paginate(5);
         }
         else{
@@ -67,6 +68,7 @@ class ProductoController extends Controller
             ->select('producto.id','producto.idcategoria','producto.codigo','producto.nombre','categoria.nombre as nombre_categoria','producto.precio_venta','producto.stock','producto.descripcion','producto.condicion')
             ->where('producto.'.$criterio, 'like', '%'. $buscar . '%')
             //->where('producto.stock','>','0')
+            ->where('producto.condicion','=','1')
             ->orderBy('producto.id', 'desc')->paginate(5);
         }
 
@@ -90,6 +92,7 @@ class ProductoController extends Controller
         $productos = Producto::where('codigo','=', $filtro)
         ->select('id', 'nombre','stock','precio_venta')
         //->where('stock','>','0')
+        ->where('condicion','=','1')
         ->orderBy('nombre', 'asc')->take(1)->get();
 
         return ['productos' => $productos];

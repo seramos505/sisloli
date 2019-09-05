@@ -211,6 +211,7 @@
                       <th>Cant.</th>
                       <th>Desc.</th>
                       <th>Relleno</th>
+                      <th>Combinado</th>
                       <th>Subtotal</th>
                     </tr>
                   </thead>
@@ -241,7 +242,17 @@
                       </td>
                       <td> 
                         <switch-button v-model="detalle.relleno" color="#e83e8c" v-if="detalle.precio>45"></switch-button>                                     
-                        
+                      </td>
+                      <td> 
+                        <!-- <switch-button v-model="detalle.combinado" color="#17a2b8"></switch-button>    -->
+                        <select class="form-control" v-model="detalle.combinado" >                          
+                          <option
+                            v-for="sabor in arraySabor"
+                            :key="sabor.id"
+                            :value="sabor.id"
+                            v-text="sabor.nombre"                            
+                          ></option>
+                        </select>                                   
                       </td>
                       <td>{{detalle.precio*detalle.cantidad-detalle.descuento}}</td>
                     </tr>
@@ -310,6 +321,7 @@
                       <th>Cantidad</th>
                       <th>Descuento</th>
                       <th>Relleno</th>
+                      <th>Combinado</th>
                       <th>Subtotal</th>
                     </tr>
                   </thead>
@@ -322,6 +334,14 @@
                       <td>
                         <template v-if="detalle.relleno">
                           <span class="badge badge-success">Si</span>
+                        </template>
+                        <template v-else>
+                          <span class="badge badge-danger">No</span>
+                        </template>
+                      </td>
+                      <td>
+                      <template v-if="detalle.combinado">
+                          <span class="badge badge-success">{{detalle.sabor}}</span>
                         </template>
                         <template v-else>
                           <span class="badge badge-danger">No</span>
@@ -489,7 +509,6 @@
     No tiene acceso
   </main> 
 </template>
-
 <script>
 export default {
   data() {
@@ -534,7 +553,8 @@ export default {
       producto: "",
       precio: 0,
       cantidad: 0,
-      descuento: 0
+      descuento: 0,
+      arraySabor: []
     };
   },
 
@@ -577,9 +597,21 @@ export default {
     }
   },
   methods: {
+    selectSabor() {
+      let me = this;
+      var url = "sabor/selectSabor";
+      axios
+        .get(url)
+        .then(function(response) {
+          //console.log(response);
+          var respuesta = response.data;
+          me.arraySabor = respuesta.sabores;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
     fecha(date) {
-      //return moment(date).format('LLL')
-      //return moment.locale("de").format('LLL');
       moment.locale("es");
       return moment(date).format("DD/MM/YYYY hh:mm a");
     },
@@ -690,7 +722,8 @@ export default {
             cantidad: me.cantidad,
             precio: me.precio,
             descuento: me.descuento,
-            relleno:0,
+            relleno:false,
+            combinado:0
           });
           me.codigo = "";
           me.idproducto = 0;
@@ -717,7 +750,8 @@ export default {
           cantidad: 1,
           precio: data["precio_venta"],
           descuento: 0,
-          relleno:0,
+          relleno:false,
+          combinado:0
         });
         me.errorMostrarMsjOrden = [];
       }
@@ -808,6 +842,7 @@ export default {
       me.arrayDetalle = [];
       me.errorMostrarMsjOrden = [];
       this.selectCliente();
+      this.selectSabor();
     },
     ocultarDetalle() {
       this.listado = 1;

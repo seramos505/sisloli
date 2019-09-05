@@ -72,6 +72,8 @@ class UserSeeder extends Seeder
         Permission::create(['name' => 'ver-orden']);
         Permission::create(['name' => 'desactivar-orden']);
 
+        Permission::create(['name' => 'listar-ingreso']);
+
 
         $role = Role::create(['name' => 'administrador']);
         foreach (Permission::all() as $permission) {

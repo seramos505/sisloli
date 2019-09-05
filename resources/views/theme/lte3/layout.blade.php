@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{asset("assets/$theme/plugins/fontawesome-free/css/all.min.css")}}">
     <!-- IonIcons -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- daterange picker -->
+    <link rel="stylesheet" href="{{asset("assets/$theme/plugins/daterangepicker/daterangepicker.css")}}">
     <!-- SweetAlert2 -->
     <link rel="stylesheet" href="{{asset("assets/$theme/plugins/sweetalert2/sweetalert2.min.css")}}">
     <!-- Toastr -->
@@ -69,6 +71,7 @@ to get the desired effect
     <script src="{{asset("assets/$theme/plugins/moment/moment.min.js")}}"></script>
     <script src="{{asset("assets/$theme/plugins/moment/locale/es.js")}}"></script>
     
+    
     <!-- AdminLTE -->
     <script src="{{asset("assets/$theme/dist/js/adminlte.js")}}"></script>
     <script src="{{asset("assets/js/scripts.js")}}"></script>
@@ -89,8 +92,10 @@ to get the desired effect
     <script src="js/app.js"></script>
     <!-- Select2 -->
     <script src="{{asset("assets/$theme/plugins/select2/js/select2.full.min.js")}}"></script>
-    
+    <!-- date-range-picker -->
+    <script src="{{asset("assets/$theme/plugins/daterangepicker/daterangepicker.js")}}"></script>
+    <!-- ChartJS -->
+    <script src="{{asset("assets/$theme/plugins/chart.js/Chart.min.js")}}"></script>
 
-    @yield("scripts")
 </body>
 </html>

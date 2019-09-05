@@ -19,12 +19,13 @@ Route::group(['middleware' => ['guest']], function () {
  
 
 Route::group(['middleware'=>['auth']],function(){
-    Route::get('/admin', 'SpaController@index')->name('admin');    
+    Route::get('/admin', 'SpaController@index');    
     Route::get('/categoria', 'SpaController@index');
     Route::get('/producto', 'SpaController@index');
     Route::get('/tamano', 'SpaController@index');
     Route::get('/sabor', 'SpaController@index');
-    Route::get('/orden', 'SpaController@index')->name('orden');;
+    Route::get('/orden', 'SpaController@index')->name('orden');
+    Route::get('/ventarango', 'SpaController@index')->name('ventarango');
 
     Route::get('/menu/listar', 'MenuController@getMenu');
     
@@ -78,5 +79,11 @@ Route::group(['middleware'=>['auth']],function(){
     Route::put('/orden/desactivar', 'OrdenController@desactivar');
     Route::get('/orden/obtenerCabecera', 'OrdenController@obtenerCabecera')->middleware('permission:ver-orden');
     Route::get('/orden/obtenerDetalles', 'OrdenController@obtenerDetalles')->middleware('permission:ver-orden'); 
+
+    Route::get('/ingreso/fecha', 'IngresoController@fecha');
+
+    Route::get('/grafico/ingreso_sabor', 'GraficosController@ingreso_sabor');
+
+
 });
 

@@ -18,6 +18,7 @@ class CreateSaborTable extends Migration
             $table->string('nombre', 50)->unique();
             $table->string('descripcion', 256)->nullable();
             $table->boolean('condicion')->default(1);
+            $table->string('color', 7);
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

@@ -23,6 +23,8 @@ class CreateOrdenDetalleTable extends Migration
             $table->decimal('precio', 11, 2);
             $table->decimal('descuento', 11, 2);
             $table->boolean('relleno')->default(0);
+            $table->integer('Combinado')->default(0);
+            //$table->foreign('Combinado')->references('id')->on('sabor');
             $table->timestamps();
             $table->charset = 'utf8mb4';
             $table->collation = 'utf8mb4_spanish_ci';

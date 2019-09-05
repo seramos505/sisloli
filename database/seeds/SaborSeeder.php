@@ -12,23 +12,23 @@ class SaborSeeder extends Seeder
      */
     public function run()
     {
-        $sabor = [
-            'LoliTropical',
-            'Dulce de Leche',
-            'Chocolate',
-            'Nancite',
-            'Tamarindo',
-            'Frambuesa',
-            'Piña',
-            'Coco',
-            'Fresa',          
-            'Mamon',
-            'Limon'
-
+        $sabores = [
+            ['nombre'=>'LoliTropical','color'=>'#48cf2f'],
+            ['nombre'=>'Dulce de Leche','color'=>'#48cf2f'],
+            ['nombre'=>'Chocolate','color'=>'#48cf2f'],
+            ['nombre'=>'Nancite','color'=>'#48cf2f'],
+            ['nombre'=>'Tamarindo','color'=>'#48cf2f'],
+            ['nombre'=>'Frambuesa','color'=>'#48cf2f'],
+            ['nombre'=>'Piña','color'=>'#48cf2f'],
+            ['nombre'=>'Coco','color'=>'#48cf2f'],
+            ['nombre'=>'Fresa','color'=>'#48cf2f'],
+            ['nombre'=>'Mamon','color'=>'#48cf2f'],
+            ['nombre'=>'Limon','color'=>'#48cf2f']
         ];
-        foreach($sabor as $key => $value){
+        foreach($sabores as $sabor){
             DB::table('sabor')->insert([
-                'nombre' => $value,
+                'nombre' => $sabor["nombre"],
+                'color' => $sabor["color"],
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]);
         }

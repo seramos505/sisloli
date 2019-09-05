@@ -24,8 +24,6 @@
         </template>               
     </li>
 </template>
-
-
 <script>
 export default {
     data() {

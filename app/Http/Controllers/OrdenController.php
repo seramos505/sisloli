@@ -75,12 +75,13 @@ class OrdenController extends Controller
         return ['orden' => $orden];
     }
     public function obtenerDetalles(Request $request){
-        if (!$request->ajax()) return redirect('/');
+        //if (!$request->ajax()) return redirect('/');
  
         $id = $request->id;
         $detalles = OrdenDetalle::join('producto','orden_detalle.idproducto','=','producto.id')
+        ->leftjoin('sabor','orden_detalle.combinado','=','sabor.id')
         ->select('orden_detalle.cantidad','orden_detalle.precio','orden_detalle.descuento','orden_detalle.relleno',
-        'producto.nombre as producto')
+        'producto.nombre as producto','orden_detalle.combinado','sabor.nombre as sabor')
         ->where('orden_detalle.idorden','=',$id)
         ->orderBy('orden_detalle.id', 'desc')->get();
          
@@ -114,7 +115,8 @@ class OrdenController extends Controller
                 $detalle->cantidad = $det['cantidad'];
                 $detalle->precio = $det['precio'];
                 $detalle->descuento = $det['descuento']; 
-                $detalle->relleno = $det['relleno'];         
+                $detalle->relleno = $det['relleno'];   
+                $detalle->combinado = $det['combinado'];       
                 $detalle->save();
             }          
            
