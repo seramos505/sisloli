@@ -100,17 +100,158 @@ const Plugins = [
   },
   // DataTables
   {
+    from: 'node_modules/pdfmake/build',
+    to: 'plugins/pdfmake'
+  },
+  {
+    from: 'node_modules/jszip/dist',
+    to: 'plugins/jszip'
+  },
+  {
     from: 'node_modules/datatables.net/js',
     to: 'plugins/datatables'
   },
   {
     from: 'node_modules/datatables.net-bs4/js',
-    to: 'plugins/datatables'
+    to: 'plugins/datatables-bs4/js'
   },
   {
     from: 'node_modules/datatables.net-bs4/css',
-    to: 'plugins/datatables'
+    to: 'plugins/datatables-bs4/css'
   },
+  {
+    from: 'node_modules/datatables.net-autofill/js',
+    to: 'plugins/datatables-autofill/js'
+  },
+  {
+    from: 'node_modules/datatables.net-autofill-bs4/js',
+    to: 'plugins/datatables-autofill/js'
+  },
+  {
+    from: 'node_modules/datatables.net-autofill-bs4/css',
+    to: 'plugins/datatables-autofill/css'
+  },
+  {
+    from: 'node_modules/datatables.net-buttons/js',
+    to: 'plugins/datatables-buttons/js'
+  },
+  {
+    from: 'node_modules/datatables.net-buttons-bs4/js',
+    to: 'plugins/datatables-buttons/js'
+  },
+  {
+    from: 'node_modules/datatables.net-buttons-bs4/css',
+    to: 'plugins/datatables-buttons/css'
+  },
+  {
+    from: 'node_modules/datatables.net-colreorder/js',
+    to: 'plugins/datatables-colreorder/js'
+  },
+  {
+    from: 'node_modules/datatables.net-colreorder-bs4/js',
+    to: 'plugins/datatables-colreorder/js'
+  },
+  {
+    from: 'node_modules/datatables.net-colreorder-bs4/css',
+    to: 'plugins/datatables-colreorder/css'
+  },
+  {
+    from: 'node_modules/datatables.net-fixedcolumns/js',
+    to: 'plugins/datatables-fixedcolumns/js'
+  },
+  {
+    from: 'node_modules/datatables.net-fixedcolumns-bs4/js',
+    to: 'plugins/datatables-fixedcolumns/js'
+  },
+  {
+    from: 'node_modules/datatables.net-fixedcolumns-bs4/css',
+    to: 'plugins/datatables-fixedcolumns/css'
+  },
+  {
+    from: 'node_modules/datatables.net-fixedheader/js',
+    to: 'plugins/datatables-fixedheader/js'
+  },
+  {
+    from: 'node_modules/datatables.net-fixedheader-bs4/js',
+    to: 'plugins/datatables-fixedheader/js'
+  },
+  {
+    from: 'node_modules/datatables.net-fixedheader-bs4/css',
+    to: 'plugins/datatables-fixedheader/css'
+  },
+  {
+    from: 'node_modules/datatables.net-keytable/js',
+    to: 'plugins/datatables-keytable/js'
+  },
+  {
+    from: 'node_modules/datatables.net-keytable-bs4/js',
+    to: 'plugins/datatables-keytable/js'
+  },
+  {
+    from: 'node_modules/datatables.net-keytable-bs4/css',
+    to: 'plugins/datatables-keytable/css'
+  },
+  {
+    from: 'node_modules/datatables.net-responsive/js',
+    to: 'plugins/datatables-responsive/js'
+  },
+  {
+    from: 'node_modules/datatables.net-responsive-bs4/js',
+    to: 'plugins/datatables-responsive/js'
+  },
+  {
+    from: 'node_modules/datatables.net-responsive-bs4/css',
+    to: 'plugins/datatables-responsive/css'
+  },
+  {
+    from: 'node_modules/datatables.net-rowgroup/js',
+    to: 'plugins/datatables-rowgroup/js'
+  },
+  {
+    from: 'node_modules/datatables.net-rowgroup-bs4/js',
+    to: 'plugins/datatables-rowgroup/js'
+  },
+  {
+    from: 'node_modules/datatables.net-rowgroup-bs4/css',
+    to: 'plugins/datatables-rowgroup/css'
+  },
+  {
+    from: 'node_modules/datatables.net-rowreorder/js',
+    to: 'plugins/datatables-rowreorder/js'
+  },
+  {
+    from: 'node_modules/datatables.net-rowreorder-bs4/js',
+    to: 'plugins/datatables-rowreorder/js'
+  },
+  {
+    from: 'node_modules/datatables.net-rowreorder-bs4/css',
+    to: 'plugins/datatables-rowreorder/css'
+  },
+  {
+    from: 'node_modules/datatables.net-scroller/js',
+    to: 'plugins/datatables-scroller/js'
+  },
+  {
+    from: 'node_modules/datatables.net-scroller-bs4/js',
+    to: 'plugins/datatables-scroller/js'
+  },
+  {
+    from: 'node_modules/datatables.net-scroller-bs4/css',
+    to: 'plugins/datatables-scroller/css'
+  },
+  {
+    from: 'node_modules/datatables.net-select/js',
+    to: 'plugins/datatables-select/js'
+  },
+  {
+    from: 'node_modules/datatables.net-select-bs4/js',
+    to: 'plugins/datatables-select/js'
+  },
+  {
+    from: 'node_modules/datatables.net-select-bs4/css',
+    to: 'plugins/datatables-select/css'
+  },
+
   // Fullcalendar
   {
     from: 'node_modules/@fullcalendar/core/',
@@ -147,9 +288,9 @@ const Plugins = [
     from: 'node_modules/ion-rangeslider/',
     to  : 'plugins/ion-rangeslider'
   },
-  // JQVMap
+  // JQVMap (jqvmap-novulnerability)
   {
-    from: 'node_modules/jqvmap/dist/',
+    from: 'node_modules/jqvmap-novulnerability/dist/',
     to  : 'plugins/jqvmap'
   },
   // jQuery Mapael
@@ -182,6 +323,10 @@ const Plugins = [
     from: 'node_modules/select2/dist/',
     to  : 'plugins/select2'
   },
+  {
+    from: 'node_modules/@ttskch/select2-bootstrap4-theme/dist/',
+    to  : 'plugins/select2-bootstrap4-theme'
+  },
   // Sparklines
   {
     from: 'node_modules/sparklines/source/',
@@ -192,56 +337,91 @@ const Plugins = [
     from: 'node_modules/sweetalert2/dist/',
     to  : 'plugins/sweetalert2'
   },
+  {
+    from: 'node_modules/@sweetalert2/theme-bootstrap-4/',
+    to  : 'plugins/sweetalert2-theme-bootstrap-4'
+  },
   // Toastr
   {
     from: 'node_modules/toastr/build/',
     to  : 'plugins/toastr'
   },
+  // jsGrid
+  {
+    from: 'node_modules/jsgrid/dist',
+    to: 'plugins/jsgrid'
+  },
+  {
+    from: 'node_modules/jsgrid/demos/',
+    to: 'plugins/jsgrid/demos'
+  },
+  // flag-icon-css
+  {
+    from: 'node_modules/flag-icon-css/css',
+    to: 'plugins/flag-icon-css/css'
+  },
+  {
+    from: 'node_modules/flag-icon-css/flags',
+    to: 'plugins/flag-icon-css/flags'
+  },
+  // bootstrap4-duallistbox
+  {
+    from: 'node_modules/bootstrap4-duallistbox/dist',
+    to: 'plugins/bootstrap4-duallistbox/'
+  },
+  // filterizr
+  {
+    from: 'node_modules/filterizr/dist',
+    to: 'plugins/filterizr/'
+  },
+  // ekko-lightbox
+  {
+    from: 'node_modules/ekko-lightbox/dist',
+    to: 'plugins/ekko-lightbox/'
+  },
 
-
-  // // Doc Assets
-  // // AdminLTE Dist
-  // {
-  //   from: 'dist/css',
-  //   to  : 'docs/assets/css'
-  // },
-  // {
-  //   from: 'dist/js',
-  //   to  : 'docs/assets/js'
-  // },
-  // // jQuery
-  // {
-  //   from: 'node_modules/jquery/dist',
-  //   to  : 'docs/assets/plugins/jquery'
-  // },
-  // // Popper
-  // {
-  //   from: 'node_modules/popper.js/dist',
-  //   to  : 'docs/assets/plugins/popper'
-  // },
-  // // Bootstrap
-  // {
-  //   from: 'node_modules/bootstrap/dist/js',
-  //   to  : 'docs/assets/plugins/bootstrap/js'
-  // },
-  // // Font Awesome
-  // {
-  //   from: 'node_modules/@fortawesome/fontawesome-free/css',
-  //   to  : 'docs/assets/plugins/fontawesome-free/css'
-  // },
-  // {
-  //   from: 'node_modules/@fortawesome/fontawesome-free/webfonts',
-  //   to  : 'docs/assets/plugins/fontawesome-free/webfonts'
-  // },
-  // // overlayScrollbars
-  // {
-  //   from: 'plugins/overlayScrollbars/js',
-  //   to  : 'docs/assets/plugins/overlayScrollbars/js'
-  // },
-  // {
-  //   from: 'plugins/overlayScrollbars/css',
-  //   to  : 'docs/assets/plugins/overlayScrollbars/css'
-  // }
+  // AdminLTE Dist
+  {
+    from: 'dist/css',
+    to  : 'docs/assets/css'
+  },
+  {
+    from: 'dist/js',
+    to  : 'docs/assets/js'
+  },
+  // jQuery
+  {
+    from: 'node_modules/jquery/dist',
+    to  : 'docs/assets/plugins/jquery'
+  },
+  // Popper
+  {
+    from: 'node_modules/popper.js/dist',
+    to  : 'docs/assets/plugins/popper'
+  },
+  // Bootstrap
+  {
+    from: 'node_modules/bootstrap/dist/js',
+    to  : 'docs/assets/plugins/bootstrap/js'
+  },
+  // Font Awesome
+  {
+    from: 'node_modules/@fortawesome/fontawesome-free/css',
+    to  : 'docs/assets/plugins/fontawesome-free/css'
+  },
+  {
+    from: 'node_modules/@fortawesome/fontawesome-free/webfonts',
+    to  : 'docs/assets/plugins/fontawesome-free/webfonts'
+  },
+  // overlayScrollbars
+  {
+    from: 'node_modules/overlayscrollbars/js',
+    to  : 'docs/assets/plugins/overlayScrollbars/js'
+  },
+  {
+    from: 'node_modules/overlayscrollbars/css',
+    to  : 'docs/assets/plugins/overlayScrollbars/css'
+  }
 ]
 
 module.exports = Plugins

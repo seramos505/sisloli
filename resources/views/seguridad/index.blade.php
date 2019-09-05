@@ -15,7 +15,7 @@
     <!-- icheck bootstrap -->
     <link rel="stylesheet" href="{{asset("assets/$theme/plugins/icheck-bootstrap/icheck-bootstrap.min.css")}}">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.css")}}">
+    <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.min.css")}}">
 
     <link rel="stylesheet" href="{{asset("assets/$theme/custom.css")}}">
 

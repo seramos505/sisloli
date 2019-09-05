@@ -364,7 +364,7 @@ export default {
             });
         } else if (
           // Read more about handling dismissals
-          result.dismiss === Swal.fire.DismissReason.cancel
+          result.dismiss === Swal.DismissReason.cancel
         ) {
         }
       });
@@ -404,7 +404,7 @@ export default {
             });
         } else if (
           // Read more about handling dismissals
-          result.dismiss === Swal.fire.DismissReason.cancel
+          result.dismiss === Swal.DismissReason.cancel
         ) {
         }
       });

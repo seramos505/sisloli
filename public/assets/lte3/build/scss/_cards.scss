@@ -1,13 +1,16 @@
-/*
- * Component: Box
- * --------------
- */
+//
+// Component: Cards
+//
 
 .card {
   @extend .mb-3;
   @include box-shadow($card-shadow);
 
   &.bg-dark {
+    .card-header {
+      border-color: $card-dark-border-color;
+    }
+
     &,
     .card-body {
       color: $white;
@@ -15,20 +18,20 @@
   }
 
   &.maximized-card {
-    z-index: 9999;
-    width: 100% !important;
     height: 100% !important;
-    max-width: 100% !important;
+    left: 0;
     max-height: 100% !important;
+    max-width: 100% !important;
     position: fixed;
     top: 0;
-    left: 0;
-    
+    width: 100% !important;
+    z-index: 9999;
+
     &.was-collapsed .card-body {
       display: block !important;
     }
 
-    [data-widget="collapse"] {
+    [data-widget='collapse'] {
       display: none;
     }
 
@@ -50,8 +53,9 @@
     > li {
       border-bottom: 1px solid $card-border-color;
       margin: 0;
+
       &:last-of-type {
-        border-bottom: none;
+        border-bottom: 0;
       }
     }
   }
@@ -78,74 +82,40 @@ html.maximized-card {
   overflow: hidden;
 }
 
-.card,
-.overlay-wrapper {
-  // Box overlay for LOADING STATE effect
-  > .overlay,
-  > .loading-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .overlay {
-    z-index: 50;
-    background: rgba(255, 255, 255, 0.7);
-    @include border-radius($border-radius);
-    > .fa, 
-    > .fas,
-    > .far,
-    > .fab {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-left: -15px;
-      margin-top: -15px;
-      color: #000;
-      font-size: 30px;
-    }
-  }
-
-  .overlay.dark {
-    background: rgba(0, 0, 0, 0.5);
-  }
-}
-
 // Add clearfix to header, body and footer
 .card-header,
 .card-body,
 .card-footer {
-  @include clearfix();
+  @include clearfix;
 }
 
 // Box header
 .card-header {
-  position: relative;
   background-color: transparent;
   border-bottom: 1px solid $card-border-color;
+  position: relative;
+  padding: (($card-spacer-y / 2) * 2) $card-spacer-x;
 
   @if $enable-rounded {
     @include border-top-radius($border-radius);
   }
 
   .collapsed-card & {
-    border-bottom: none;
+    border-bottom: 0;
   }
 
   > .card-tools {
-    position: absolute;
-    right: 1rem;
-    top: .5rem;
+    float: right;
+    margin-right: -$card-spacer-x/2;
 
-    [data-toggle="tooltip"] {
+    [data-toggle='tooltip'] {
       position: relative;
     }
   }
 }
 
 .card-title {
+  float: left;
   font-size: $card-title-font-size;
   font-weight: $card-title-font-weight;
   margin: 0;
@@ -153,10 +123,11 @@ html.maximized-card {
 
 // Box Tools Buttons
 .btn-tool {
-  padding: .25rem .5rem;
-  font-size: $font-size-sm;
   background: transparent;
   color: $gray-500;
+  font-size: $font-size-sm;
+  margin: -(($card-spacer-y / 2) * 2) 0;
+  padding: .25rem .5rem;
 
   .btn-group.show &,
   &:hover {
@@ -175,9 +146,11 @@ html.maximized-card {
   .no-header & {
     // @include border-top-radius($border-radius);
   }
+
   // Tables within the box body
   > .table {
     margin-bottom: 0;
+
     > thead > tr > th,
     > thead > tr > td {
       border-top-width: 0;
@@ -201,6 +174,7 @@ html.maximized-card {
 .chart-legend {
   @extend .list-unstyled;
   margin: 10px 0;
+
   > li {
     @media (max-width: map-get($grid-breakpoints, sm)) {
       float: left;
@@ -211,34 +185,41 @@ html.maximized-card {
 
 // Comment Box
 .card-comments {
-  background: #f7f7f7;
+  background: $gray-100;
+
   .card-comment {
-    @include clearfix();
+    @include clearfix;
+    border-bottom: 1px solid $gray-200;
     padding: 8px 0;
-    border-bottom: 1px solid #eee;
+
     &:last-of-type {
       border-bottom: 0;
     }
+
     &:first-of-type {
       padding-top: 0;
     }
+
     img {
       @extend .img-sm;
       float: left;
     }
   }
+
   .comment-text {
+    color: lighten($gray-700, 20%);
     margin-left: 40px;
-    color: #555;
   }
+
   .username {
-    color: #444;
+    color: $gray-700;
     display: block;
     font-weight: 600;
   }
+
   .text-muted {
-    font-weight: 400;
     font-size: 12px;
+    font-weight: 400;
   }
 }
 
@@ -247,18 +228,20 @@ html.maximized-card {
 
 // Widget: TODO LIST
 .todo-list {
-  margin: 0;
-  padding: 0;
   list-style: none;
+  margin: 0;
   overflow: auto;
+  padding: 0;
+
   // Todo list element
   > li {
     @include border-radius(2px);
-    padding: 10px;
-    background: #f4f4f4;
+    background: $gray-100;
+    border-left: 2px solid $gray-200;
+    color: $gray-700;
     margin-bottom: 2px;
-    border-left: 2px solid #e6e7e8;
-    color: #444;
+    padding: 10px;
+
     &:last-of-type {
       margin-bottom: 0;
     }
@@ -269,70 +252,68 @@ html.maximized-card {
 
     .text {
       display: inline-block;
-      margin-left: 5px;
       font-weight: 600;
+      margin-left: 5px;
     }
 
     // Time labels
-    .label {
+    .badge {
+      font-size: .7rem;
       margin-left: 10px;
-      font-size: 9px;
     }
 
     // Tools and options box
     .tools {
+      color: theme-color('danger');
       display: none;
       float: right;
-      color: theme-color("danger");
-      // icons
-      > .fa, 
-      > .fas, 
-      > .far, 
-      > .fab, 
-      > .glyphicon, 
-      > .ion {
-        margin-right: 5px;
-        cursor: pointer;
-      }
 
+      // icons
+      > .fa,
+      > .fas,
+      > .far,
+      > .fab,
+      > .glyphicon,
+      > .ion {
+        cursor: pointer;
+        margin-right: 5px;
+      }
     }
+
     &:hover .tools {
       display: inline-block;
     }
 
     &.done {
-      color: #999;
+      color: darken($gray-500, 25%);
+
       .text {
-        text-decoration: line-through;
         font-weight: 500;
+        text-decoration: line-through;
       }
 
-      .label {
+      .badge {
         background: $gray-500 !important;
       }
     }
   }
 
-  // Color varaity
-  .danger {
-    border-left-color: theme-color("danger");
+  // Color variants
+  @each $name, $color in $theme-colors {
+    .#{$name} {
+      border-left-color: $color;
+    }
   }
-  .warning {
-    border-left-color: theme-color("warning");
-  }
-  .info {
-    border-left-color: theme-color("info");
-  }
-  .success {
-    border-left-color: theme-color("success");
-  }
-  .primary {
-    border-left-color: theme-color("primary");
+
+  @each $name, $color in $colors {
+    .#{$name} {
+      border-left-color: $color;
+    }
   }
 
   .handle {
-    display: inline-block;
     cursor: move;
+    display: inline-block;
     margin: 0 5px;
   }
 }
@@ -344,58 +325,11 @@ html.maximized-card {
   max-width: 200px;
 }
 
+// Color variants
 @each $name, $color in $theme-colors {
-  .card-#{$name} {
-    &:not(.card-outline) {
-      .card-header {
-        background-color: $color;
-        border-bottom: 0;
-        &,
-        a {
-          color: color-yiq($color);
-        }
-      }
-    }
+  @include cards-variant($name, $color);
+}
 
-    &.card-outline {
-      border-top: 3px solid $color;
-    }
-  }
-
-  .bg-#{$name},
-  .bg-#{$name}-gradient,
-  .card-#{$name}:not(.card-outline) {
-    .btn-tool {
-      color: rgba(color-yiq($color), 0.8);
-      &:hover {
-        color: color-yiq($color);
-      }
-    }
-  }
-
-  .card.bg-#{$name},
-  .card.bg-#{$name}-gradient {
-    .bootstrap-datetimepicker-widget {
-      .table td,
-      .table th {
-        border: none;
-      }
-      
-      table thead tr:first-child th:hover,
-      table td.day:hover,
-      table td.hour:hover,
-      table td.minute:hover,
-      table td.second:hover {
-        background: darken($color, 8%);
-        color: color-yiq($color);
-      }
-
-
-      table td.active,
-      table td.active:hover {
-        background: lighten($color, 10%);
-        color: color-yiq($color);
-      }
-    }
-  }
+@each $name, $color in $colors {
+  @include cards-variant($name, $color);
 }

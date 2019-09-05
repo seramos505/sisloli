@@ -125,8 +125,8 @@ export default {
       arrayIngresos: [],
       TotalVenta: 0.0,
       TotalProd: 0,
-      FechaInicial: moment().format("YYYY-MM-DD 00:00:00"),
-      FechaFinal: moment().format("YYYY-MM-DD 23:00:00"),
+      FechaInicial: moment().format("YYYY-MM-DD 08:00:00"),
+      FechaFinal: moment().format("YYYY-MM-DD 17:00:00"),
       pagination: {
         total: 0,
         current_page: 0,
@@ -169,8 +169,7 @@ export default {
       me.listarIngreso(page, FechaInicial, FechaFinal);
     }
   },
-  mounted() {
-    
+  mounted() {    
     this.listarIngreso(1, this.FechaInicial, this.FechaFinal);
   },
   updated(){
@@ -178,21 +177,21 @@ export default {
     let me = this;
     $('#fechahora').daterangepicker({
         timePicker: true,
-        //timePickerIncrement: 15,
-        //startDate: moment().format("DD/MM/YYYY 10:00:00"),
-        //endDate: moment().format("DD/MM/YYYY 20:00:00"),
-        //"opens": "left",
+        timePickerIncrement: 15,
+        startDate: moment().format("DD/MM/YYYY 08:00:00"),
+        endDate: moment().format("DD/MM/YYYY 17:00:00"),
+        opens: "left",
         applyButtonClasses: "btn-success",
         cancelClass: "btn-danger",
         locale: {
-            format: 'DD/MM/YYYY hh:mm a',
+            format: 'DD/MM/YYYY hh:mm A',
             cancelLabel: 'Cancelar',
             applyLabel: 'Aplicar',
         }
     }, function (start, end, label) {
         //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        me.FechaInicial=start.format('YYYY-MM-DD hh:mm:ss');
-        me.FechaFinal=end.format('YYYY-MM-DD hh:mm:ss');
+        me.FechaInicial=start.format('YYYY-MM-DD HH:mm:ss');
+        me.FechaFinal=end.format('YYYY-MM-DD HH:mm:ss');
     });
     $("#fechahora").on("apply.daterangepicker", function(ev, picker) {
       me.listarIngreso(1, me.FechaInicial, me.FechaFinal);

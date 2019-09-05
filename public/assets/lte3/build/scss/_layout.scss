@@ -1,27 +1,29 @@
-/*
- * Core: General Layout Style
- * -------------------------
- */
+//
+// Core: Layout
+//
+
+html {
+  scroll-behavior: smooth;
+}
+
 html,
 body,
 .wrapper {
   min-height: 100%;
-  overflow-x: hidden;
 }
 
 .wrapper {
-  overflow: hidden;
   position: relative;
 
   & .content-wrapper {
-    min-height: calc(100vh - 112px);
+    min-height: calc(100vh - #{$main-header-height} - #{$main-footer-height});
   }
 
   .layout-boxed & {
-    @include box-shadow(0 0 10px rgba(0, 0, 0, .3));
+    @include box-shadow(0 0 10 rgba($black, .3));
 
     &,
-    &:before {
+    &::before {
       margin: 0 auto;
       max-width: $boxed-layout-max-width;
     }
@@ -31,30 +33,234 @@ body,
     }
   }
 
+  .layout-navbar-fixed.layout-fixed & {
+    .control-sidebar {
+      top: $main-header-height;
+    }
+    .sidebar {
+      margin-top: $main-header-height;
+    }
+  }
+
+  .layout-navbar-fixed.sidebar-collapse & {
+    .brand-link {
+      height: $main-header-height;
+      width: $sidebar-mini-width;
+    }
+  }
+
   .layout-navbar-fixed & {
+    .control-sidebar {
+      top: 0;
+    }
+
+    a.anchor {
+      display: block;
+      position: relative;
+      top: calc((#{$main-header-height-inner} + #{$main-header-bottom-border-width} + (#{$main-header-link-padding-y} * 2)) / -1);
+    }
+
+    .main-sidebar:hover {
+      .brand-link {
+        transition: width $transition-speed $transition-fn;
+        width: $sidebar-width;
+      }
+    }
+
+    .brand-link {
+      overflow: hidden;
+      position: fixed;
+      top: 0;
+      transition: width $transition-speed $transition-fn;
+      width: $sidebar-width;
+      z-index: $zindex-main-header + 1;
+    }
+
+    // Sidebar variants brand-link fix
+    @each $name, $color in $theme-colors {
+      .sidebar-dark-#{$name} .brand-link {
+        background-color: $sidebar-dark-bg;
+      }
+
+      .sidebar-light-#{$name} .brand-link {
+        background-color: $sidebar-light-bg;
+      }
+    }
+
     .content-wrapper {
-      margin-top: 57px;
+      margin-top: $main-header-height;
     }
 
     .main-header {
-      position: fixed;
-      z-index: $zindex-main-sidebar - 1;
-      top: 0;
-      right: 0;
       left: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: $zindex-main-header - 1;
+    }
+  }
+
+  .layout-navbar-not-fixed & {
+    .brand-link {
+      position: static;
+    }
+
+    .sidebar,
+    .content-wrapper {
+      margin-top: 0;
+    }
+
+    .main-header {
+      position: static;
+    }
+  }
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+      .layout#{$infix}-navbar-fixed.layout-fixed & {
+        .control-sidebar {
+          top: $main-header-height;
+        }
+        .sidebar {
+          margin-top: $main-header-height;
+        }
+      }
+
+      .layout#{$infix}-navbar-fixed & {
+        .control-sidebar {
+          top: 0;
+        }
+
+        a.anchor {
+          display: block;
+          position: relative;
+          top: calc((#{$main-header-height-inner} + #{$main-header-bottom-border-width} + (#{$main-header-link-padding-y} * 2)) / -1);
+        }
+
+        &.sidebar-collapse {
+          .brand-link {
+            height: $main-header-height;
+            transition: width $transition-speed $transition-fn;
+            width: $sidebar-mini-width;
+          }
+
+          .main-sidebar:hover {
+            .brand-link {
+              transition: width $transition-speed $transition-fn;
+              width: $sidebar-width;
+            }
+          }
+        }
+
+        .brand-link {
+          overflow: hidden;
+          position: fixed;
+          top: 0;
+          transition: width $transition-speed $transition-fn;
+          width: $sidebar-width;
+          z-index: $zindex-main-header + 1;
+        }
+
+        // Sidebar variants brand-link fix
+        @each $name, $color in $theme-colors {
+          .sidebar-dark-#{$name} .brand-link {
+            background-color: $sidebar-dark-bg;
+          }
+
+          .sidebar-light-#{$name} .brand-link {
+            background-color: $sidebar-light-bg;
+          }
+        }
+
+        .content-wrapper {
+          margin-top: $main-header-height;
+        }
+
+        .main-header {
+          left: 0;
+          position: fixed;
+          right: 0;
+          top: 0;
+          z-index: $zindex-main-sidebar - 1;
+        }
+      }
+
+      .layout#{$infix}-navbar-not-fixed & {
+        .brand-link {
+          position: static;
+        }
+
+        .sidebar,
+        .content-wrapper {
+          margin-top: 0;
+        }
+
+        .main-header {
+          position: static;
+        }
+      }
+
+    }
+  }
+
+  .layout-footer-fixed & {
+    .control-sidebar {
+      bottom: 0;
     }
   }
 
   .layout-footer-fixed & {
     .main-footer {
-      position: fixed;
-      z-index: $zindex-main-sidebar - 1;
       bottom: 0;
-      right: 0;
       left: 0;
+      position: fixed;
+      right: 0;
+      z-index: $zindex-main-footer;
     }
   }
 
+  .layout-footer-not-fixed & {
+    .main-footer {
+      position: static;
+    }
+
+    .content-wrapper {
+      margin-bottom: 0;
+    }
+  }
+
+  @each $breakpoint in map-keys($grid-breakpoints) {
+    @include media-breakpoint-up($breakpoint) {
+      $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+      .layout#{$infix}-footer-fixed & {
+        .control-sidebar {
+          bottom: 0;
+        }
+      }
+
+      .layout#{$infix}-footer-fixed & {
+        .main-footer {
+          bottom: 0;
+          left: 0;
+          position: fixed;
+          right: 0;
+          z-index: $zindex-main-footer;
+        }
+
+        .content-wrapper {
+          margin-bottom: $main-footer-height;
+        }
+      }
+
+      .layout#{$infix}-footer-not-fixed & {
+        .main-footer {
+          position: static;
+        }
+      }
+    }
+  }
 
   .layout-top-nav & {
     margin-left: 0;
@@ -69,7 +275,7 @@ body,
       height: 33px;
     }
 
-    & .main-sidebar{
+    & .main-sidebar {
       display: none;
     }
 
@@ -97,7 +303,7 @@ body,
 
   @include media-breakpoint-down(sm) {
     &,
-    &:before {
+    &::before {
       margin-left: 0;
     }
   }
@@ -113,7 +319,7 @@ body,
 
 .main-sidebar {
   &,
-  &:before {
+  &::before {
     $local-sidebar-transition: margin-left $transition-speed $transition-fn, width $transition-speed $transition-fn;
     @include transition($local-sidebar-transition);
     width: $sidebar-width;
@@ -121,21 +327,25 @@ body,
 
   .sidebar-collapse & {
     &,
-    &:before {
+    &::before {
       margin-left: -$sidebar-width;
+    }
+
+    .nav-sidebar.nav-child-indent .nav-treeview {
+      padding: 0;
     }
   }
 
   @include media-breakpoint-down(sm) {
     &,
-    &:before {
-      box-shadow: none!important;
+    &::before {
+      box-shadow: none !important;
       margin-left: -$sidebar-width;
     }
 
     .sidebar-open & {
       &,
-      &:before {
+      &::before {
         margin-left: 0;
       }
     }
@@ -144,73 +354,45 @@ body,
 
 :not(.layout-fixed) {
   .main-sidebar {
-    position: absolute;
-    top: 0;
     height: inherit;
     min-height: 100%;
-  }
-}
-
-.layout-navbar-fixed {
-
-  &.sidebar-collapse {
-    .brand-link {
-      transition: width $transition-speed $transition-fn;
-      width: $sidebar-mini-width;
-      height: 57px;
-    }
-
-    .main-sidebar:hover {
-      .brand-link {
-        transition: width $transition-speed $transition-fn;
-        width: $sidebar-width;
-      }
-    }
-  }
-
-
-  .sidebar {
-    margin-top: 57px;
-  }
-
-  .brand-link {
-    transition: width $transition-speed $transition-fn;
-    position: fixed;
-    overflow: hidden;
+    position: absolute;
     top: 0;
-    z-index: $zindex-main-sidebar + 1;
-    width: $sidebar-width;
-  }
-
-  // Sidebar variants
-  @each $name, $color in $theme-colors {
-    .sidebar-dark-#{$name} .brand-link {
-      background-color: $sidebar-dark-bg;
-    }
-
-    .sidebar-light-#{$name} .brand-link {
-      background-color: $sidebar-light-bg;
-    }
   }
 }
 
 .layout-fixed {
+  .brand-link {
+    width: $sidebar-width;
+  }
+
   .main-sidebar {
+    bottom: 0;
+    float: none;
+    height: 100vh;
+    left: 0;
+    position: fixed;
+    top: 0;
+  }
+
+  .control-sidebar {
+    bottom: 0;
+    float: none;
     height: 100vh;
     position: fixed;
     top: 0;
-    left: 0;
-    bottom: 0;
-    float: none;
-  } 
+
+    .control-sidebar-content {
+      height: calc(100vh - #{$main-header-height});
+    }
+  }
 }
 
-
 .main-footer {
-  padding: $main-footer-padding;
-  color: #555;
-  border-top: $main-footer-border-top;
   background: $main-footer-bg;
+  border-top: $main-footer-border-top;
+  color: lighten($gray-700, 25%);
+  padding: $main-footer-padding;
 }
 
 .content-header {
@@ -220,18 +402,23 @@ body,
     font-size: 1.8rem;
     margin: 0;
   }
+
   .breadcrumb {
-    margin-bottom: 0;
-    padding: 0;
     background: transparent;
     line-height: 1.8rem;
+    margin-bottom: 0;
+    padding: 0;
   }
 }
 
 .hold-transition {
   .content-wrapper,
   .main-header,
+  .main-sidebar,
+  .main-sidebar *,
+  .control-sidebar,
+  .control-sidebar *,
   .main-footer {
-    transition: none!important;
+    transition: none !important;
   }
 }

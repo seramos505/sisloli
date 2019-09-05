@@ -257,19 +257,19 @@
                       <td>{{detalle.precio*detalle.cantidad-detalle.descuento}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="6" align="right">
+                      <td colspan="7" align="right">
                         <strong>Total Parcial:</strong>
                       </td>
                       <td>C$ {{totalParcial=(total-totalImpuesto).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="6" align="right">
+                      <td colspan="7" align="right">
                         <strong>Total Impuesto:</strong>
                       </td>
                       <td>C$ {{totalImpuesto=((total*impuesto)/(1+impuesto)).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="6" align="right">
+                      <td colspan="7" align="right">
                         <strong>Total Neto:</strong>
                       </td>
                       <td>C$ {{total=calcularTotal}}</td>
@@ -277,7 +277,7 @@
                   </tbody>
                   <tbody v-else>
                     <tr>
-                      <td colspan="7">No hay productos agregados</td>
+                      <td colspan="8">No hay productos agregados</td>
                     </tr>
                   </tbody>
                 </table>
@@ -350,19 +350,19 @@
                       <td>{{detalle.precio*detalle.cantidad-detalle.descuento}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="5" align="right">
+                      <td colspan="6" align="right">
                         <strong>Total Parcial:</strong>
                       </td>
                       <td>C$ {{totalParcial=(total-totalImpuesto).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="5" align="right">
+                      <td colspan="6" align="right">
                         <strong>Total Impuesto:</strong>
                       </td>
                       <td>C$ {{totalImpuesto=(total*impuesto).toFixed(2)}}</td>
                     </tr>
                     <tr style="background-color: #CEECF5;">
-                      <td colspan="5" align="right">
+                      <td colspan="6" align="right">
                         <strong>Total Neto:</strong>
                       </td>
                       <td>C$ {{total}}</td>
@@ -370,7 +370,7 @@
                   </tbody>
                   <tbody v-else>
                     <tr>
-                      <td colspan="6">No hay productos agregados</td>
+                      <td colspan="8">No hay productos agregados</td>
                     </tr>
                   </tbody>
                 </table>
@@ -935,7 +935,7 @@ export default {
             });
         } else if (
           // Read more about handling dismissals
-          result.dismiss === Swal.fire.DismissReason.cancel
+          result.dismiss === Swal.DismissReason.cancel
         ) {
         }
       });

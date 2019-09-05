@@ -19,7 +19,7 @@ Route::group(['middleware' => ['guest']], function () {
  
 
 Route::group(['middleware'=>['auth']],function(){
-    Route::get('/admin', 'SpaController@index');    
+    Route::get('/admin', 'SpaController@index')->name('admin');;    
     Route::get('/categoria', 'SpaController@index');
     Route::get('/producto', 'SpaController@index');
     Route::get('/tamano', 'SpaController@index');

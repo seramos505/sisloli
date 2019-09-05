@@ -25,7 +25,7 @@
     @yield("css-optional")
     
     <!-- Theme style -->    
-    <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.css")}}">
+    <link rel="stylesheet" href="{{asset("assets/$theme/dist/css/adminlte.min.css")}}">
 
     <link rel="stylesheet" href="{{asset("assets/$theme/custom.css")}}">
 
@@ -71,9 +71,9 @@ to get the desired effect
     <script src="{{asset("assets/$theme/plugins/moment/moment.min.js")}}"></script>
     <script src="{{asset("assets/$theme/plugins/moment/locale/es.js")}}"></script>
     
-    
+
     <!-- AdminLTE -->
-    <script src="{{asset("assets/$theme/dist/js/adminlte.js")}}"></script>
+    <script src="{{asset("assets/$theme/dist/js/adminlte.min.js")}}"></script>
     <script src="{{asset("assets/js/scripts.js")}}"></script>
 
     <!-- CONSULTAR TODOS LOS PERMISOS QUE TIENE EL USUARIO -->
@@ -86,10 +86,9 @@ to get the desired effect
         @endauth
     </script>
     <!-- OPTIONAL SCRIPTS -->
-
-
     <!-- SCRIPTS -->
     <script src="js/app.js"></script>
+
     <!-- Select2 -->
     <script src="{{asset("assets/$theme/plugins/select2/js/select2.full.min.js")}}"></script>
     <!-- date-range-picker -->

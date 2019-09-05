@@ -4,8 +4,8 @@
 <aside class="main-sidebar elevation-4 sidebar-dark-info" style="background-color: #1f2d3d;">
   <!-- Brand Logo -->
   <div class="brand-link navbar-info pl-1">
-    <img src="{{asset("assets/$theme/dist/img/logo-transparente.png")}}" alt="LOLI Logo" class="brand-image ml-0">
-    <span class="">RASPADOS <b>LOLI</b></span>
+    <img src="{{asset("images/logo-transparente.png")}}" alt="LOLI Logo" class="brand-image ml-0">    
+    <a href="{{ route('admin') }}" class="text-white">RASPADOS <b>LOLI</b></a>
   </div>
 
   <!-- Sidebar -->

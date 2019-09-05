@@ -22,6 +22,7 @@ const Layout = (($) => {
 
   const Selector = {
     HEADER         : '.main-header',
+    MAIN_SIDEBAR   : '.main-sidebar',
     SIDEBAR        : '.main-sidebar .sidebar',
     CONTENT        : '.content-wrapper',
     BRAND          : '.brand-link',
@@ -33,12 +34,13 @@ const Layout = (($) => {
   }
 
   const ClassName = {
-    HOLD         : 'hold-transition',
-    SIDEBAR      : 'main-sidebar',
-    CONTENT_FIXED: 'content-fixed',
-    LAYOUT_FIXED : 'layout-fixed',
-    NAVBAR_FIXED : 'layout-navbar-fixed',
-    FOOTER_FIXED : 'layout-footer-fixed',
+    HOLD           : 'hold-transition',
+    SIDEBAR        : 'main-sidebar',
+    CONTENT_FIXED  : 'content-fixed',
+    SIDEBAR_FOCUSED: 'sidebar-focused',
+    LAYOUT_FIXED   : 'layout-fixed',
+    NAVBAR_FIXED   : 'layout-navbar-fixed',
+    FOOTER_FIXED   : 'layout-footer-fixed',
   }
 
   const Default = {
@@ -75,18 +77,9 @@ const Layout = (($) => {
       if ($('body').hasClass(ClassName.LAYOUT_FIXED)) {
         $(Selector.CONTENT).css('min-height', max - heights.header - heights.footer)
         // $(Selector.SIDEBAR).css('min-height', max - heights.header)
-        $(Selector.CONTROL_SIDEBAR + ' .control-sidebar-content').css('height', max - heights.header)
         
         if (typeof $.fn.overlayScrollbars !== 'undefined') {
           $(Selector.SIDEBAR).overlayScrollbars({
-            className       : this._config.scrollbarTheme,
-            sizeAutoCapable : true,
-            scrollbars : {
-              autoHide: this._config.scrollbarAutoHide, 
-              clickScrolling : true
-            }
-          })
-          $(Selector.CONTROL_SIDEBAR + ' .control-sidebar-content').overlayScrollbars({
             className       : this._config.scrollbarTheme,
             sizeAutoCapable : true,
             scrollbars : {
@@ -102,17 +95,6 @@ const Layout = (($) => {
           $(Selector.CONTENT).css('min-height', heights.sidebar - heights.header)
         }
       }
-      if ($('body').hasClass(ClassName.NAVBAR_FIXED)) {
-          $(Selector.BRAND).css('height', heights.header)
-          $(Selector.SIDEBAR).css('margin-top', heights.header)
-          $(Selector.SIDEBAR).css('margin-top', heights.header)
-      }
-      if ($('body').hasClass(ClassName.FOOTER_FIXED)) {
-        $(Selector.CONTENT).css('margin-bottom', heights.footer)
-      }
-      if ($('body').hasClass(ClassName.CONTENT_FIXED)) {
-        $(Selector.CONTENT).css('height', $(Selector.CONTENT).css('min-height'))
-      } 
     }
 
     // Private
@@ -174,6 +156,14 @@ const Layout = (($) => {
 
   $(window).on('load', () => {
     Layout._jQueryInterface.call($('body'))
+  })
+
+  $(Selector.SIDEBAR + ' a').on('focusin', () => {
+    $(Selector.MAIN_SIDEBAR).addClass(ClassName.SIDEBAR_FOCUSED);
+  })
+
+  $(Selector.SIDEBAR + ' a').on('focusout', () => {
+    $(Selector.MAIN_SIDEBAR).removeClass(ClassName.SIDEBAR_FOCUSED);
   })
 
   /**

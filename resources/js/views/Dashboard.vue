@@ -23,16 +23,13 @@
                 <h3 class="card-title">Donut Chart</h3>
 
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-widget="collapse">
-                    <i class="fas fa-minus"></i>
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-tool" data-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
                 </div>
               </div>
               <div class="card-body">
-                <canvas id="donutChart" style="height:230px"></canvas>
+                <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
               </div>
               <!-- /.card-body -->
             </div>
@@ -44,20 +41,18 @@
                 <h3 class="card-title">Pie Chart</h3>
 
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-widget="collapse">
-                    <i class="fas fa-minus"></i>
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-tool" data-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
                 </div>
               </div>
               <div class="card-body">
-                <canvas id="pieChart" style="height:230px"></canvas>
+                <canvas id="pieChart" style="height:230px; min-height:230px"></canvas>
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
+
           </div>
           <!-- /.col (LEFT) -->
           <div class="col-md-6">
@@ -67,17 +62,14 @@
                 <h3 class="card-title">Line Chart</h3>
 
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-widget="collapse">
-                    <i class="fas fa-minus"></i>
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-tool" data-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
                 </div>
               </div>
               <div class="card-body">
                 <div class="chart">
-                  <canvas id="lineChart" style="height:250px"></canvas>
+                  <canvas id="lineChart" style="height:250px; min-height:250px"></canvas>
                 </div>
               </div>
               <!-- /.card-body -->
@@ -90,28 +82,26 @@
                 <h3 class="card-title">Bar Chart</h3>
 
                 <div class="card-tools">
-                  <button type="button" class="btn btn-tool" data-widget="collapse">
-                    <i class="fas fa-minus"></i>
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-tool" data-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
                 </div>
               </div>
               <div class="card-body">
                 <div class="chart">
-                  <canvas id="barChart" style="height:230px"></canvas>
+                  <canvas id="barChart" style="height:230px; min-height:230px"></canvas>
                 </div>
               </div>
               <!-- /.card-body -->
             </div>
             <!-- /.card -->
+
+
           </div>
           <!-- /.col (RIGHT) -->
         </div>
         <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
+      </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
   </main>
@@ -147,8 +137,9 @@ export default {
                 datasets: [
                     {
                         label: 'Sabor',
-                        backgroundColor: ['#d1a077','#4ead40','#26862a','#982ddf','#25da7e','#46a9ab','#b03ded',
-                        '#4115aa','#691f72','#04c27b','#c6ad38'],
+                        // backgroundColor: ['#d1a077','#4ead40','#26862a','#982ddf','#25da7e','#46a9ab','#b03ded',
+                        // '#4115aa','#691f72','#04c27b','#c6ad38'],
+                        backgroundColor: responseData.map(item => item.color),
                         data: responseData.map(item => item.total)
                     }                    
                 ]

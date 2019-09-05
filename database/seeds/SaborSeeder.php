@@ -13,16 +13,16 @@ class SaborSeeder extends Seeder
     public function run()
     {
         $sabores = [
-            ['nombre'=>'LoliTropical','color'=>'#48cf2f'],
-            ['nombre'=>'Dulce de Leche','color'=>'#48cf2f'],
-            ['nombre'=>'Chocolate','color'=>'#48cf2f'],
-            ['nombre'=>'Nancite','color'=>'#48cf2f'],
-            ['nombre'=>'Tamarindo','color'=>'#48cf2f'],
-            ['nombre'=>'Frambuesa','color'=>'#48cf2f'],
-            ['nombre'=>'Piña','color'=>'#48cf2f'],
-            ['nombre'=>'Coco','color'=>'#48cf2f'],
-            ['nombre'=>'Fresa','color'=>'#48cf2f'],
-            ['nombre'=>'Mamon','color'=>'#48cf2f'],
+            ['nombre'=>'LoliTropical','color'=>'#00755e'],
+            ['nombre'=>'Dulce de Leche','color'=>'#603d02'],
+            ['nombre'=>'Chocolate','color'=>'#45322e'],
+            ['nombre'=>'Nancite','color'=>'#faed27'],
+            ['nombre'=>'Tamarindo','color'=>'#4e3b31'],
+            ['nombre'=>'Frambuesa','color'=>'#c51d34'],
+            ['nombre'=>'Piña','color'=>'#f2e8cc'],
+            ['nombre'=>'Coco','color'=>'#9a8c84'],
+            ['nombre'=>'Fresa','color'=>'#ff0080'],
+            ['nombre'=>'Mamon','color'=>'#ff8000'],
             ['nombre'=>'Limon','color'=>'#48cf2f']
         ];
         foreach($sabores as $sabor){

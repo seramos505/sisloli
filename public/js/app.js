@@ -2568,7 +2568,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === Swal.fire.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     },
     activarCategoria: function activarCategoria(id) {
@@ -2599,7 +2599,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === Swal.fire.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     },
     validarCategoria: function validarCategoria() {
@@ -2775,16 +2775,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2807,7 +2797,11 @@ __webpack_require__.r(__webpack_exports__);
           }),
           datasets: [{
             label: 'Sabor',
-            backgroundColor: ['#d1a077', '#4ead40', '#26862a', '#982ddf', '#25da7e', '#46a9ab', '#b03ded', '#4115aa', '#691f72', '#04c27b', '#c6ad38'],
+            // backgroundColor: ['#d1a077','#4ead40','#26862a','#982ddf','#25da7e','#46a9ab','#b03ded',
+            // '#4115aa','#691f72','#04c27b','#c6ad38'],
+            backgroundColor: responseData.map(function (item) {
+              return item.color;
+            }),
             data: responseData.map(function (item) {
               return item.total;
             })
@@ -3870,7 +3864,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === Swal.fire.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     }
   },
@@ -4292,8 +4286,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           })["catch"](function (error) {
             console.log(error);
           });
-        } else if ( // Read more about handling dismissals
-        result.dismiss === Swal.fire.DismissReason.cancel) {}
+        } else if ( // Read more about handling dismissals          
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     },
     activarproducto: function activarproducto(id) {
@@ -4324,7 +4318,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === Swal.fire.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     },
     validarproducto: function validarproducto() {
@@ -4719,7 +4713,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === Swal.fire.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     },
     activarsabor: function activarsabor(id) {
@@ -4750,7 +4744,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === Swal.fire.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     },
     validarsabor: function validarsabor() {
@@ -5119,7 +5113,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === Swal.fire.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     },
     activartamano: function activartamano(id) {
@@ -5150,7 +5144,7 @@ __webpack_require__.r(__webpack_exports__);
             console.log(error);
           });
         } else if ( // Read more about handling dismissals
-        result.dismiss === Swal.fire.DismissReason.cancel) {}
+        result.dismiss === Swal.DismissReason.cancel) {}
       });
     },
     validartamano: function validartamano() {
@@ -5343,8 +5337,8 @@ __webpack_require__.r(__webpack_exports__);
       arrayIngresos: [],
       TotalVenta: 0.0,
       TotalProd: 0,
-      FechaInicial: moment().format("YYYY-MM-DD 00:00:00"),
-      FechaFinal: moment().format("YYYY-MM-DD 23:00:00"),
+      FechaInicial: moment().format("YYYY-MM-DD 08:00:00"),
+      FechaFinal: moment().format("YYYY-MM-DD 17:00:00"),
       pagination: {
         total: 0,
         current_page: 0,
@@ -5385,21 +5379,21 @@ __webpack_require__.r(__webpack_exports__);
     var me = this;
     $('#fechahora').daterangepicker({
       timePicker: true,
-      //timePickerIncrement: 15,
-      //startDate: moment().format("DD/MM/YYYY 10:00:00"),
-      //endDate: moment().format("DD/MM/YYYY 20:00:00"),
-      //"opens": "left",
+      timePickerIncrement: 15,
+      startDate: moment().format("DD/MM/YYYY 08:00:00"),
+      endDate: moment().format("DD/MM/YYYY 17:00:00"),
+      opens: "left",
       applyButtonClasses: "btn-success",
       cancelClass: "btn-danger",
       locale: {
-        format: 'DD/MM/YYYY hh:mm a',
+        format: 'DD/MM/YYYY hh:mm A',
         cancelLabel: 'Cancelar',
         applyLabel: 'Aplicar'
       }
     }, function (start, end, label) {
       //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-      me.FechaInicial = start.format('YYYY-MM-DD hh:mm:ss');
-      me.FechaFinal = end.format('YYYY-MM-DD hh:mm:ss');
+      me.FechaInicial = start.format('YYYY-MM-DD HH:mm:ss');
+      me.FechaFinal = end.format('YYYY-MM-DD HH:mm:ss');
     });
     $("#fechahora").on("apply.daterangepicker", function (ev, picker) {
       me.listarIngreso(1, me.FechaInicial, me.FechaFinal);
@@ -42361,7 +42355,10 @@ var staticRenderFns = [
                       "button",
                       {
                         staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-widget": "collapse" }
+                        attrs: {
+                          type: "button",
+                          "data-card-widget": "collapse"
+                        }
                       },
                       [_c("i", { staticClass: "fas fa-minus" })]
                     ),
@@ -42370,7 +42367,7 @@ var staticRenderFns = [
                       "button",
                       {
                         staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-widget": "remove" }
+                        attrs: { type: "button", "data-card-widget": "remove" }
                       },
                       [_c("i", { staticClass: "fas fa-times" })]
                     )
@@ -42379,7 +42376,7 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("div", { staticClass: "card-body" }, [
                   _c("canvas", {
-                    staticStyle: { height: "230px" },
+                    staticStyle: { height: "230px", "min-height": "230px" },
                     attrs: { id: "donutChart" }
                   })
                 ])
@@ -42396,7 +42393,10 @@ var staticRenderFns = [
                       "button",
                       {
                         staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-widget": "collapse" }
+                        attrs: {
+                          type: "button",
+                          "data-card-widget": "collapse"
+                        }
                       },
                       [_c("i", { staticClass: "fas fa-minus" })]
                     ),
@@ -42405,7 +42405,7 @@ var staticRenderFns = [
                       "button",
                       {
                         staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-widget": "remove" }
+                        attrs: { type: "button", "data-card-widget": "remove" }
                       },
                       [_c("i", { staticClass: "fas fa-times" })]
                     )
@@ -42414,7 +42414,7 @@ var staticRenderFns = [
                 _vm._v(" "),
                 _c("div", { staticClass: "card-body" }, [
                   _c("canvas", {
-                    staticStyle: { height: "230px" },
+                    staticStyle: { height: "230px", "min-height": "230px" },
                     attrs: { id: "pieChart" }
                   })
                 ])
@@ -42433,7 +42433,10 @@ var staticRenderFns = [
                       "button",
                       {
                         staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-widget": "collapse" }
+                        attrs: {
+                          type: "button",
+                          "data-card-widget": "collapse"
+                        }
                       },
                       [_c("i", { staticClass: "fas fa-minus" })]
                     ),
@@ -42442,7 +42445,7 @@ var staticRenderFns = [
                       "button",
                       {
                         staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-widget": "remove" }
+                        attrs: { type: "button", "data-card-widget": "remove" }
                       },
                       [_c("i", { staticClass: "fas fa-times" })]
                     )
@@ -42452,7 +42455,7 @@ var staticRenderFns = [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "chart" }, [
                     _c("canvas", {
-                      staticStyle: { height: "250px" },
+                      staticStyle: { height: "250px", "min-height": "250px" },
                       attrs: { id: "lineChart" }
                     })
                   ])
@@ -42470,7 +42473,10 @@ var staticRenderFns = [
                       "button",
                       {
                         staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-widget": "collapse" }
+                        attrs: {
+                          type: "button",
+                          "data-card-widget": "collapse"
+                        }
                       },
                       [_c("i", { staticClass: "fas fa-minus" })]
                     ),
@@ -42479,7 +42485,7 @@ var staticRenderFns = [
                       "button",
                       {
                         staticClass: "btn btn-tool",
-                        attrs: { type: "button", "data-widget": "remove" }
+                        attrs: { type: "button", "data-card-widget": "remove" }
                       },
                       [_c("i", { staticClass: "fas fa-times" })]
                     )
@@ -42489,7 +42495,7 @@ var staticRenderFns = [
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "chart" }, [
                     _c("canvas", {
-                      staticStyle: { height: "230px" },
+                      staticStyle: { height: "230px", "min-height": "230px" },
                       attrs: { id: "barChart" }
                     })
                   ])
@@ -44188,7 +44194,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "6", align: "right" } }, [
+    return _c("td", { attrs: { colspan: "7", align: "right" } }, [
       _c("strong", [_vm._v("Total Parcial:")])
     ])
   },
@@ -44196,7 +44202,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "6", align: "right" } }, [
+    return _c("td", { attrs: { colspan: "7", align: "right" } }, [
       _c("strong", [_vm._v("Total Impuesto:")])
     ])
   },
@@ -44204,7 +44210,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "6", align: "right" } }, [
+    return _c("td", { attrs: { colspan: "7", align: "right" } }, [
       _c("strong", [_vm._v("Total Neto:")])
     ])
   },
@@ -44213,7 +44219,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "7" } }, [
+      _c("td", { attrs: { colspan: "8" } }, [
         _vm._v("No hay productos agregados")
       ])
     ])
@@ -44244,7 +44250,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "5", align: "right" } }, [
+    return _c("td", { attrs: { colspan: "6", align: "right" } }, [
       _c("strong", [_vm._v("Total Parcial:")])
     ])
   },
@@ -44252,7 +44258,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "5", align: "right" } }, [
+    return _c("td", { attrs: { colspan: "6", align: "right" } }, [
       _c("strong", [_vm._v("Total Impuesto:")])
     ])
   },
@@ -44260,7 +44266,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "5", align: "right" } }, [
+    return _c("td", { attrs: { colspan: "6", align: "right" } }, [
       _c("strong", [_vm._v("Total Neto:")])
     ])
   },
@@ -44269,7 +44275,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("td", { attrs: { colspan: "6" } }, [
+      _c("td", { attrs: { colspan: "8" } }, [
         _vm._v("No hay productos agregados")
       ])
     ])
@@ -62308,15 +62314,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************!*\
   !*** ./resources/js/views/Dashboard.vue ***!
   \******************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Dashboard_vue_vue_type_template_id_1f79daf6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=template&id=1f79daf6& */ "./resources/js/views/Dashboard.vue?vue&type=template&id=1f79daf6&");
 /* harmony import */ var _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Dashboard.vue?vue&type=script&lang=js& */ "./resources/js/views/Dashboard.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _Dashboard_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -62346,7 +62351,7 @@ component.options.__file = "resources/js/views/Dashboard.vue"
 /*!*******************************************************************!*\
   !*** ./resources/js/views/Dashboard.vue?vue&type=script&lang=js& ***!
   \*******************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
