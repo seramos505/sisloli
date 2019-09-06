@@ -83,6 +83,7 @@ Route::group(['middleware'=>['auth']],function(){
     Route::get('/ingreso/fecha', 'IngresoController@fecha');
 
     Route::get('/grafico/ingreso_sabor', 'GraficosController@ingreso_sabor');
+    Route::get('/grafico/ingreso_sabor_mes', 'GraficosController@ingreso_sabor_mes');
 
 
 });

@@ -20,16 +20,38 @@
             <!-- DONUT CHART -->
             <div class="card card-danger">
               <div class="card-header">
-                <h3 class="card-title">Donut Chart</h3>
+                <h3 class="card-title">Ventas por Sabor</h3>
 
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  
                 </div>
               </div>
-              <div class="card-body">
+              <!-- <div class="card-body">
                 <canvas id="donutChart" style="height:230px; min-height:230px"></canvas>
+              </div> -->
+
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <div class="chart-responsive">
+                      <canvas id="donutChart" height="250"></canvas>
+                    </div>
+                    <!-- ./chart-responsive -->
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-md-4">
+                    <ul  class="chart-legend clearfix">
+                      <li v-for="(item,index) in arrayingreso_sabor" :key="index">
+                        <i class="fas fa-ice-cream" :style="{color:item.color}" >
+                        </i> {{item.sabor}}: <span class="badge text-white" :style="{'background-color':item.color}">{{item.total}}</span>
+                      </li>                      
+                    </ul>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
               </div>
               <!-- /.card-body -->
             </div>
@@ -43,7 +65,7 @@
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  
                 </div>
               </div>
               <div class="card-body">
@@ -64,7 +86,7 @@
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  
                 </div>
               </div>
               <div class="card-body">
@@ -84,7 +106,7 @@
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
                   </button>
-                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                  
                 </div>
               </div>
               <div class="card-body">
@@ -113,10 +135,10 @@ export default {
   
   data() {
     return {
-      arrayIngresos: [],    
+      arrayingreso_sabor: [],    
       chartData: '',
-      FechaInicial: moment().format("YYYY-MM-DD HH:mm:ss"),
-      FechaFinal: moment().subtract(6, 'days').format("YYYY-MM-DD HH:mm:ss"),
+      FechaInicial: moment().subtract(6, 'days').format("YYYY-MM-DD HH:mm:ss"),
+      FechaFinal: moment().format("YYYY-MM-DD HH:mm:ss"),
     };
   },
 
@@ -132,7 +154,8 @@ export default {
         .get(url)
         .then(function(response) {
             var responseData = response.data;
-            //me.arrayIngresos = respuesta.ingresos.data;  
+            me.arrayingreso_sabor = responseData;  
+            console.log(me.arrayingreso_sabor);
             me.chartData = {
                 labels: responseData.map(item => item.sabor),
                 datasets: [
@@ -153,11 +176,14 @@ export default {
             var donutOptions     = {
                 maintainAspectRatio : false,
                 responsive : true,
+                legend: {
+                  display: false
+                }
             }
             //Create pie or douhnut chart
             // You can switch between pie and douhnut using the method below.
             var donutChart = new Chart(donutChartCanvas, {
-                type: 'doughnut',
+                type: 'pie',
                 data: me.chartData,
                 options: donutOptions      
             })
@@ -184,31 +210,27 @@ export default {
       datasets: [
         {
           label               : 'Digital Goods',
-          backgroundColor     : 'rgba(60,141,188,0.9)',
-          borderColor         : 'rgba(60,141,188,0.8)',
-          pointRadius          : false,
-          pointColor          : '#3b8bba',
-          pointStrokeColor    : 'rgba(60,141,188,1)',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(60,141,188,1)',
-          data                : [28, 48, 40, 19, 86, 27, 90]
+         borderColor: "#ff0000 ",
+        fill: false,  
+          data                : [28, 48, 40, 19, 86, 27, 120]
         },
         {
           label               : 'Electronics',
-          backgroundColor     : 'rgba(210, 214, 222, 1)',
-          borderColor         : 'rgba(210, 214, 222, 1)',
-          pointRadius         : false,
-          pointColor          : 'rgba(210, 214, 222, 1)',
-          pointStrokeColor    : '#c1c7d1',
-          pointHighlightFill  : '#fff',
-          pointHighlightStroke: 'rgba(220,220,220,1)',
+         borderColor: "#e8c3b9",
+        fill: false,
           data                : [65, 59, 80, 81, 56, 55, 40]
+        },
+        {
+          label               : 'Silvio',
+         borderColor: "#f045c2",
+        fill: false,
+          data                : [35, 51, 90, 11, 120,0 , 90]
         },
       ]
     }
 
     var areaChartOptions = {
-      maintainAspectRatio : false,
+      maintainAspectRatio : true,
       responsive : true,
       legend: {
         display: false
@@ -216,12 +238,12 @@ export default {
       scales: {
         xAxes: [{
           gridLines : {
-            display : false,
+            display : true,
           }
         }],
         yAxes: [{
           gridLines : {
-            display : false,
+            display : true,
           }
         }]
       }
@@ -235,14 +257,12 @@ export default {
     var lineChartCanvas = $('#lineChart').get(0).getContext('2d')
     var lineChartOptions = areaChartOptions
     var lineChartData = areaChartData
-    lineChartData.datasets[0].fill = false;
-    lineChartData.datasets[1].fill = false;
-    lineChartOptions.datasetFill = false
+
 
     var lineChart = new Chart(lineChartCanvas, { 
       type: 'line',
       data: lineChartData, 
-      options: lineChartOptions
+      options: lineChartOptions 
     })
 
     //-------------
