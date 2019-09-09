@@ -25,11 +25,13 @@ class IngresoController extends Controller
         ->select('orden.id as orden','orden_detalle.id','orden_detalle.cantidad','orden_detalle.precio','orden_detalle.descuento','orden_detalle.relleno',
                 'producto.nombre as producto','orden_detalle.combinado','sabor.nombre as sabor')
         ->whereBetween('orden.fecha_hora', [$FechaInicial, $FechaFinal])
+        ->where('orden.estado','=','Registrado')
         ->orderBy('orden.id', 'desc')->paginate(15);   
         
-        $TotalVenta = Orden::join('orden_detalle','orden.id','=','orden_detalle.idorden')
-        ->select(DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total'))
+        $totales = Orden::join('orden_detalle','orden.id','=','orden_detalle.idorden')
+        ->select(DB::raw('sum(orden_detalle.cantidad) as TotalProd'),DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as TotalVenta'))
         ->whereBetween('orden.fecha_hora', [$FechaInicial, $FechaFinal])
+        ->where('orden.estado','=','Registrado')
         //->get();
         // ->pluck('total');
         ->first();
@@ -44,7 +46,7 @@ class IngresoController extends Controller
                 'to'           => $ingresos->lastItem(),
             ],
             'ingresos' => $ingresos,
-            'TotalVenta'=>$TotalVenta->total,
+            'totales'=>$totales,
         ];
     }
 }

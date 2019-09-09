@@ -45,3 +45,6 @@
     background-color: #e83e8c;
     border-color: #b52265;
   }
+  option:disabled {
+    color: #CCCCCC;
+  }

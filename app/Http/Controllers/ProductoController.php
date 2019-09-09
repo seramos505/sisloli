@@ -58,14 +58,18 @@ class ProductoController extends Controller
         
         if ($buscar==''){
             $productos = Producto::join('categoria','producto.idcategoria','=','categoria.id')
-            ->select('producto.id','producto.idcategoria','producto.codigo','producto.nombre','categoria.nombre as nombre_categoria','producto.precio_venta','producto.stock','producto.descripcion','producto.condicion')
+            ->select('producto.id','producto.idcategoria','producto.codigo','producto.nombre',
+            'categoria.nombre as nombre_categoria','producto.precio_venta','producto.stock','producto.descripcion',
+            'producto.condicion','producto.idsabor')
             //->where('producto.stock','>','0')
             ->where('producto.condicion','=','1')
             ->orderBy('producto.id', 'desc')->paginate(5);
         }
         else{
             $productos = Producto::join('categoria','producto.idcategoria','=','categoria.id')
-            ->select('producto.id','producto.idcategoria','producto.codigo','producto.nombre','categoria.nombre as nombre_categoria','producto.precio_venta','producto.stock','producto.descripcion','producto.condicion')
+            ->select('producto.id','producto.idcategoria','producto.codigo','producto.nombre',
+            'categoria.nombre as nombre_categoria','producto.precio_venta','producto.stock','producto.descripcion',
+            'producto.condicion','producto.idsabor')
             ->where('producto.'.$criterio, 'like', '%'. $buscar . '%')
             //->where('producto.stock','>','0')
             ->where('producto.condicion','=','1')
@@ -90,7 +94,7 @@ class ProductoController extends Controller
 
         $filtro = $request->filtro;
         $productos = Producto::where('codigo','=', $filtro)
-        ->select('id', 'nombre','stock','precio_venta')
+        ->select('id', 'nombre','stock','precio_venta','idsabor')
         //->where('stock','>','0')
         ->where('condicion','=','1')
         ->orderBy('nombre', 'asc')->take(1)->get();

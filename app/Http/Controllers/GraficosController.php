@@ -28,8 +28,31 @@ class GraficosController extends Controller
         //->selectRaw('sabor.nombre as sabor,sabor.color as color,sum(orden_detalle.cantidad) as total')    
         ->select('sabor.nombre as sabor','sabor.color as color',DB::raw('sum(orden_detalle.cantidad) as total'))
         //->whereBetween('orden.fecha_hora', [$FechaInicial, $FechaFinal])
-        ->groupby('sabor.id')
+        ->groupby('sabor.nombre')
         ->orderBy('total', 'desc')->get();          
+
+        return $ingresos; 
+        
+    }
+
+    public function ingreso_tamano(Request $request)
+    {
+        //if (!$request->ajax()) return redirect('/');
+ 
+        
+        $FechaInicial=Carbon::parse($request->FechaInicial)->format('Y-m-d H:i:s');
+        $FechaFinal = Carbon::parse($request->FechaFinal)->format('Y-m-d H:i:s');
+        
+        
+        $ingresos = Orden::join('orden_detalle','orden.id','=','orden_detalle.idorden')
+        ->join('producto','orden_detalle.idproducto','=','producto.id')   
+        ->rightjoin('tamano','producto.idtamano','=','tamano.id')  
+        //cualquier select funciona
+        //->selectRaw('sabor.nombre as sabor,sabor.color as color,sum(orden_detalle.cantidad) as total')    
+        ->select('tamano.nombre as tamano',DB::raw('sum(orden_detalle.cantidad) as total'))
+        //->whereBetween('orden.fecha_hora', [$FechaInicial, $FechaFinal])
+        ->groupby('tamano.id')
+        ->orderBy('tamano', 'desc')->get();          
 
         return $ingresos; 
         

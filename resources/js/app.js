@@ -124,4 +124,7 @@ const app = new Vue({
     components:{App},
     router
 });
+// Vue.config.devtools = false
+// Vue.config.debug = false
+// Vue.config.silent = true
 

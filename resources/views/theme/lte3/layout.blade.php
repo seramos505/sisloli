@@ -80,7 +80,7 @@ to get the desired effect
     <script>
         @auth
             window.Permissions = {!! json_encode(Auth::user()->allPermissions, true) !!};
-            console.log(window.Permissions);
+            //console.log(window.Permissions);
         @else
             window.Permissions = [];
         @endauth

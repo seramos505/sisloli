@@ -2,43 +2,81 @@
   <main class="main" v-if="$can('listar-ingreso')">
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
-      <div class="card">
+      <div class="card mt-3">
         <div class="card-header">
           <h3 class="float-left">
-            <i class="fas fa-th-list"></i> Ingresos por Fecha
+            <i class="fas fa-th-list"></i> Ingresos
           </h3>
         </div>
         <div class="card-body">
-          <div class="form-group row">
+          <div class="row">
             <div class="col-md-6">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text">
-                    <i class="far fa-clock"></i>
-                  </span>
+              <div class="form-group">
+                <label>Rango:</label>
+                <div class="d-flex">
+                  <div class="input-group mr-1">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text">
+                        <i class="far fa-calendar"></i>
+                      </span>
+                    </div>
+                    <input type="text" class="form-control float-right" id="fechahora" />
+                  </div>
+                  <button
+                    type="submit"
+                    @click="listarIngreso(1,FechaInicial,FechaFinal)"
+                    class="btn btn-primary"
+                  >
+                    <i class="fas fa-search"></i>
+                  </button>
                 </div>
-                <input
-                  type="text"
-                  class="form-control float-right"
-                  id="fechahora"               
-                />
-                <button
-                  type="submit"
-                  @click="listarIngreso(1,FechaInicial,FechaFinal)"
-                  class="btn btn-primary">
-                  <i class="fas fa-search"></i> Obtener
-                </button>                
               </div>
             </div>
-            <!-- {{FechaInicial}} -{{FechaFinal}} -->
+
             <div class="col-md-6">
               <div class="row">
-                <div class="col-sm-6 col-12">
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="text-input">Sabor:</label>
+                    <div>
+                      <select class="form-control" v-model="idsabor">
+                        <option value="0" disabled>Seleccione el Sabor</option>
+                        <option
+                          v-for="sabor in arraySabor"
+                          :key="sabor.id"
+                          :value="sabor.id"
+                          v-text="sabor.nombre"></option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="form-group">
+                    <label class="form-control-label" for="text-input">Tamaño:</label>
+                    <div>
+                      <select class="form-control" v-model="idtamano">
+                        <option value="0" disabled>Seleccione el Tamaño</option>
+                        <option
+                          v-for="tamano in arrayTamano"
+                          :key="tamano.id"
+                          :value="tamano.id"
+                          v-text="tamano.nombre"></option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-sm-6 col-6">
                   <div class="info-box">
                     <span class="info-box-icon bg-info">
                       <i class="fab fa-product-hunt"></i>
                     </span>
-
                     <div class="info-box-content">
                       <span class="info-box-text">Productos</span>
                       <span class="info-box-number">{{TotalProd}}</span>
@@ -46,12 +84,11 @@
                     <!-- /.info-box-content -->
                   </div>
                 </div>
-                <div class="col-sm-6 col-12">
+                <div class="col-sm-6 col-6">
                   <div class="info-box">
                     <span class="info-box-icon bg-success">
                       <i class="far fa-money-bill-alt"></i>
                     </span>
-
                     <div class="info-box-content">
                       <span class="info-box-text">Total Neto</span>
                       <span class="info-box-number">C$ {{TotalVenta}}</span>
@@ -123,10 +160,12 @@ export default {
   data() {
     return {
       arrayIngresos: [],
+      arrayTamano: [],
+      arraySabor: [],
       TotalVenta: 0.0,
       TotalProd: 0,
       FechaInicial: moment().format("YYYY-MM-DD 08:00:00"),
-      FechaFinal: moment().format("YYYY-MM-DD 17:00:00"),
+      FechaFinal: moment().format("YYYY-MM-DD 20:00:00"),
       pagination: {
         total: 0,
         current_page: 0,
@@ -154,8 +193,36 @@ export default {
           var respuesta = response.data;
           me.arrayIngresos = respuesta.ingresos.data;
           me.pagination = respuesta.pagination;
-          me.TotalVenta = respuesta.TotalVenta;
-          me.TotalProd = respuesta.pagination.total;
+          me.TotalVenta = respuesta.totales.TotalVenta;
+          me.TotalProd = respuesta.totales.TotalProd;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    selectTamano() {
+      let me = this;
+      var url = "tamano/selectTamano";
+      axios
+        .get(url)
+        .then(function(response) {
+          //console.log(response);
+          var respuesta = response.data;
+          me.arrayTamano = respuesta.tamanos;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    },
+    selectSabor() {
+      let me = this;
+      var url = "sabor/selectSabor";
+      axios
+        .get(url)
+        .then(function(response) {
+          //console.log(response);
+          var respuesta = response.data;
+          me.arraySabor = respuesta.sabores;
         })
         .catch(function(error) {
           console.log(error);
@@ -169,30 +236,35 @@ export default {
       me.listarIngreso(page, FechaInicial, FechaFinal);
     }
   },
-  mounted() {    
+  mounted() {
     this.listarIngreso(1, this.FechaInicial, this.FechaFinal);
+    this.selectSabor();
+    this.selectTamano();
   },
-  updated(){
+  updated() {
     //Date range picker with time picker
     let me = this;
-    $('#fechahora').daterangepicker({
+    $("#fechahora").daterangepicker(
+      {
         timePicker: true,
         timePickerIncrement: 15,
-        startDate: moment().format("DD/MM/YYYY 08:00:00"),
-        endDate: moment().format("DD/MM/YYYY 17:00:00"),
+        startDate: moment(me.FechaInicial).format("DD/MM/YYYY 08:00:00"),
+        endDate: moment(me.FechaFinal).format("DD/MM/YYYY 20:00:00"),
         opens: "left",
         applyButtonClasses: "btn-success",
         cancelClass: "btn-danger",
         locale: {
-            format: 'DD/MM/YYYY hh:mm A',
-            cancelLabel: 'Cancelar',
-            applyLabel: 'Aplicar',
+          format: "DD/MM/YYYY hh:mm A",
+          cancelLabel: "Cancelar",
+          applyLabel: "Aplicar"
         }
-    }, function (start, end, label) {
+      },
+      function(start, end, label) {
         //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        me.FechaInicial=start.format('YYYY-MM-DD HH:mm:ss');
-        me.FechaFinal=end.format('YYYY-MM-DD HH:mm:ss');
-    });
+        me.FechaInicial = start.format("YYYY-MM-DD HH:mm:ss");
+        me.FechaFinal = end.format("YYYY-MM-DD HH:mm:ss");
+      }
+    );
     $("#fechahora").on("apply.daterangepicker", function(ev, picker) {
       me.listarIngreso(1, me.FechaInicial, me.FechaFinal);
     });

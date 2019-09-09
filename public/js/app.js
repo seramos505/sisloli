@@ -2755,55 +2755,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       arrayingreso_sabor: [],
-      chartData: '',
-      FechaInicial: moment().subtract(6, 'days').format("YYYY-MM-DD HH:mm:ss"),
+      saborchartData: "",
+      FechaInicial: moment().subtract(6, "days").format("YYYY-MM-DD HH:mm:ss"),
       FechaFinal: moment().format("YYYY-MM-DD HH:mm:ss")
     };
   },
@@ -2814,13 +2771,12 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(url).then(function (response) {
         var responseData = response.data;
         me.arrayingreso_sabor = responseData;
-        console.log(me.arrayingreso_sabor);
-        me.chartData = {
+        me.saborchartData = {
           labels: responseData.map(function (item) {
             return item.sabor;
           }),
           datasets: [{
-            label: 'Sabor',
+            label: "Sabor",
             // backgroundColor: ['#d1a077','#4ead40','#26862a','#982ddf','#25da7e','#46a9ab','#b03ded',
             // '#4115aa','#691f72','#04c27b','#c6ad38'],
             backgroundColor: responseData.map(function (item) {
@@ -2835,20 +2791,61 @@ __webpack_require__.r(__webpack_exports__);
         //-------------
         // Get context with jQuery - using jQuery's .get() method.
 
-        var donutChartCanvas = $('#donutChart').get(0).getContext('2d');
-        var donutOptions = {
+        var saborChartCanvas = $("#saborChart").get(0).getContext("2d");
+        var saborOptions = {
           maintainAspectRatio: false,
           responsive: true,
           legend: {
             display: false
-          } //Create pie or douhnut chart
-          // You can switch between pie and douhnut using the method below.
+          }
+        }; //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
 
-        };
-        var donutChart = new Chart(donutChartCanvas, {
-          type: 'pie',
-          data: me.chartData,
-          options: donutOptions
+        var saborChart = new Chart(saborChartCanvas, {
+          type: "pie",
+          data: me.saborchartData,
+          options: saborOptions
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    ingreso_tamano: function ingreso_tamano(FechaInicial, FechaFinal) {
+      var me = this;
+      var url = "grafico/ingreso_tamano?FechaInicial=" + FechaInicial + "&FechaFinal=" + FechaFinal;
+      axios.get(url).then(function (response) {
+        var responseData = response.data; // me.arrayingreso_sabor = responseData;
+
+        me.tamanochartData = {
+          labels: responseData.map(function (item) {
+            return item.tamano;
+          }),
+          datasets: [{
+            label: "Tamano",
+            backgroundColor: ["#f56954", "#00a65a", "#f39c12"],
+            data: responseData.map(function (item) {
+              return item.total;
+            })
+          }]
+        }; //-------------
+        //- DONUT CHART -
+        //-------------
+        // Get context with jQuery - using jQuery's .get() method.
+
+        var tamanoChartCanvas = $("#tamanoChart").get(0).getContext("2d");
+        var tamanoOptions = {
+          maintainAspectRatio: false,
+          responsive: true,
+          legend: {
+            display: true
+          }
+        }; //Create pie or douhnut chart
+        // You can switch between pie and douhnut using the method below.
+
+        var tamanoChart = new Chart(tamanoChartCanvas, {
+          type: "doughnut",
+          data: me.tamanochartData,
+          options: tamanoOptions
         });
       })["catch"](function (error) {
         console.log(error);
@@ -2858,133 +2855,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var me = this;
     me.ingreso_sabor(this.FechaInicial, this.FechaFinal);
-    $(function () {
-      var areaChartData = {
-        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-        datasets: [{
-          label: 'Digital Goods',
-          borderColor: "#ff0000 ",
-          fill: false,
-          data: [28, 48, 40, 19, 86, 27, 120]
-        }, {
-          label: 'Electronics',
-          borderColor: "#e8c3b9",
-          fill: false,
-          data: [65, 59, 80, 81, 56, 55, 40]
-        }, {
-          label: 'Silvio',
-          borderColor: "#f045c2",
-          fill: false,
-          data: [35, 51, 90, 11, 120, 0, 90]
-        }]
-      };
-      var areaChartOptions = {
-        maintainAspectRatio: true,
-        responsive: true,
-        legend: {
-          display: false
-        },
-        scales: {
-          xAxes: [{
-            gridLines: {
-              display: true
-            }
-          }],
-          yAxes: [{
-            gridLines: {
-              display: true
-            }
-          }]
-        } //-------------
-        //- LINE CHART -
-        //--------------
-
-      };
-      var lineChartCanvas = $('#lineChart').get(0).getContext('2d');
-      var lineChartOptions = areaChartOptions;
-      var lineChartData = areaChartData;
-      var lineChart = new Chart(lineChartCanvas, {
-        type: 'line',
-        data: lineChartData,
-        options: lineChartOptions
-      }); //-------------
-      //- DONUT CHART -
-      //-------------
-      // Get context with jQuery - using jQuery's .get() method.
-      // var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
-
-      var donutData = {
-        labels: ['Chrome', 'IE', 'FireFox', 'Safari', 'Opera', 'Navigator'],
-        datasets: [{
-          data: [700, 500, 400, 600, 300, 100],
-          backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc', '#d2d6de']
-        }]
-      };
-      console.log(donutData); // var donutOptions     = {
-      //   maintainAspectRatio : false,
-      //   responsive : true,
-      // }
-      //Create pie or douhnut chart
-      // You can switch between pie and douhnut using the method below.
-      // var donutChart = new Chart(donutChartCanvas, {
-      //   type: 'doughnut',
-      //   data: donutData,
-      //   options: donutOptions      
-      // })
-      //-------------
-      //- PIE CHART -
-      //-------------
-      // Get context with jQuery - using jQuery's .get() method.
-
-      var pieChartCanvas = $('#pieChart').get(0).getContext('2d');
-      var pieData = donutData;
-      var pieOptions = {
-        maintainAspectRatio: false,
-        responsive: true //Create pie or douhnut chart
-        // You can switch between pie and douhnut using the method below.
-
-      };
-      var pieChart = new Chart(pieChartCanvas, {
-        type: 'pie',
-        data: pieData,
-        options: pieOptions
-      }); //-------------
-      //- BAR CHART -
-      //-------------
-
-      var barChartCanvas = $('#barChart').get(0).getContext('2d');
-      var barChartData = jQuery.extend(true, {}, areaChartData);
-      var temp0 = areaChartData.datasets[0];
-      var temp1 = areaChartData.datasets[1];
-      barChartData.datasets[0] = temp1;
-      barChartData.datasets[1] = temp0;
-      var barChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        datasetFill: false
-      };
-      var barChart = new Chart(barChartCanvas, {
-        type: 'bar',
-        data: barChartData,
-        options: barChartOptions
-      }); //---------------------
-      //- STACKED BAR CHART -
-      //---------------------
-
-      var stackedBarChartData = jQuery.extend(true, {}, barChartData);
-      var stackedBarChartOptions = {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          xAxes: [{
-            stacked: true
-          }],
-          yAxes: [{
-            stacked: true
-          }]
-        }
-      };
-    });
+    me.ingreso_tamano(this.FechaInicial, this.FechaFinal);
   }
 });
 
@@ -2999,6 +2870,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -3554,7 +3426,8 @@ __webpack_require__.r(__webpack_exports__);
       precio: 0,
       cantidad: 0,
       descuento: 0,
-      arraySabor: []
+      arraySabor: [],
+      idsabor: 0
     };
   },
   computed: {
@@ -3647,6 +3520,7 @@ __webpack_require__.r(__webpack_exports__);
           me.idproducto = me.arrayProducto[0]["id"];
           me.precio = me.arrayProducto[0]["precio_venta"];
           me.cantidad = 1;
+          me.idsabor = me.arrayProducto[0]["idsabor"];
           $("#agregarDetalle").focus();
         } else {
           me.producto = "No existe este producto";
@@ -3706,7 +3580,8 @@ __webpack_require__.r(__webpack_exports__);
             precio: me.precio,
             descuento: me.descuento,
             relleno: false,
-            combinado: 0
+            combinado: 0,
+            idsabor: me.idsabor
           });
           me.codigo = "";
           me.idproducto = 0;
@@ -3736,7 +3611,8 @@ __webpack_require__.r(__webpack_exports__);
           precio: data["precio_venta"],
           descuento: 0,
           relleno: false,
-          combinado: 0
+          combinado: 0,
+          idsabor: data["idsabor"]
         });
         me.errorMostrarMsjOrden = [];
       }
@@ -5350,14 +5226,53 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       arrayIngresos: [],
+      arrayTamano: [],
+      arraySabor: [],
       TotalVenta: 0.0,
       TotalProd: 0,
       FechaInicial: moment().format("YYYY-MM-DD 08:00:00"),
-      FechaFinal: moment().format("YYYY-MM-DD 17:00:00"),
+      FechaFinal: moment().format("YYYY-MM-DD 20:00:00"),
       pagination: {
         total: 0,
         current_page: 0,
@@ -5376,8 +5291,30 @@ __webpack_require__.r(__webpack_exports__);
         var respuesta = response.data;
         me.arrayIngresos = respuesta.ingresos.data;
         me.pagination = respuesta.pagination;
-        me.TotalVenta = respuesta.TotalVenta;
-        me.TotalProd = respuesta.pagination.total;
+        me.TotalVenta = respuesta.totales.TotalVenta;
+        me.TotalProd = respuesta.totales.TotalProd;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    selectTamano: function selectTamano() {
+      var me = this;
+      var url = "tamano/selectTamano";
+      axios.get(url).then(function (response) {
+        //console.log(response);
+        var respuesta = response.data;
+        me.arrayTamano = respuesta.tamanos;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    selectSabor: function selectSabor() {
+      var me = this;
+      var url = "sabor/selectSabor";
+      axios.get(url).then(function (response) {
+        //console.log(response);
+        var respuesta = response.data;
+        me.arraySabor = respuesta.sabores;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -5392,27 +5329,29 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.listarIngreso(1, this.FechaInicial, this.FechaFinal);
+    this.selectSabor();
+    this.selectTamano();
   },
   updated: function updated() {
     //Date range picker with time picker
     var me = this;
-    $('#fechahora').daterangepicker({
+    $("#fechahora").daterangepicker({
       timePicker: true,
       timePickerIncrement: 15,
-      startDate: moment().format("DD/MM/YYYY 08:00:00"),
-      endDate: moment().format("DD/MM/YYYY 17:00:00"),
+      startDate: moment(me.FechaInicial).format("DD/MM/YYYY 08:00:00"),
+      endDate: moment(me.FechaFinal).format("DD/MM/YYYY 20:00:00"),
       opens: "left",
       applyButtonClasses: "btn-success",
       cancelClass: "btn-danger",
       locale: {
-        format: 'DD/MM/YYYY hh:mm A',
-        cancelLabel: 'Cancelar',
-        applyLabel: 'Aplicar'
+        format: "DD/MM/YYYY hh:mm A",
+        cancelLabel: "Cancelar",
+        applyLabel: "Aplicar"
       }
     }, function (start, end, label) {
       //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-      me.FechaInicial = start.format('YYYY-MM-DD HH:mm:ss');
-      me.FechaFinal = end.format('YYYY-MM-DD HH:mm:ss');
+      me.FechaInicial = start.format("YYYY-MM-DD HH:mm:ss");
+      me.FechaFinal = end.format("YYYY-MM-DD HH:mm:ss");
     });
     $("#fechahora").on("apply.daterangepicker", function (ev, picker) {
       me.listarIngreso(1, me.FechaInicial, me.FechaFinal);
@@ -42365,7 +42304,11 @@ var render = function() {
                             staticClass: "fas fa-ice-cream",
                             style: { color: item.color }
                           }),
-                          _vm._v(" " + _vm._s(item.sabor) + ": "),
+                          _vm._v(
+                            "\n                      " +
+                              _vm._s(item.sabor) +
+                              ":\n                      "
+                          ),
                           _c(
                             "span",
                             {
@@ -42381,19 +42324,13 @@ var render = function() {
                   ])
                 ])
               ])
-            ]),
-            _vm._v(" "),
-            _vm._m(3)
+            ])
           ]),
           _vm._v(" "),
-          _vm._m(4)
+          _vm._m(3)
         ])
       ])
-    ]),
-    _vm._v(" "),
-    _vm._v(
-      "\n  " + _vm._s(_vm.FechaInicial) + " to " + _vm._s(_vm.FechaFinal) + "\n"
-    )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -42436,35 +42373,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-md-8" }, [
       _c("div", { staticClass: "chart-responsive" }, [
-        _c("canvas", { attrs: { id: "donutChart", height: "250" } })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card card-danger" }, [
-      _c("div", { staticClass: "card-header" }, [
-        _c("h3", { staticClass: "card-title" }, [_vm._v("Pie Chart")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-tools" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-tool",
-              attrs: { type: "button", "data-card-widget": "collapse" }
-            },
-            [_c("i", { staticClass: "fas fa-minus" })]
-          )
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card-body" }, [
-        _c("canvas", {
-          staticStyle: { height: "230px", "min-height": "230px" },
-          attrs: { id: "pieChart" }
-        })
+        _c("canvas", { attrs: { id: "saborChart", height: "250" } })
       ])
     ])
   },
@@ -42475,7 +42384,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-md-6" }, [
       _c("div", { staticClass: "card card-info" }, [
         _c("div", { staticClass: "card-header" }, [
-          _c("h3", { staticClass: "card-title" }, [_vm._v("Line Chart")]),
+          _c("h3", { staticClass: "card-title" }, [_vm._v("Venta por Tamano")]),
           _vm._v(" "),
           _c("div", { staticClass: "card-tools" }, [
             _c(
@@ -42490,38 +42399,10 @@ var staticRenderFns = [
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "chart" }, [
-            _c("canvas", {
-              staticStyle: { height: "250px", "min-height": "250px" },
-              attrs: { id: "lineChart" }
-            })
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "card card-success" }, [
-        _c("div", { staticClass: "card-header" }, [
-          _c("h3", { staticClass: "card-title" }, [_vm._v("Bar Chart")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-tools" }, [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-tool",
-                attrs: { type: "button", "data-card-widget": "collapse" }
-              },
-              [_c("i", { staticClass: "fas fa-minus" })]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "chart" }, [
-            _c("canvas", {
-              staticStyle: { height: "230px", "min-height": "230px" },
-              attrs: { id: "barChart" }
-            })
-          ])
+          _c("canvas", {
+            staticStyle: { height: "250px", "min-height": "250px" },
+            attrs: { id: "tamanoChart" }
+          })
         ])
       ])
     ])
@@ -43375,6 +43256,11 @@ var render = function() {
                                                 ) {
                                                   return _c("option", {
                                                     key: sabor.id,
+                                                    attrs: {
+                                                      disabled:
+                                                        sabor.id ==
+                                                        detalle.idsabor
+                                                    },
                                                     domProps: {
                                                       value: sabor.id,
                                                       textContent: _vm._s(
@@ -46277,49 +46163,179 @@ var render = function() {
   return _vm.$can("listar-ingreso")
     ? _c("main", { staticClass: "main" }, [
         _c("div", { staticClass: "container-fluid" }, [
-          _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "card mt-3" }, [
             _vm._m(0),
             _vm._v(" "),
             _c(
               "div",
               { staticClass: "card-body" },
               [
-                _c("div", { staticClass: "form-group row" }, [
+                _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-6" }, [
-                    _c("div", { staticClass: "input-group" }, [
-                      _vm._m(1),
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", [_vm._v("Rango:")]),
                       _vm._v(" "),
-                      _c("input", {
-                        staticClass: "form-control float-right",
-                        attrs: { type: "text", id: "fechahora" }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-primary",
-                          attrs: { type: "submit" },
-                          on: {
-                            click: function($event) {
-                              return _vm.listarIngreso(
-                                1,
-                                _vm.FechaInicial,
-                                _vm.FechaFinal
-                              )
+                      _c("div", { staticClass: "d-flex" }, [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                return _vm.listarIngreso(
+                                  1,
+                                  _vm.FechaInicial,
+                                  _vm.FechaFinal
+                                )
+                              }
                             }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "fas fa-search" }),
-                          _vm._v(" Obtener\n              ")
-                        ]
-                      )
+                          },
+                          [_c("i", { staticClass: "fas fa-search" })]
+                        )
+                      ])
                     ])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-md-6" }, [
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-sm-6 col-12" }, [
+                      _c("div", { staticClass: "col-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "form-control-label",
+                              attrs: { for: "text-input" }
+                            },
+                            [_vm._v("Sabor:")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.idsabor,
+                                    expression: "idsabor"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.idsabor = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "0", disabled: "" } },
+                                  [_vm._v("Seleccione el Sabor")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arraySabor, function(sabor) {
+                                  return _c("option", {
+                                    key: sabor.id,
+                                    domProps: {
+                                      value: sabor.id,
+                                      textContent: _vm._s(sabor.nombre)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "form-control-label",
+                              attrs: { for: "text-input" }
+                            },
+                            [_vm._v("Tamaño:")]
+                          ),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.idtamano,
+                                    expression: "idtamano"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.idtamano = $event.target.multiple
+                                      ? $$selectedVal
+                                      : $$selectedVal[0]
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { value: "0", disabled: "" } },
+                                  [_vm._v("Seleccione el Tamaño")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.arrayTamano, function(tamano) {
+                                  return _c("option", {
+                                    key: tamano.id,
+                                    domProps: {
+                                      value: tamano.id,
+                                      textContent: _vm._s(tamano.nombre)
+                                    }
+                                  })
+                                })
+                              ],
+                              2
+                            )
+                          ])
+                        ])
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-sm-6 col-6" }, [
                         _c("div", { staticClass: "info-box" }, [
                           _vm._m(2),
                           _vm._v(" "),
@@ -46335,7 +46351,7 @@ var render = function() {
                         ])
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-sm-6 col-12" }, [
+                      _c("div", { staticClass: "col-sm-6 col-6" }, [
                         _c("div", { staticClass: "info-box" }, [
                           _vm._m(3),
                           _vm._v(" "),
@@ -46478,7 +46494,7 @@ var staticRenderFns = [
     return _c("div", { staticClass: "card-header" }, [
       _c("h3", { staticClass: "float-left" }, [
         _c("i", { staticClass: "fas fa-th-list" }),
-        _vm._v(" Ingresos por Fecha\n        ")
+        _vm._v(" Ingresos\n        ")
       ])
     ])
   },
@@ -46486,10 +46502,17 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "input-group-prepend" }, [
-      _c("span", { staticClass: "input-group-text" }, [
-        _c("i", { staticClass: "far fa-clock" })
-      ])
+    return _c("div", { staticClass: "input-group mr-1" }, [
+      _c("div", { staticClass: "input-group-prepend" }, [
+        _c("span", { staticClass: "input-group-text" }, [
+          _c("i", { staticClass: "far fa-calendar" })
+        ])
+      ]),
+      _vm._v(" "),
+      _c("input", {
+        staticClass: "form-control float-right",
+        attrs: { type: "text", id: "fechahora" }
+      })
     ])
   },
   function() {
@@ -61647,7 +61670,9 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     App: _views_App__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   router: router
-});
+}); // Vue.config.devtools = false
+// Vue.config.debug = false
+// Vue.config.silent = true
 
 /***/ }),
 

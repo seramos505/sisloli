@@ -248,9 +248,10 @@
                         <select class="form-control" v-model="detalle.combinado" >                          
                           <option
                             v-for="sabor in arraySabor"
-                            :key="sabor.id"
+                            :key="sabor.id" 
                             :value="sabor.id"
-                            v-text="sabor.nombre"                            
+                            v-text="sabor.nombre"                                     
+                            :disabled="sabor.id==detalle.idsabor"                  
                           ></option>
                         </select>                                   
                       </td>
@@ -554,7 +555,8 @@ export default {
       precio: 0,
       cantidad: 0,
       descuento: 0,
-      arraySabor: []
+      arraySabor: [],
+      idsabor:0,
     };
   },
 
@@ -665,6 +667,7 @@ export default {
             me.idproducto = me.arrayProducto[0]["id"];
             me.precio = me.arrayProducto[0]["precio_venta"];
             me.cantidad = 1;
+            me.idsabor = me.arrayProducto[0]["idsabor"];
             $("#agregarDetalle").focus();
           } else {
             me.producto = "No existe este producto";
@@ -723,7 +726,8 @@ export default {
             precio: me.precio,
             descuento: me.descuento,
             relleno:false,
-            combinado:0
+            combinado:0,
+            idsabor:me.idsabor
           });
           me.codigo = "";
           me.idproducto = 0;
@@ -751,7 +755,8 @@ export default {
           precio: data["precio_venta"],
           descuento: 0,
           relleno:false,
-          combinado:0
+          combinado:0,
+          idsabor:data["idsabor"]
         });
         me.errorMostrarMsjOrden = [];
       }
