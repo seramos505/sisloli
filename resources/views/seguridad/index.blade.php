@@ -27,8 +27,8 @@
 
 <body class="hold-transition login-page">
     <div class="login-box">
-        <div class="login-logo">
-            <b>RASPADOS</b> LOLI
+        <div class="d-flex justify-content-center">            
+            <img src="{{asset("images/logo-transparente.png")}}" alt="LOLI Logo" class="w-75 mb-2">
         </div>
         <!-- /.login-logo -->
         <div class="card">

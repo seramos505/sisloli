@@ -1,13 +1,23 @@
 <template>
   <main class="main" v-if="$can('listar-producto')">
-    <div class="container-fluid" >
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Catalogo</h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
+    <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
         <div class="card-header">
           <h3 class="float-left">
-            <i class="fas fa-th-list"></i> Productos
-          </h3>          
-          <button            
+            <i class="fab fa-product-hunt"></i> Productos
+          </h3>
+          <button
             v-if="$can('nuevo-producto')"
             type="button"
             @click="abrirModal('producto','registrar')"
@@ -41,82 +51,90 @@
               </div>
             </div>
           </div>
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover table-sm">
-              <thead class="thead-dark">
-                <tr>
-                  <th colspan="2">Opciones</th>
-                  <th>Nombre</th>
-                  <th>Categoría</th>
-                  <th>Tamaño</th>
-                  <th>Sabor</th>
-                  <th>Precio Venta</th>
-                  <th>Descripción</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="producto in arrayProducto" :key="producto.id">
-                  <td style="width: 10px;">
-                    <button                      
-                      v-if="$can('editar-producto')"
-                      type="button"
-                      @click="abrirModal('producto','actualizar',producto)"
-                      class="btn btn-warning btn-sm"
-                      title="Editar Producto"
-                    >
-                      <i class="fas fa-edit"></i>
-                    </button>
-                  </td>
-                  <td style="width: 10px;">
-                    <template v-if="producto.condicion">
-                      <button                        
-                        v-if="$can('desactivar-producto')"
+          <cargando v-if="loading"></cargando>
+          <div v-else>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover table-sm">
+                <thead class="thead-dark">
+                  <tr>
+                    <th colspan="2">Opciones</th>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Tamaño</th>
+                    <th>Sabor</th>
+                    <th>Precio Venta</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="producto in arrayProducto" :key="producto.id">
+                    <td style="width: 10px;">
+                      <button
+                        v-if="$can('editar-producto')"
                         type="button"
-                        class="btn btn-danger btn-sm"
-                        @click="desactivarproducto(producto.id)"
-                        title="Desactivar producto"
+                        @click="abrirModal('producto','actualizar',producto)"
+                        class="btn btn-warning btn-sm"
+                        title="Editar Producto"
                       >
-                        <i class="fas fa-trash-alt"></i>
+                        <i class="fas fa-edit"></i>
                       </button>
-                    </template>
-                    <template v-else>
-                      <button                        
-                        v-if="$can('activar-producto')"
-                        type="button"
-                        class="btn btn-info btn-sm"
-                        @click="activarproducto(producto.id)"
-                        title="Activar producto"
-                      >
-                        <i class="fas fa-check"></i>
-                      </button>
-                    </template>
-                  </td>
-                  <td v-text="producto.nombre"></td>
-                  <td v-text="producto.nombre_categoria"></td>
-                  <td v-text="producto.nombre_tamano"></td>
-                  <td v-text="producto.nombre_sabor"></td>
-                  <td v-text="producto.precio_venta"></td>
-                  <td v-text="producto.descripcion"></td>
-                  <td>
-                    <div v-if="producto.condicion">
-                      <span class="badge badge-success">Activo</span>
-                    </div>
-                    <div v-else>
-                      <span class="badge badge-danger">Desactivado</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    </td>
+                    <td style="width: 10px;">
+                      <template v-if="producto.condicion">
+                        <button
+                          v-if="$can('desactivar-producto')"
+                          type="button"
+                          class="btn btn-danger btn-sm"
+                          @click="desactivarproducto(producto.id)"
+                          title="Desactivar producto"
+                        >
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </template>
+                      <template v-else>
+                        <button
+                          v-if="$can('activar-producto')"
+                          type="button"
+                          class="btn btn-info btn-sm"
+                          @click="activarproducto(producto.id)"
+                          title="Activar producto"
+                        >
+                          <i class="fas fa-check"></i>
+                        </button>
+                      </template>
+                    </td>
+                    <td v-text="producto.nombre"></td>
+                    <td v-text="producto.nombre_categoria"></td>
+                    <td v-text="producto.nombre_tamano"></td>
+                    <td v-text="producto.nombre_sabor"></td>
+                    <td v-text="producto.precio_venta"></td>
+                    <td v-text="producto.descripcion"></td>
+                    <td>
+                      <div v-if="producto.condicion">
+                        <span class="badge badge-success">Activo</span>
+                      </div>
+                      <div v-else>
+                        <span class="badge badge-danger">Desactivado</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination
+              :pagination="pagination"
+              :cambiarPagina="cambiarPagina"
+              :buscar="buscar"
+              :criterio="criterio"
+            ></pagination>
           </div>
-          <pagination :pagination="pagination" :cambiarPagina="cambiarPagina" :buscar="buscar" :criterio="criterio"></pagination>
         </div>
       </div>
       <!-- Fin ejemplo de tabla Listado -->
     </div>
     <!--Inicio del modal agregar/actualizar-->
-    <div class="modal fade"  id="modalCU">
+    <div class="modal fade" id="modalCU">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -128,7 +146,10 @@
           <div class="modal-body">
             <form action method="post" enctype="multipart/form-data" class="form-horizontal">
               <div class="form-group row">
-                <label class="col-md-3 form-control-label" for="text-input">Categoría <i class="required-entry">*</i></label>
+                <label class="col-md-3 form-control-label" for="text-input">
+                  Categoría
+                  <i class="required-entry">*</i>
+                </label>
                 <div class="col-md-9">
                   <select class="form-control" v-model="idcategoria">
                     <option value="0" disabled>Seleccione la Categoría</option>
@@ -141,8 +162,11 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group row ">
-                <label class="col-md-3 form-control-label" for="text-input">Tamaño <i class="required-entry">*</i></label>
+              <div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">
+                  Tamaño
+                  <i class="required-entry">*</i>
+                </label>
                 <div class="col-md-9">
                   <select class="form-control" v-model="idtamano">
                     <option value="0" disabled>Seleccione el Tamaño</option>
@@ -155,8 +179,11 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group row ">
-                <label class="col-md-3 form-control-label" for="text-input">Sabor <i class="required-entry">*</i></label>
+              <div class="form-group row">
+                <label class="col-md-3 form-control-label" for="text-input">
+                  Sabor
+                  <i class="required-entry">*</i>
+                </label>
                 <div class="col-md-9">
                   <select class="form-control" v-model="idsabor">
                     <option value="0" disabled>Seleccione el Sabor</option>
@@ -169,8 +196,11 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group row ">
-                <label class="col-md-3 control-label" for="text-input">Nombre: <i class="required-entry">*</i></label>
+              <div class="form-group row">
+                <label class="col-md-3 control-label" for="text-input">
+                  Nombre:
+                  <i class="required-entry">*</i>
+                </label>
                 <div class="col-md-9">
                   <input
                     type="text"
@@ -181,7 +211,10 @@
                 </div>
               </div>
               <div class="form-group row">
-                <label class="col-md-3 form-control-label" for="text-input">Precio Venta <i class="required-entry">*</i></label>
+                <label class="col-md-3 form-control-label" for="text-input">
+                  Precio Venta
+                  <i class="required-entry">*</i>
+                </label>
                 <div class="col-md-9">
                   <input type="number" v-model="precio_venta" class="form-control" placeholder />
                 </div>
@@ -199,8 +232,9 @@
               </div>
               <div v-show="errorProducto" class="form-group row div-error">
                 <div class="text-center text-error">
-                   <u> 
-                  <li v-for="error in errorMostrarMsjProducto" :key="error" v-text="error"></li></u>
+                  <u>
+                    <li v-for="error in errorMostrarMsjProducto" :key="error" v-text="error"></li>
+                  </u>
                 </div>
               </div>
             </form>
@@ -233,9 +267,7 @@
     </div>
     <!--Fin del modal-->
   </main>
-  <main class="main" v-else>
-    No tiene acceso
-  </main> 
+  <main class="main" v-else>No tiene acceso</main>
 </template>
 
 <script>
@@ -271,13 +303,14 @@ export default {
       buscar: "",
       arrayCategoria: [],
       arrayTamano: [],
-      arraySabor: []
+      arraySabor: [],
+      loading: true
     };
   },
   methods: {
-
     listarproducto(page, buscar, criterio) {
       let me = this;
+      me.loading= true;
       var url =
         "producto/listar?page=" +
         page +
@@ -294,7 +327,8 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-        });
+        })
+        .finally(() => (me.loading = false));
     },
     selectCategoria() {
       let me = this;
@@ -399,7 +433,7 @@ export default {
         .then(function(response) {
           me.cerrarModal();
           me.listarproducto(me.pagination.current_page, me.buscar, me.criterio);
-          
+
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -438,7 +472,11 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarproducto(me.pagination.current_page, me.buscar, me.criterio);
+              me.listarproducto(
+                me.pagination.current_page,
+                me.buscar,
+                me.criterio
+              );
               Swal.fire(
                 "Desactivado!",
                 "El registro ha sido desactivado con éxito.",
@@ -449,7 +487,7 @@ export default {
               console.log(error);
             });
         } else if (
-          // Read more about handling dismissals          
+          // Read more about handling dismissals
           result.dismiss === Swal.DismissReason.cancel
         ) {
         }
@@ -478,7 +516,11 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarproducto(me.pagination.current_page, me.buscar, me.criterio);
+              me.listarproducto(
+                me.pagination.current_page,
+                me.buscar,
+                me.criterio
+              );
               Swal.fire(
                 "Activado!",
                 "El registro ha sido activado con éxito.",
@@ -518,7 +560,7 @@ export default {
 
       return this.errorProducto;
     },
-    cerrarModal() {      
+    cerrarModal() {
       this.tituloModal = "";
       this.idcategoria = 0;
       this.nombre_categoria = "";
@@ -537,32 +579,32 @@ export default {
       switch (modelo) {
         case "producto": {
           switch (accion) {
-            case "registrar": {              
+            case "registrar": {
               this.tituloModal = "Registrar Producto";
-              this.idcategoria=0;
-              this.nombre_categoria='';
-              this.idtamano=0;
-              this.nombre_tamano='';
-              this.idsabor=0;
-              this.nombre_sabor='';
-              this.nombre= '';
-              this.precio_venta=0;
-              this.descripcion = '';
+              this.idcategoria = 0;
+              this.nombre_categoria = "";
+              this.idtamano = 0;
+              this.nombre_tamano = "";
+              this.idsabor = 0;
+              this.nombre_sabor = "";
+              this.nombre = "";
+              this.precio_venta = 0;
+              this.descripcion = "";
               this.tipoAccion = 1;
               $("#modalCU").modal("show");
               break;
             }
             case "actualizar": {
-              //console.log(data);            
+              //console.log(data);
               this.tituloModal = "Actualizar Producto";
               this.tipoAccion = 2;
               this.producto_id = data["id"];
-              this.idcategoria=data['idcategoria'];
-              this.idtamano=data['idtamano'];
-              this.idsabor=data['idsabor'];
-              this.nombre = data['nombre'];
-              this.precio_venta=data['precio_venta'];
-              this.descripcion= data['descripcion'];
+              this.idcategoria = data["idcategoria"];
+              this.idtamano = data["idtamano"];
+              this.idsabor = data["idsabor"];
+              this.nombre = data["nombre"];
+              this.precio_venta = data["precio_venta"];
+              this.descripcion = data["descripcion"];
               $("#modalCU").modal("show");
               break;
             }

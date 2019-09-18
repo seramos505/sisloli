@@ -2,13 +2,16 @@
   <main class="main" v-if="$can('listar-orden')">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Ventas</h1>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Ventas</h1>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
     <div class="container-fluid">
@@ -18,7 +21,7 @@
           <h3 class="float-left">
             <i class="fas fa-cart-plus"></i> Ordenes
           </h3>
-          <button            
+          <button
             v-if="$can('nuevo-orden')"
             type="button"
             @click="mostrarDetalle()"
@@ -55,66 +58,74 @@
                 </div>
               </div>
             </div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-striped table-hover table-sm">
-                <thead class="thead-dark">
-                  <tr>
-                    <th colspan="2">Opciones</th>
-                    <th>ID</th>
-                    <!-- <th>Usuario</th>-->
-                    <th>Cliente</th>
-                    <th>Fecha Hora</th>
-                    <th>Total</th>
-                    <th>Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="orden in arrayOrden" :key="orden.id">
-                    <td style="width: 10px;">
-                      <button
-                        v-if="$can('ver-orden')"
-                        type="button"
-                        @click="verOrden(orden.id)"
-                        class="btn btn-success btn-sm"
-                      >
-                        <i class="fas fa-eye"></i>
-                      </button>
-                    </td>
-                    <!-- <td style="width: 10px;">
-                      <button type="button" @click="pdfOrden(orden.id)" class="btn btn-info btn-sm">
-                        <i class="fas fa-file-pdf"></i>
-                      </button>
-                    </td> -->
-                    <td style="width: 10px;">
-                      <template v-if="orden.estado=='Registrado'">
+            <cargando v-if="loading"></cargando>
+            <div v-else>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover table-sm">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th colspan="2">Opciones</th>
+                      <th>ID</th>
+                      <!-- <th>Usuario</th>-->
+                      <th>Cliente</th>
+                      <th>Fecha Hora</th>
+                      <th>Total</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="orden in arrayOrden" :key="orden.id">
+                      <td style="width: 10px;">
                         <button
-                          v-if="$can('desactivar-orden')"
+                          v-if="$can('ver-orden')"
                           type="button"
-                          class="btn btn-danger btn-sm"
-                          @click="desactivarOrden(orden.id)"
-                        > 
-                          <i class="fas fa-trash-alt"></i>
+                          @click="verOrden(orden.id)"
+                          class="btn btn-success btn-sm"
+                        >
+                          <i class="fas fa-eye"></i>
                         </button>
-                      </template>
-                    </td>
-                    <td v-text="orden.id"></td>
-                    <!-- <td v-text="orden.user"></td> -->
-                    <td v-text="orden.cliente"></td>
-                    <td v-text="fecha(orden.fecha_hora)"></td>
-                    <td v-text="orden.total"></td>                    
-                    <td>
-                    <div v-if="orden.estado=='Registrado'">
-                      <span class="badge badge-success">{{orden.estado}}</span>
-                    </div>
-                    <div v-else>
-                      <span class="badge badge-danger">{{orden.estado}}</span>
-                    </div>
-                  </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-         <pagination :pagination="pagination" :cambiarPagina="cambiarPagina" :buscar="buscar" :criterio="criterio"></pagination>
+                      </td>
+                      <!-- <td style="width: 10px;">
+                        <button type="button" @click="pdfOrden(orden.id)" class="btn btn-info btn-sm">
+                          <i class="fas fa-file-pdf"></i>
+                        </button>
+                      </td>-->
+                      <td style="width: 10px;">
+                        <template v-if="orden.estado=='Registrado'">
+                          <button
+                            v-if="$can('desactivar-orden')"
+                            type="button"
+                            class="btn btn-danger btn-sm"
+                            @click="desactivarOrden(orden.id)"
+                          >
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                        </template>
+                      </td>
+                      <td v-text="orden.id"></td>
+                      <!-- <td v-text="orden.user"></td> -->
+                      <td v-text="orden.cliente"></td>
+                      <td v-text="fecha(orden.fecha_hora)"></td>
+                      <td v-text="orden.total"></td>
+                      <td>
+                        <div v-if="orden.estado=='Registrado'">
+                          <span class="badge badge-success">{{orden.estado}}</span>
+                        </div>
+                        <div v-else>
+                          <span class="badge badge-danger">{{orden.estado}}</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <pagination
+                :pagination="pagination"
+                :cambiarPagina="cambiarPagina"
+                :buscar="buscar"
+                :criterio="criterio"
+              ></pagination>
+            </div>    
           </div>
         </template>
         <!--Fin Listado-->
@@ -133,8 +144,7 @@
                     Cliente
                     <i class="required-entry">*</i>
                   </label>
-                  <select2 :options="arrayCliente" v-model="idcliente" :value=2>                    
-                  </select2>
+                  <select2 :options="arrayCliente" v-model="idcliente" :value="2"></select2>
                 </div>
               </div>
               <div class="col-md-3">
@@ -173,7 +183,14 @@
                     Precio
                     <i class="required-entry">*</i>
                   </label>
-                  <input type="number" value="0" min="1" step="any" class="form-control" v-model="precio" />
+                  <input
+                    type="number"
+                    value="0"
+                    min="1"
+                    step="any"
+                    class="form-control"
+                    v-model="precio"
+                  />
                 </div>
               </div>
               <div class="col-4 col-md-2">
@@ -194,7 +211,11 @@
               <div class="col-12 col-md-2">
                 <div class="form-group">
                   <label class="d-none d-sm-inline-block">&nbsp;</label>
-                  <button @click="agregarDetalle()" class="btn btn-success w-100" id="agregarDetalle">
+                  <button
+                    @click="agregarDetalle()"
+                    class="btn btn-success w-100"
+                    id="agregarDetalle"
+                  >
                     <i class="fas fa-plus-circle"></i>
                   </button>
                 </div>
@@ -231,29 +252,38 @@
                         <input v-model="detalle.precio" min="1" type="number" class="form-control" />
                       </td>
                       <td>
-                        <input v-model="detalle.cantidad" min="1" type="number" class="form-control" />
+                        <input
+                          v-model="detalle.cantidad"
+                          min="1"
+                          type="number"
+                          class="form-control"
+                        />
                       </td>
                       <td>
                         <span
-                          style="color:red;"  
+                          style="color:red;"
                           v-show="detalle.descuento>(detalle.precio*detalle.cantidad)"
                         >Descuento superior</span>
                         <input v-model="detalle.descuento" type="number" class="form-control" />
                       </td>
-                      <td> 
-                        <switch-button v-model="detalle.relleno" color="#e83e8c" v-if="detalle.precio>45"></switch-button>                                     
+                      <td>
+                        <switch-button
+                          v-model="detalle.relleno"
+                          color="#e83e8c"
+                          v-if="detalle.precio>45"
+                        ></switch-button>
                       </td>
-                      <td> 
+                      <td>
                         <!-- <switch-button v-model="detalle.combinado" color="#17a2b8"></switch-button>    -->
-                        <select class="form-control" v-model="detalle.combinado" >                          
+                        <select class="form-control" v-model="detalle.combinado">
                           <option
                             v-for="sabor in arraySabor"
-                            :key="sabor.id" 
+                            :key="sabor.id"
                             :value="sabor.id"
-                            v-text="sabor.nombre"                                     
-                            :disabled="sabor.id==detalle.idsabor"                  
+                            v-text="sabor.nombre"
+                            :disabled="sabor.id==detalle.idsabor"
                           ></option>
-                        </select>                                   
+                        </select>
                       </td>
                       <td>{{detalle.precio*detalle.cantidad-detalle.descuento}}</td>
                     </tr>
@@ -286,7 +316,11 @@
             </div>
             <div class="form-group row">
               <div class="col-md-12">
-                <button type="button" @click="ocultarDetalle()" class="btn btn-danger">Cancelar Orden</button>
+                <button
+                  type="button"
+                  @click="ocultarDetalle()"
+                  class="btn btn-danger"
+                >Cancelar Orden</button>
                 <button
                   type="button"
                   class="btn btn-primary"
@@ -300,7 +334,7 @@
         <!--Ver ingreso-->
         <template v-else-if="listado==2">
           <div class="card-body">
-            <div class="form-group row border">
+            <div class="row ">
               <div class="col-6 col-md-9">
                 <div class="form-group">
                   <label for>Cliente</label>
@@ -312,73 +346,76 @@
                 <p v-text="impuesto"></p>
               </div>
             </div>
-            <div class="form-group row">
-              <div class="table-responsive col-md-12">
-                <table class="table table-bordered table-striped table-sm">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th>Producto</th>
-                      <th>Precio</th>
-                      <th>Cantidad</th>
-                      <th>Descuento</th>
-                      <th>Relleno</th>
-                      <th>Combinado</th>
-                      <th>Subtotal</th>
-                    </tr>
-                  </thead>
-                  <tbody v-if="arrayDetalle.length">
-                    <tr v-for="detalle in arrayDetalle" :key="detalle.id">
-                      <td v-text="detalle.producto"></td>
-                      <td v-text="detalle.precio"></td>
-                      <td v-text="detalle.cantidad"></td>
-                      <td v-text="detalle.descuento"></td>
-                      <td>
-                        <template v-if="detalle.relleno">
-                          <span class="badge badge-success">Si</span>
-                        </template>
-                        <template v-else>
-                          <span class="badge badge-danger">No</span>
-                        </template>
-                      </td>
-                      <td>
-                      <template v-if="detalle.combinado">
-                          <span class="badge badge-success">{{detalle.sabor}}</span>
-                        </template>
-                        <template v-else>
-                          <span class="badge badge-danger">No</span>
-                        </template>
-                      </td>
-                      <td>{{detalle.precio*detalle.cantidad-detalle.descuento}}</td>
-                    </tr>
-                    <tr style="background-color: #CEECF5;">
-                      <td colspan="6" align="right">
-                        <strong>Total Parcial:</strong>
-                      </td>
-                      <td>C$ {{totalParcial=(total-totalImpuesto).toFixed(2)}}</td>
-                    </tr>
-                    <tr style="background-color: #CEECF5;">
-                      <td colspan="6" align="right">
-                        <strong>Total Impuesto:</strong>
-                      </td>
-                      <td>C$ {{totalImpuesto=(total*impuesto).toFixed(2)}}</td>
-                    </tr>
-                    <tr style="background-color: #CEECF5;">
-                      <td colspan="6" align="right">
-                        <strong>Total Neto:</strong>
-                      </td>
-                      <td>C$ {{total}}</td>
-                    </tr>
-                  </tbody>
-                  <tbody v-else>
-                    <tr>
-                      <td colspan="8">No hay productos agregados</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            <div class="row  mb-2 mt-2">
+              <div class="col-12">
+                <cargando v-if="loading"></cargando>              
+                <div  v-else class="table-responsive">
+                  <table class="table table-bordered table-striped table-sm">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th>Producto</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Descuento</th>
+                        <th>Relleno</th>
+                        <th>Combinado</th>
+                        <th>Subtotal</th>
+                      </tr>
+                    </thead>
+                    <tbody v-if="arrayDetalle.length">
+                      <tr v-for="detalle in arrayDetalle" :key="detalle.id">
+                        <td v-text="detalle.producto"></td>
+                        <td v-text="detalle.precio"></td>
+                        <td v-text="detalle.cantidad"></td>
+                        <td v-text="detalle.descuento"></td>
+                        <td>
+                          <template v-if="detalle.relleno">
+                            <span class="badge badge-success">Si</span>
+                          </template>
+                          <template v-else>
+                            <span class="badge badge-danger">No</span>
+                          </template>
+                        </td>
+                        <td>
+                          <template v-if="detalle.combinado">
+                            <span class="badge badge-success">{{detalle.sabor}}</span>
+                          </template>
+                          <template v-else>
+                            <span class="badge badge-danger">No</span>
+                          </template>
+                        </td>
+                        <td>{{detalle.precio*detalle.cantidad-detalle.descuento}}</td>
+                      </tr>
+                      <tr style="background-color: #CEECF5;">
+                        <td colspan="6" align="right">
+                          <strong>Total Parcial:</strong>
+                        </td>
+                        <td>C$ {{totalParcial=(total-totalImpuesto).toFixed(2)}}</td>
+                      </tr>
+                      <tr style="background-color: #CEECF5;">
+                        <td colspan="6" align="right">
+                          <strong>Total Impuesto:</strong>
+                        </td>
+                        <td>C$ {{totalImpuesto=(total*impuesto).toFixed(2)}}</td>
+                      </tr>
+                      <tr style="background-color: #CEECF5;">
+                        <td colspan="6" align="right">
+                          <strong>Total Neto:</strong>
+                        </td>
+                        <td>C$ {{total}}</td>
+                      </tr>
+                    </tbody>
+                    <tbody v-else>
+                      <tr>
+                        <td colspan="8">No hay productos agregados</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>  
+              </div>           
             </div>
-            <div class="form-group row">
-              <div class="col-md-12">
+            <div class="row">
+              <div class="col-12">
                 <button type="button" @click="ocultarDetalle()" class="btn btn-secondary">Cerrar</button>
               </div>
             </div>
@@ -424,75 +461,80 @@
                 </div>
               </div>
             </div>
-            <div class="table-responsive">
-              <table class="table table-bordered table-striped table-hover table-sm">
-                <thead class="thead-dark">
-                  <tr>
-                    <th></th>
-                    <th>Nombre</th>
-                    <th>Categoría</th>
-                    <th>Precio</th>
-                    <th>Estado</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="producto in arrayProducto" :key="producto.id">
-                    <td style="width: 10px;">
-                      <button
-                        type="button"
-                        @click="agregarDetalleModal(producto)"
-                        class="btn btn-success btn-sm"
-                      >
-                        <i class="fas fa-cart-plus"></i>
-                      </button>
-                    </td>
-                    <td v-text="producto.nombre"></td>
-                    <td v-text="producto.nombre_categoria"></td>
-                    <td v-text="producto.precio_venta"></td>
-                    <td>
-                      <div v-if="producto.condicion">
-                        <span class="badge badge-success">Activo</span>
-                      </div>
-                      <div v-else>
-                        <span class="badge badge-danger">Desactivado</span>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <nav>
-            <ul class="pagination">
-              <li class="page-item" :class="[paginationP.current_page == 1 ? 'disabled' : '']">
-                <a
-                  class="page-link"
-                  href="#"
-                  @click.prevent="cambiarPaginaP(paginationP.current_page - 1,buscarA,criterioA)"
-                >Ant</a>
-              </li>
-              <li
-                class="page-item"
-                v-for="page in pagesNumberP"
-                :key="page"
-                :class="[page == isActivedP ? 'active' : '']"
-              >
-                <a
-                  class="page-link"
-                  href="#"
-                  @click.prevent="cambiarPaginaP(page,buscarA,criterioA)"
-                  v-text="page"
-                ></a>
-              </li>
-              <li class="page-item" :class="[paginationP.current_page == paginationP.last_page ? 'disabled' : '']">
-                <a
-                  class="page-link"
-                  href="#"
-                  @click.prevent="cambiarPaginaP(paginationP.current_page + 1,buscarA,criterioA)"
-                >Sig</a>
-              </li>
-            </ul>
-          </nav>
+            <cargando v-if="loading"></cargando>
+            <div v-else>
+              <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover table-sm">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th></th>
+                      <th>Nombre</th>
+                      <th>Categoría</th>
+                      <th>Precio</th>
+                      <th>Estado</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="producto in arrayProducto" :key="producto.id">
+                      <td style="width: 10px;">
+                        <button
+                          type="button"
+                          @click="agregarDetalleModal(producto)"
+                          class="btn btn-success btn-sm"
+                        >
+                          <i class="fas fa-cart-plus"></i>
+                        </button>
+                      </td>
+                      <td v-text="producto.nombre"></td>
+                      <td v-text="producto.nombre_categoria"></td>
+                      <td v-text="producto.precio_venta"></td>
+                      <td>
+                        <div v-if="producto.condicion">
+                          <span class="badge badge-success">Activo</span>
+                        </div>
+                        <div v-else>
+                          <span class="badge badge-danger">Desactivado</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <nav>
+                <ul class="pagination">
+                  <li class="page-item" :class="[paginationP.current_page == 1 ? 'disabled' : '']">
+                    <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="cambiarPaginaP(paginationP.current_page - 1,buscarA,criterioA)"
+                    >Ant</a>
+                  </li>
+                  <li
+                    class="page-item"
+                    v-for="page in pagesNumberP"
+                    :key="page"
+                    :class="[page == isActivedP ? 'active' : '']"
+                  >
+                    <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="cambiarPaginaP(page,buscarA,criterioA)"
+                      v-text="page"
+                    ></a>
+                  </li>
+                  <li
+                    class="page-item"
+                    :class="[paginationP.current_page == paginationP.last_page ? 'disabled' : '']"
+                  >
+                    <a
+                      class="page-link"
+                      href="#"
+                      @click.prevent="cambiarPaginaP(paginationP.current_page + 1,buscarA,criterioA)"
+                    >Sig</a>
+                  </li>
+                </ul>
+              </nav>
+            </div>  
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-info" @click="cerrarModal()">
@@ -506,9 +548,7 @@
     </div>
     <!--Fin del modal-->
   </main>
-  <main class="main" v-else>
-    No tiene acceso
-  </main> 
+  <main class="main" v-else>No tiene acceso</main>
 </template>
 <script>
 export default {
@@ -556,7 +596,8 @@ export default {
       cantidad: 0,
       descuento: 0,
       arraySabor: [],
-      idsabor:0,
+      idsabor: 0,
+      loading: true
     };
   },
 
@@ -619,6 +660,7 @@ export default {
     },
     listarOrden(page, buscar, criterio) {
       let me = this;
+      me.loading = true;
       var url =
         "orden/listar?page=" +
         page +
@@ -635,7 +677,8 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-        });
+        })
+        .finally(() => (me.loading = false));
     },
     selectCliente() {
       let me = this;
@@ -711,58 +754,59 @@ export default {
     agregarDetalle() {
       let me = this;
       if (me.idproducto == 0 || me.cantidad == 0 || me.precio == 0) {
-      } else {
+      } /*else {
         if (me.encuentra(me.idproducto)) {
           Swal.fire({
             type: "error",
             title: "Error...",
             text: "Este Producto ya se encuentra agregado!"
           });
-        } else {
-          me.arrayDetalle.push({
-            idproducto: me.idproducto,
-            producto: me.producto,
-            cantidad: me.cantidad,
-            precio: me.precio,
-            descuento: me.descuento,
-            relleno:false,
-            combinado:0,
-            idsabor:me.idsabor
-          });
-          me.codigo = "";
-          me.idproducto = 0;
-          me.producto = "";
-          me.cantidad = 0;
-          me.precio = 0;
-          me.descuento = 0;
-          me.errorMostrarMsjOrden = [];
-        }
+        }*/ else {
+        me.arrayDetalle.push({
+          idproducto: me.idproducto,
+          producto: me.producto,
+          cantidad: me.cantidad,
+          precio: me.precio,
+          descuento: me.descuento,
+          relleno: false,
+          combinado: 0,
+          idsabor: me.idsabor
+        });
+        me.codigo = "";
+        me.idproducto = 0;
+        me.producto = "";
+        me.cantidad = 0;
+        me.precio = 0;
+        me.descuento = 0;
+        me.errorMostrarMsjOrden = [];
       }
+      //}
     },
     agregarDetalleModal(data = []) {
       let me = this;
-      if (me.encuentra(data["id"])) {
+      /*if (me.encuentra(data["id"])) {
         Swal.fire({
           type: "error",
           title: "Error...",
           text: "Este Producto ya se encuentra agregado!"
         });
-      } else {
-        me.arrayDetalle.push({
-          idproducto: data["id"],
-          producto: data["nombre"],
-          cantidad: 1,
-          precio: data["precio_venta"],
-          descuento: 0,
-          relleno:false,
-          combinado:0,
-          idsabor:data["idsabor"]
-        });
-        me.errorMostrarMsjOrden = [];
-      }
+      } else {*/
+      me.arrayDetalle.push({
+        idproducto: data["id"],
+        producto: data["nombre"],
+        cantidad: 1,
+        precio: data["precio_venta"],
+        descuento: 0,
+        relleno: false,
+        combinado: 0,
+        idsabor: data["idsabor"]
+      });
+      me.errorMostrarMsjOrden = [];
+      //}
     },
     listarProducto(page, buscar, criterio) {
       let me = this;
+      me.loading = true;
       var url =
         "producto/listarProductoOrden?page=" +
         page +
@@ -779,7 +823,8 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-        });
+        })
+        .finally(() => (me.loading = false));
     },
     registrarOrden() {
       if (this.validarOrden()) {
@@ -855,7 +900,7 @@ export default {
     verOrden(id) {
       let me = this;
       me.listado = 2;
-
+      me.loading = true;
       //Obtener datos del ingreso
       var arrayOrdenT = [];
       var url = "orden/obtenerCabecera?id=" + id;
@@ -865,7 +910,6 @@ export default {
         .then(function(response) {
           var respuesta = response.data;
           arrayOrdenT = respuesta.orden;
-
           /*
           me.tipo_comprobante = arrayOrdenT[0]["tipo_comprobante"];
           me.serie_comprobante = arrayOrdenT[0]["serie_comprobante"];
@@ -890,7 +934,8 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-        });
+        })
+        .finally(() => (me.loading = false));
     },
     cerrarModal() {
       //this.modal = 0;
@@ -918,7 +963,6 @@ export default {
         cancelButtonClass: "btn btn-danger  mr-3",
         buttonsStyling: false,
         reverseButtons: true
-      
       }).then(result => {
         if (result.value) {
           let me = this;

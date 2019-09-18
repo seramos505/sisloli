@@ -1,11 +1,21 @@
 <template>
   <main class="main" v-if="$can('listar-ingreso')">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Reportes</h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card mt-3">
         <div class="card-header">
           <h3 class="float-left">
-            <i class="fas fa-th-list"></i> Ingresos
+            <i class="fas fa-calculator"></i> Ingresos
           </h3>
         </div>
         <div class="card-body">
@@ -22,17 +32,9 @@
                     </div>
                     <input type="text" class="form-control float-right" id="fechahora" />
                   </div>
-                  <button
-                    type="submit"
-                    @click="listarIngreso(1,FechaInicial,FechaFinal)"
-                    class="btn btn-primary"
-                  >
-                    <i class="fas fa-search"></i>
-                  </button>
                 </div>
               </div>
             </div>
-
             <div class="col-md-6">
               <div class="row">
                 <div class="col-6">
@@ -40,12 +42,13 @@
                     <label class="form-control-label" for="text-input">Sabor:</label>
                     <div>
                       <select class="form-control" v-model="idsabor">
-                        <option value="0" disabled>Seleccione el Sabor</option>
+                        <option value="0">Seleccione el Sabor</option>
                         <option
                           v-for="sabor in arraySabor"
                           :key="sabor.id"
                           :value="sabor.id"
-                          v-text="sabor.nombre"></option>
+                          v-text="sabor.nombre"
+                        ></option>
                       </select>
                     </div>
                   </div>
@@ -55,19 +58,19 @@
                     <label class="form-control-label" for="text-input">Tamaño:</label>
                     <div>
                       <select class="form-control" v-model="idtamano">
-                        <option value="0" disabled>Seleccione el Tamaño</option>
+                        <option value="0">Seleccione el Tamaño</option>
                         <option
                           v-for="tamano in arrayTamano"
                           :key="tamano.id"
                           :value="tamano.id"
-                          v-text="tamano.nombre"></option>
+                          v-text="tamano.nombre"
+                        ></option>
                       </select>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            
           </div>
           <div class="row">
             <div class="col-md-6">
@@ -98,55 +101,69 @@
                 </div>
               </div>
             </div>
+            <div class="col-12 col-md-3">
+              <div class="form-group">
+                <button
+                  type="submit"
+                  @click="listarIngreso(1,FechaInicial,FechaFinal,idtamano,idsabor)"
+                  class="btn btn-success w-100"
+                >
+                  <i class="fas fa-search"></i> Buscar
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover table-sm">
-              <thead class="thead-dark">
-                <tr>
-                  <th>Orden Id</th>
-                  <th>Producto</th>
-                  <th>Precio</th>
-                  <th>Cantidad</th>
-                  <th>Descuento</th>
-                  <th>Relleno</th>
-                  <th>Combinado</th>
-                  <th>Subtotal</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(ingreso) in arrayIngresos" :key="ingreso.id">
-                  <td v-text="ingreso.orden"></td>
-                  <td v-text="ingreso.producto"></td>
-                  <td v-text="ingreso.precio"></td>
-                  <td v-text="ingreso.cantidad"></td>
-                  <td v-text="ingreso.descuento"></td>
-                  <td>
-                    <template v-if="ingreso.relleno">
-                      <span class="badge badge-success">Si</span>
-                    </template>
-                    <template v-else>
-                      <span class="badge badge-danger">No</span>
-                    </template>
-                  </td>
-                  <td>
-                    <template v-if="ingreso.combinado">
-                      <span class="badge badge-info">{{ingreso.sabor}}</span>
-                    </template>
-                    <template v-else>
-                      <span class="badge badge-danger">No</span>
-                    </template>
-                  </td>
-                  <td>{{ingreso.precio*ingreso.cantidad-ingreso.descuento}}</td>
-                </tr>
-              </tbody>
-            </table>
+          <cargando v-if="loading"></cargando>
+          <div v-else>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover table-sm">
+                <thead class="thead-dark">
+                  <tr>
+                    <th>Orden Id</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Descuento</th>
+                    <th>Relleno</th>
+                    <th>Combinado</th>
+                    <th>Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(ingreso) in arrayIngresos" :key="ingreso.id">
+                    <td v-text="ingreso.orden"></td>
+                    <td v-text="ingreso.producto"></td>
+                    <td v-text="ingreso.precio"></td>
+                    <td v-text="ingreso.cantidad"></td>
+                    <td v-text="ingreso.descuento"></td>
+                    <td>
+                      <template v-if="ingreso.relleno">
+                        <span class="badge badge-success">Si</span>
+                      </template>
+                      <template v-else>
+                        <span class="badge badge-danger">No</span>
+                      </template>
+                    </td>
+                    <td>
+                      <template v-if="ingreso.combinado">
+                        <span class="badge badge-info">{{ingreso.sabor}}</span>
+                      </template>
+                      <template v-else>
+                        <span class="badge badge-danger">No</span>
+                      </template>
+                    </td>
+                    <td>{{ingreso.precio*ingreso.cantidad-ingreso.descuento}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination
+              :pagination="pagination"
+              :cambiarPagina="cambiarPagina"
+              :buscar="FechaInicial"
+              :criterio="FechaFinal"
+            ></pagination>
           </div>
-          <pagination
-            :pagination="pagination"
-            :cambiarPagina="cambiarPagina"
-            :buscar="FechaInicial"
-            :criterio="FechaFinal"
-          ></pagination>
         </div>
       </div>
       <!-- Fin ejemplo de tabla Listado -->
@@ -154,6 +171,7 @@
   </main>
   <main class="main" v-else>No tiene acceso</main>
 </template>
+
 
 <script>
 export default {
@@ -164,6 +182,8 @@ export default {
       arraySabor: [],
       TotalVenta: 0.0,
       TotalProd: 0,
+      idtamano: 0,
+      idsabor: 0,
       FechaInicial: moment().format("YYYY-MM-DD 08:00:00"),
       FechaFinal: moment().format("YYYY-MM-DD 20:00:00"),
       pagination: {
@@ -173,20 +193,27 @@ export default {
         last_page: 0,
         from: 0,
         to: 0
-      }
+      },
+      loading: true
     };
   },
 
   methods: {
-    listarIngreso(page, FechaInicial, FechaFinal) {
+    listarIngreso(page, FechaInicial, FechaFinal, idtamano, idsabor) {
       let me = this;
+      me.loading = true;
       var url =
         "ingreso/fecha?page=" +
         page +
         "&FechaInicial=" +
         FechaInicial +
         "&FechaFinal=" +
-        FechaFinal;
+        FechaFinal +
+        "&idtamano=" +
+        idtamano +
+        "&idsabor=" +
+        idsabor;
+
       axios
         .get(url)
         .then(function(response) {
@@ -198,7 +225,8 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-        });
+        })
+        .finally(() => (me.loading = false));
     },
     selectTamano() {
       let me = this;
@@ -233,13 +261,13 @@ export default {
       //Actualiza la página actual
       me.pagination.current_page = page;
       //Envia la petición para visualizar la data de esa página
-      me.listarIngreso(page, FechaInicial, FechaFinal);
+      me.listarIngreso(page, FechaInicial, FechaFinal, me.idtamano, me.idsabor);
     }
   },
   mounted() {
-    this.listarIngreso(1, this.FechaInicial, this.FechaFinal);
     this.selectSabor();
     this.selectTamano();
+    this.listarIngreso(1, this.FechaInicial, this.FechaFinal, 0, 0);
   },
   updated() {
     //Date range picker with time picker
@@ -266,7 +294,13 @@ export default {
       }
     );
     $("#fechahora").on("apply.daterangepicker", function(ev, picker) {
-      me.listarIngreso(1, me.FechaInicial, me.FechaFinal);
+      me.listarIngreso(
+        1,
+        me.FechaInicial,
+        me.FechaFinal,
+        me.idtamano,
+        me.idsabor
+      );
     });
   }
 };

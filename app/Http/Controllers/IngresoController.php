@@ -17,6 +17,8 @@ class IngresoController extends Controller
         
         $FechaInicial=Carbon::parse($request->FechaInicial)->format('Y-m-d H:i:s');
         $FechaFinal = Carbon::parse($request->FechaFinal)->format('Y-m-d H:i:s');
+        $idtamano= $request->idtamano;
+        $idsabor= $request->idsabor;
         
         
         $ingresos = Orden::join('orden_detalle','orden.id','=','orden_detalle.idorden')
@@ -25,12 +27,29 @@ class IngresoController extends Controller
         ->select('orden.id as orden','orden_detalle.id','orden_detalle.cantidad','orden_detalle.precio','orden_detalle.descuento','orden_detalle.relleno',
                 'producto.nombre as producto','orden_detalle.combinado','sabor.nombre as sabor')
         ->whereBetween('orden.fecha_hora', [$FechaInicial, $FechaFinal])
+        //->where('producto.idtamano','=',$idtamano)
+        ->when($request->idtamano, function($query) use ($request){
+            return $query->where('producto.idtamano', $request->idtamano);
+        })
+        //->where('producto.idsabor','=',$idsabor)
+        ->when($request->idsabor, function($query) use ($request){
+            return $query->where('producto.idsabor', $request->idsabor);
+        })        
         ->where('orden.estado','=','Registrado')
         ->orderBy('orden.id', 'desc')->paginate(15);   
         
         $totales = Orden::join('orden_detalle','orden.id','=','orden_detalle.idorden')
+        ->join('producto','orden_detalle.idproducto','=','producto.id') 
         ->select(DB::raw('sum(orden_detalle.cantidad) as TotalProd'),DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as TotalVenta'))
         ->whereBetween('orden.fecha_hora', [$FechaInicial, $FechaFinal])
+        //->where('producto.idtamano','=',$idtamano)
+        ->when($request->idtamano, function($query) use ($request){
+            return $query->where('producto.idtamano', $request->idtamano);
+        })
+        //->where('producto.idsabor','=',$idsabor)
+        ->when($request->idsabor, function($query) use ($request){
+            return $query->where('producto.idsabor', $request->idsabor);
+        }) 
         ->where('orden.estado','=','Registrado')
         //->get();
         // ->pluck('total');

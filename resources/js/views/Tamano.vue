@@ -1,11 +1,21 @@
 <template>
   <main class="main" v-if="$can('listar-tamano')">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Catalogo</h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
         <div class="card-header">
           <h3 class="float-left">
-            <i class="fas fa-th-list"></i> Tamaños
+            <i class="fas fa-ruler"></i> Tamaños
           </h3>
           <button
             v-if="$can('nuevo-tamano')"
@@ -41,68 +51,71 @@
               </div>
             </div>
           </div>
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover table-sm">
-              <thead class="thead-dark">
-                <tr>
-                  <th colspan="2">Opciones</th>
-                  <th>Nombre</th>
-                  <th>Descripción</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="tamano in arraytamano" :key="tamano.id">
-                  <td style="width: 10px;">
-                    <button
-                      v-if="$can('editar-tamano')"
-                      type="button"
-                      @click="abrirModal('tamano','actualizar',tamano)"
-                      class="btn btn-warning btn-sm"
-                      title="Editar tamano"
-                    >
-                      <i class="fas fa-edit"></i>
-                    </button>
-                  </td>
-                  <td style="width: 10px;">
-                    <template v-if="tamano.condicion">
+          <cargando v-if="loading"></cargando>
+          <div v-else>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover table-sm">
+                <thead class="thead-dark">
+                  <tr>
+                    <th colspan="2">Opciones</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="tamano in arraytamano" :key="tamano.id">
+                    <td style="width: 10px;">
                       <button
-                        v-if="$can('desactivar-tamano')"
+                        v-if="$can('editar-tamano')"
                         type="button"
-                        class="btn btn-danger btn-sm"
-                        @click="desactivartamano(tamano.id)"
-                        title="Desactivar tamano"
+                        @click="abrirModal('tamano','actualizar',tamano)"
+                        class="btn btn-warning btn-sm"
+                        title="Editar tamano"
                       >
-                        <i class="fas fa-trash-alt"></i>
+                        <i class="fas fa-edit"></i>
                       </button>
-                    </template>
-                    <template v-else>
-                      <button
-                        v-if="$can('activar-tamano')"
-                        type="button"
-                        class="btn btn-info btn-sm"
-                        @click="activartamano(tamano.id)"
-                        title="Activar tamano"
-                      >
-                        <i class="fas fa-check"></i>
-                      </button>
-                    </template>
-                  </td>
-                  <td v-text="tamano.nombre"></td>
-                  <td v-text="tamano.descripcion"></td>
-                  <td>
-                    <div v-if="tamano.condicion">
-                      <span class="badge badge-success">Activo</span>
-                    </div>
-                    <div v-else>
-                      <span class="badge badge-danger">Desactivado</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    </td>
+                    <td style="width: 10px;">
+                      <template v-if="tamano.condicion">
+                        <button
+                          v-if="$can('desactivar-tamano')"
+                          type="button"
+                          class="btn btn-danger btn-sm"
+                          @click="desactivartamano(tamano.id)"
+                          title="Desactivar tamano"
+                        >
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </template>
+                      <template v-else>
+                        <button
+                          v-if="$can('activar-tamano')"
+                          type="button"
+                          class="btn btn-info btn-sm"
+                          @click="activartamano(tamano.id)"
+                          title="Activar tamano"
+                        >
+                          <i class="fas fa-check"></i>
+                        </button>
+                      </template>
+                    </td>
+                    <td v-text="tamano.nombre"></td>
+                    <td v-text="tamano.descripcion"></td>
+                    <td>
+                      <div v-if="tamano.condicion">
+                        <span class="badge badge-success">Activo</span>
+                      </div>
+                      <div v-else>
+                        <span class="badge badge-danger">Desactivado</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination :pagination="pagination" :cambiarPagina="cambiarPagina" :buscar="buscar" :criterio="criterio"></pagination>
           </div>
-          <pagination :pagination="pagination" :cambiarPagina="cambiarPagina" :buscar="buscar" :criterio="criterio"></pagination>
         </div>
       </div>
       <!-- Fin ejemplo de tabla Listado -->
@@ -198,12 +211,14 @@ export default {
       },
       offset: 3,
       criterio: "nombre",
-      buscar: ""
+      buscar: "",
+      loading: true
     };
   },
   methods: {
     listartamano(page, buscar, criterio) {
       let me = this;
+      me.loading = true;
       var url =
         "tamano/listar?page=" +
         page +
@@ -220,7 +235,8 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-        });
+        })
+        .finally(() => (me.loading = false));
     },
     cambiarPagina(page, buscar, criterio) {
       let me = this;

@@ -1,21 +1,24 @@
 <template>
-  <main class="main"  v-if="$can('listar-categoria')">
+  <main class="main" v-if="$can('listar-categoria')">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Catalogos</h1>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Catalogo</h1>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
     </div>
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
         <div class="card-header">
           <h3 class="float-left">
-            <i class="fas fa-th-list"></i> Categorías
+            <i class="fas fa-clipboard-check"></i> Categorías
           </h3>
           <button
             v-if="$can('nuevo-categoria')"
@@ -51,68 +54,76 @@
               </div>
             </div>
           </div>
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover table-sm">
-              <thead class="thead-dark">
-                <tr>
-                  <th colspan="2">Opciones</th>
-                  <th>Nombre</th>
-                  <th>Descripción</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="categoria in arrayCategoria" :key="categoria.id">
-                  <td style="width: 10px;">
-                    <button
-                      v-if="$can('editar-categoria')"
-                      type="button"
-                      @click="abrirModal('categoria','actualizar',categoria)"
-                      class="btn btn-warning btn-sm"
-                      title="Editar Categoria"
-                    >
-                      <i class="fas fa-edit"></i>
-                    </button>
-                  </td>
-                  <td style="width: 10px;">
-                    <template v-if="categoria.condicion">
+          <cargando v-if="loading"></cargando>
+          <div v-else>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover table-sm">
+                <thead class="thead-dark">
+                  <tr>
+                    <th colspan="2">Opciones</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="categoria in arrayCategoria" :key="categoria.id">
+                    <td style="width: 10px;">
                       <button
-                        v-if="$can('desactivar-categoria')"
+                        v-if="$can('editar-categoria')"
                         type="button"
-                        class="btn btn-danger btn-sm"
-                        @click="desactivarCategoria(categoria.id)"
-                        title="Desactivar Categoria"
+                        @click="abrirModal('categoria','actualizar',categoria)"
+                        class="btn btn-warning btn-sm"
+                        title="Editar Categoria"
                       >
-                        <i class="fas fa-trash-alt"></i>
+                        <i class="fas fa-edit"></i>
                       </button>
-                    </template>
-                    <template v-else>
-                      <button
-                        v-if="$can('activar-categoria')"
-                        type="button"
-                        class="btn btn-info btn-sm"
-                        @click="activarCategoria(categoria.id)"
-                        title="Activar Categoria"
-                      >
-                        <i class="fas fa-check"></i>
-                      </button>
-                    </template>
-                  </td>
-                  <td v-text="categoria.nombre"></td>
-                  <td v-text="categoria.descripcion"></td>
-                  <td>
-                    <div v-if="categoria.condicion">
-                      <span class="badge badge-success">Activo</span>
-                    </div>
-                    <div v-else>
-                      <span class="badge badge-danger">Desactivado</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>          
-          <pagination :pagination="pagination" :cambiarPagina="cambiarPagina" :buscar="buscar" :criterio="criterio"></pagination>
+                    </td>
+                    <td style="width: 10px;">
+                      <template v-if="categoria.condicion">
+                        <button
+                          v-if="$can('desactivar-categoria')"
+                          type="button"
+                          class="btn btn-danger btn-sm"
+                          @click="desactivarCategoria(categoria.id)"
+                          title="Desactivar Categoria"
+                        >
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </template>
+                      <template v-else>
+                        <button
+                          v-if="$can('activar-categoria')"
+                          type="button"
+                          class="btn btn-info btn-sm"
+                          @click="activarCategoria(categoria.id)"
+                          title="Activar Categoria"
+                        >
+                          <i class="fas fa-check"></i>
+                        </button>
+                      </template>
+                    </td>
+                    <td v-text="categoria.nombre"></td>
+                    <td v-text="categoria.descripcion"></td>
+                    <td>
+                      <div v-if="categoria.condicion">
+                        <span class="badge badge-success">Activo</span>
+                      </div>
+                      <div v-else>
+                        <span class="badge badge-danger">Desactivado</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination
+              :pagination="pagination"
+              :cambiarPagina="cambiarPagina"
+              :buscar="buscar"
+              :criterio="criterio"
+            ></pagination>
+          </div>
         </div>
       </div>
       <!-- Fin ejemplo de tabla Listado -->
@@ -130,7 +141,10 @@
           <div class="modal-body">
             <form action method="post" enctype="multipart/form-data" class="form-horizontal">
               <div class="form-group row">
-                <label class="col-md-3 control-label" for="text-input">Nombre: <i class="required-entry">*</i></label>
+                <label class="col-md-3 control-label" for="text-input">
+                  Nombre:
+                  <i class="required-entry">*</i>
+                </label>
                 <div class="col-md-9">
                   <input
                     type="text"
@@ -151,7 +165,7 @@
                   />
                 </div>
               </div>
-              <div class="alert alert-danger" v-if="errorMostrarMsjCategoria.length > 0">         
+              <div class="alert alert-danger" v-if="errorMostrarMsjCategoria.length > 0">
                 <ul>
                   <li v-for="error in errorMostrarMsjCategoria">{{ error }}</li>
                 </ul>
@@ -186,9 +200,7 @@
     </div>
     <!--Fin del modal-->
   </main>
-  <main class="main" v-else>
-    No tiene acceso
-  </main> 
+  <main class="main" v-else>No tiene acceso</main>
 </template>
 
 <script>
@@ -213,13 +225,15 @@ export default {
       },
       offset: 3,
       criterio: "nombre",
-      buscar: ""
+      buscar: "",
+      loading: true
     };
   },
- 
+
   methods: {
     listarCategoria(page, buscar, criterio) {
       let me = this;
+      me.loading = true;
       var url =
         "categoria/listar?page=" +
         page +
@@ -236,7 +250,8 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-        });
+        })
+        .finally(() => (me.loading = false));
     },
     cambiarPagina(page, buscar, criterio) {
       let me = this;
@@ -259,7 +274,11 @@ export default {
         })
         .then(function(response) {
           me.cerrarModal();
-          me.listarCategoria(me.pagination.current_page, me.buscar, me.criterio);
+          me.listarCategoria(
+            me.pagination.current_page,
+            me.buscar,
+            me.criterio
+          );
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -303,7 +322,11 @@ export default {
         })
         .then(function(response) {
           me.cerrarModal();
-          me.listarCategoria(me.pagination.current_page, me.buscar, me.criterio);
+          me.listarCategoria(
+            me.pagination.current_page,
+            me.buscar,
+            me.criterio
+          );
           const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -352,7 +375,11 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarCategoria(me.pagination.current_page, me.buscar, me.criterio);
+              me.listarCategoria(
+                me.pagination.current_page,
+                me.buscar,
+                me.criterio
+              );
               Swal.fire(
                 "Desactivado!",
                 "El registro ha sido desactivado con éxito.",
@@ -392,7 +419,11 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarCategoria(me.pagination.current_page, me.buscar, me.criterio);
+              me.listarCategoria(
+                me.pagination.current_page,
+                me.buscar,
+                me.criterio
+              );
               Swal.fire(
                 "Activado!",
                 "El registro ha sido activado con éxito.",
@@ -415,8 +446,7 @@ export default {
         this.errorMostrarMsjCategoria.push(
           "El nombre de la categoría no puede estar vacío."
         );
-        if (this.errorMostrarMsjCategoria.length) return 1;
-      
+      if (this.errorMostrarMsjCategoria.length) return 1;
     },
     cerrarModal() {
       //this.modal = 0;

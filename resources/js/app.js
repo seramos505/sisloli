@@ -25,6 +25,7 @@ Vue.component('pagination', require('./components/pagination.vue').default);
 Vue.component('navigationmenu', require('./components/menu.vue').default);
 Vue.component('itemmenu', require('./components/item-menu.vue').default);
 Vue.component('switch-button', require('./components/switch-button.vue').default);
+Vue.component('cargando', require('./components/cargando.vue').default);
 
 Vue.use(VueRouter)
 import App from './views/App'
@@ -124,7 +125,7 @@ const app = new Vue({
     components:{App},
     router
 });
-// Vue.config.devtools = false
-// Vue.config.debug = false
-// Vue.config.silent = true
+Vue.config.devtools = false
+Vue.config.debug = false
+Vue.config.silent = true
 

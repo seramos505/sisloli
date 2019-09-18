@@ -1,11 +1,21 @@
 <template>
   <main class="main" v-if="$can('listar-sabor')">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark">Catalogo</h1>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+    </div>
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
       <div class="card">
         <div class="card-header">
           <h3 class="float-left">
-            <i class="fas fa-th-list"></i> Sabores
+            <i class="fas fa-ice-cream"></i> Sabores
           </h3>
           <button
             v-if="$can('nuevo-sabor')"
@@ -41,68 +51,71 @@
               </div>
             </div>
           </div>
-          <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover table-sm">
-              <thead class="thead-dark">
-                <tr>
-                  <th colspan="2">Opciones</th>
-                  <th>Nombre</th>
-                  <th>Descripción</th>
-                  <th>Estado</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="sabor in arraySabor" :key="sabor.id">
-                  <td style="width: 10px;">
-                    <button
-                      v-if="$can('editar-sabor')"
-                      type="button"
-                      @click="abrirModal('sabor','actualizar',sabor)"
-                      class="btn btn-warning btn-sm"
-                      title="Editar sabor"
-                    >
-                      <i class="fas fa-edit"></i>
-                    </button>
-                  </td>
-                  <td style="width: 10px;">
-                    <template v-if="sabor.condicion">
+          <cargando v-if="loading"></cargando>
+          <div v-else>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped table-hover table-sm">
+                <thead class="thead-dark">
+                  <tr>
+                    <th colspan="2">Opciones</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Estado</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="sabor in arraySabor" :key="sabor.id">
+                    <td style="width: 10px;">
                       <button
-                        v-if="$can('desactivar-sabor')"
+                        v-if="$can('editar-sabor')"
                         type="button"
-                        class="btn btn-danger btn-sm"
-                        @click="desactivarsabor(sabor.id)"
-                        title="Desactivar sabor"
+                        @click="abrirModal('sabor','actualizar',sabor)"
+                        class="btn btn-warning btn-sm"
+                        title="Editar sabor"
                       >
-                        <i class="fas fa-trash-alt"></i>
+                        <i class="fas fa-edit"></i>
                       </button>
-                    </template>
-                    <template v-else>
-                      <button
-                        v-if="$can('activar-sabor')"
-                        type="button"
-                        class="btn btn-info btn-sm"
-                        @click="activarsabor(sabor.id)"
-                        title="Activar sabor"
-                      >
-                        <i class="fas fa-check"></i>
-                      </button>
-                    </template>
-                  </td>
-                  <td v-text="sabor.nombre"></td>
-                  <td v-text="sabor.descripcion"></td>
-                  <td>
-                    <div v-if="sabor.condicion">
-                      <span class="badge badge-success">Activo</span>
-                    </div>
-                    <div v-else>
-                      <span class="badge badge-danger">Desactivado</span>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                    </td>
+                    <td style="width: 10px;">
+                      <template v-if="sabor.condicion">
+                        <button
+                          v-if="$can('desactivar-sabor')"
+                          type="button"
+                          class="btn btn-danger btn-sm"
+                          @click="desactivarsabor(sabor.id)"
+                          title="Desactivar sabor"
+                        >
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </template>
+                      <template v-else>
+                        <button
+                          v-if="$can('activar-sabor')"
+                          type="button"
+                          class="btn btn-info btn-sm"
+                          @click="activarsabor(sabor.id)"
+                          title="Activar sabor"
+                        >
+                          <i class="fas fa-check"></i>
+                        </button>
+                      </template>
+                    </td>
+                    <td v-text="sabor.nombre"></td>
+                    <td v-text="sabor.descripcion"></td>
+                    <td>
+                      <div v-if="sabor.condicion">
+                        <span class="badge badge-success">Activo</span>
+                      </div>
+                      <div v-else>
+                        <span class="badge badge-danger">Desactivado</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <pagination :pagination="pagination" :cambiarPagina="cambiarPagina" :buscar="buscar" :criterio="criterio"></pagination>
           </div>
-          <pagination :pagination="pagination" :cambiarPagina="cambiarPagina" :buscar="buscar" :criterio="criterio"></pagination>
         </div>
       </div>
       <!-- Fin ejemplo de tabla Listado -->
@@ -198,12 +211,14 @@ export default {
       },
       offset: 3,
       criterio: "nombre",
-      buscar: ""
+      buscar: "",
+      loading: true
     };
   },
   methods: {
     listarsabor(page, buscar, criterio) {
       let me = this;
+      me.loading = true;
       var url =
         "sabor/listar?page=" +
         page +
@@ -220,7 +235,8 @@ export default {
         })
         .catch(function(error) {
           console.log(error);
-        });
+        })
+        .finally(() => (me.loading = false));
     },
     cambiarPagina(page, buscar, criterio) {
       let me = this;
