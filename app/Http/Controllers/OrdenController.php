@@ -29,8 +29,9 @@ class OrdenController extends Controller
             ->join('orden_detalle','orden.id','=','orden_detalle.idorden')
             ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name as user','cliente.nombre as cliente',
             DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total'))
+            ->where('orden_detalle.condicion','=','1')
             ->groupBy('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name')
-            ->orderBy('orden.id', 'desc')->paginate(5);
+            ->orderBy('orden.id', 'desc')->paginate(10);
         }
         else{
             $ordenes = Orden::join('users','orden.idusuario','=','users.id')
@@ -40,7 +41,8 @@ class OrdenController extends Controller
             DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total'))
             ->groupBy('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name')
             ->where($criterio, 'like', '%'. $buscar . '%')
-            ->orderBy('orden.id', 'desc')->paginate(5);
+            ->where('orden_detalle.condicion','=','1')
+            ->orderBy('orden.id', 'desc')->paginate(10);
         }
          
         return [
@@ -66,6 +68,7 @@ class OrdenController extends Controller
         ->select('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name','cliente.nombre as cliente',
         DB::raw('sum(orden_detalle.cantidad*orden_detalle.precio-orden_detalle.descuento) as total'))
         ->where('orden.id','=',$id)
+        ->where('orden_detalle.condicion','=','1')
         ->groupBy('orden.id','orden.fecha_hora','orden.impuesto','orden.estado','users.name')
         ->get();
 
@@ -83,6 +86,7 @@ class OrdenController extends Controller
         ->select('orden_detalle.cantidad','orden_detalle.precio','orden_detalle.descuento','orden_detalle.relleno',
         'producto.nombre as producto','orden_detalle.combinado','sabor.nombre as sabor')
         ->where('orden_detalle.idorden','=',$id)
+        ->where('orden_detalle.condicion','=','1')
         ->orderBy('orden_detalle.id', 'desc')->get();
          
         return ['detalles' => $detalles];

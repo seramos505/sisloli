@@ -36,6 +36,7 @@ class IngresoController extends Controller
             return $query->where('producto.idsabor', $request->idsabor);
         })        
         ->where('orden.estado','=','Registrado')
+        ->where('orden_detalle.condicion','=','1')
         ->orderBy('orden.id', 'desc')->paginate(15);   
         
         $totales = Orden::join('orden_detalle','orden.id','=','orden_detalle.idorden')
@@ -50,6 +51,7 @@ class IngresoController extends Controller
         ->when($request->idsabor, function($query) use ($request){
             return $query->where('producto.idsabor', $request->idsabor);
         }) 
+        ->where('orden_detalle.condicion','=','1')
         ->where('orden.estado','=','Registrado')
         //->get();
         // ->pluck('total');

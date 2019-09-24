@@ -28,6 +28,7 @@ class GraficosController extends Controller
         //->selectRaw('sabor.nombre as sabor,sabor.color as color,sum(orden_detalle.cantidad) as total')    
         ->select('sabor.nombre as sabor','sabor.color as color',DB::raw('sum(orden_detalle.cantidad) as total'))
         //->whereBetween('orden.fecha_hora', [$FechaInicial, $FechaFinal])
+        ->where('orden_detalle.condicion','=','1')
         ->groupby('sabor.nombre')
         ->orderBy('total', 'desc')->get();          
 
@@ -51,6 +52,7 @@ class GraficosController extends Controller
         //->selectRaw('sabor.nombre as sabor,sabor.color as color,sum(orden_detalle.cantidad) as total')    
         ->select('tamano.nombre as tamano',DB::raw('sum(orden_detalle.cantidad) as total'))
         //->whereBetween('orden.fecha_hora', [$FechaInicial, $FechaFinal])
+        ->where('orden_detalle.condicion','=','1')
         ->groupby('tamano.id')
         ->orderBy('tamano', 'desc')->get();          
 
