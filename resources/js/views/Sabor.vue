@@ -2,13 +2,16 @@
   <main class="main" v-if="$can('listar-sabor')">
     <!-- Content Header (Page header) -->
     <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Catalogo</h1>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0 text-dark">Catalogo</h1>
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
     </div>
     <div class="container-fluid">
       <!-- Ejemplo de tabla Listado -->
@@ -60,6 +63,7 @@
                     <th colspan="2">Opciones</th>
                     <th>Nombre</th>
                     <th>Descripción</th>
+                    <th>Color</th>
                     <th>Estado</th>
                   </tr>
                 </thead>
@@ -102,6 +106,7 @@
                     </td>
                     <td v-text="sabor.nombre"></td>
                     <td v-text="sabor.descripcion"></td>
+                    <td class="text-center" style="width: 10px;"><i class="fas fa-circle" :style="{color: sabor.color}" style="font-size: 1.5rem;"></i></td>
                     <td>
                       <div v-if="sabor.condicion">
                         <span class="badge badge-success">Activo</span>
@@ -114,7 +119,12 @@
                 </tbody>
               </table>
             </div>
-            <pagination :pagination="pagination" :cambiarPagina="cambiarPagina" :buscar="buscar" :criterio="criterio"></pagination>
+            <pagination
+              :pagination="pagination"
+              :cambiarPagina="cambiarPagina"
+              :buscar="buscar"
+              :criterio="criterio"
+            ></pagination>
           </div>
         </div>
       </div>
@@ -132,8 +142,11 @@
           </div>
           <div class="modal-body">
             <form action method="post" enctype="multipart/form-data" class="form-horizontal">
-              <div class="form-group row ">
-                <label class="col-md-3 control-label" for="text-input">Nombre: <i class="required-entry">*</i></label>
+              <div class="form-group row">
+                <label class="col-md-3 control-label" for="text-input">
+                  Nombre:
+                  <i class="required-entry">*</i>
+                </label>
                 <div class="col-md-9">
                   <input
                     type="text"
@@ -154,6 +167,22 @@
                   />
                 </div>
               </div>
+              <!-- Color Picker -->
+              <div class="form-group row">
+                <label class="col-md-3 control-label" for="text-input">Color:</label>
+
+                <div class="col-md-9 input-group picker-sabor">
+                  <input type="text" class="form-control" v-model="color" />
+
+                  <div class="input-group-append">
+                    <span class="input-group-text">
+                      <i class="fas fa-circle icon-color" :style="{color: color}"></i>
+                    </span>
+                  </div>
+                </div>
+                <!-- /.input group -->
+              </div>
+              <!-- /.form group -->
               <div v-show="errorSabor" class="form-group row div-error">
                 <div class="text-center text-error">
                   <div v-for="error in errorMostrarMsjSabor" :key="error" v-text="error"></div>
@@ -162,19 +191,25 @@
             </form>
           </div>
           <div class="modal-footer justify-content-between">
-            <button type="button" class="btn btn-info" @click="cerrarModal()"><i class="fas fa-times-circle"></i> Cerrar</button>
+            <button type="button" class="btn btn-info" @click="cerrarModal()">
+              <i class="fas fa-times-circle"></i> Cerrar
+            </button>
             <button
               type="button"
               v-if="tipoAccion==1"
               class="btn btn-success"
               @click="registrarsabor()"
-            ><i class="fas fa-save"></i> Guardar</button>
+            >
+              <i class="fas fa-save"></i> Guardar
+            </button>
             <button
               type="button"
               v-if="tipoAccion==2"
               class="btn btn-primary"
               @click="actualizarsabor()"
-            ><i class="fas fa-save"></i> Actualizar</button>
+            >
+              <i class="fas fa-save"></i> Actualizar
+            </button>
           </div>
         </div>
         <!-- /.modal-content -->
@@ -183,9 +218,7 @@
     </div>
     <!--Fin del modal-->
   </main>
-  <main class="main" v-else>
-    No tiene acceso
-  </main> 
+  <main class="main" v-else>No tiene acceso</main>
 </template>
 
 <script>
@@ -195,6 +228,7 @@ export default {
       sabor_id: 0,
       nombre: "",
       descripcion: "",
+      color: "",
       arraySabor: [],
       modal: 0,
       tituloModal: "",
@@ -255,21 +289,22 @@ export default {
       axios
         .post("sabor/registrar", {
           nombre: this.nombre,
-          descripcion: this.descripcion
+          descripcion: this.descripcion,
+          color:this.color
         })
         .then(function(response) {
           me.cerrarModal();
           me.listarsabor(1, "", "nombre");
           const Toast = Swal.mixin({
             toast: true,
-            position: 'top-end',
+            position: "top-end",
             showConfirmButton: false,
             timer: 3000
           });
           Toast.fire({
-            type: 'success',
-            title: 'El sabor ha sido Creado con Exito'
-          })
+            type: "success",
+            title: "El sabor ha sido Creado con Exito"
+          });
         })
         .catch(function(error) {
           console.log(error);
@@ -286,21 +321,22 @@ export default {
         .put("sabor/actualizar", {
           nombre: this.nombre,
           descripcion: this.descripcion,
+          color:this.color,
           id: this.sabor_id
         })
         .then(function(response) {
           me.cerrarModal();
-          me.listarsabor(1, "", "nombre");
+          me.listarsabor(me.pagination.current_page, "", "nombre");
           const Toast = Swal.mixin({
             toast: true,
-            position: 'top-end',
+            position: "top-end",
             showConfirmButton: false,
             timer: 3000
           });
           Toast.fire({
-            type: 'success',
-            title: 'El sabor ha sido Actualizado con Exito'
-          })
+            type: "info",
+            title: "El sabor ha sido Actualizado con Exito"
+          });
         })
         .catch(function(error) {
           console.log(error);
@@ -308,7 +344,7 @@ export default {
     },
     desactivarsabor(id) {
       Swal.fire({
-        title: 'Estas Seguro?',
+        title: "Estas Seguro?",
         text: "Desactivar este Sabor!",
         type: "warning",
         showCancelButton: true,
@@ -329,7 +365,7 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarsabor(1, "", "nombre");
+              me.listarsabor(me.pagination.current_page, "", "nombre");
               Swal.fire(
                 "Desactivado!",
                 "El registro ha sido desactivado con éxito.",
@@ -348,7 +384,7 @@ export default {
     },
     activarsabor(id) {
       Swal.fire({
-        title: 'Estas Seguro?',
+        title: "Estas Seguro?",
         text: "Activar este Sabor!",
         type: "warning",
         showCancelButton: true,
@@ -369,7 +405,7 @@ export default {
               id: id
             })
             .then(function(response) {
-              me.listarsabor(1, "", "nombre");
+              me.listarsabor(me.pagination.current_page, "", "nombre");
               Swal.fire(
                 "Activado!",
                 "El registro ha sido activado con éxito.",
@@ -391,15 +427,13 @@ export default {
       this.errorMostrarMsjSabor = [];
 
       if (!this.nombre)
-        this.errorMostrarMsjSabor.push(
-          "El nombre del no puede estar vacío."
-        );
+        this.errorMostrarMsjSabor.push("El nombre del no puede estar vacío.");
 
       if (this.errorMostrarMsjSabor.length) this.errorSabor = 1;
 
       return this.errorSabor;
     },
-    cerrarModal() {      
+    cerrarModal() {
       this.tituloModal = "";
       this.nombre = "";
       this.descripcion = "";
@@ -411,21 +445,23 @@ export default {
       switch (modelo) {
         case "sabor": {
           switch (accion) {
-            case "registrar": {              
+            case "registrar": {
               this.tituloModal = "Registrar Sabor";
               this.nombre = "";
               this.descripcion = "";
+              this.color="";
               this.tipoAccion = 1;
               $("#modalCU").modal("show");
               break;
             }
             case "actualizar": {
-              //console.log(data);              
+              //console.log(data);
               this.tituloModal = "Actualizar Sabor";
               this.tipoAccion = 2;
               this.sabor_id = data["id"];
               this.nombre = data["nombre"];
               this.descripcion = data["descripcion"];
+              this.color=data["color"];
               $("#modalCU").modal("show");
               break;
             }
@@ -436,6 +472,16 @@ export default {
   },
   mounted() {
     this.listarsabor(1, this.buscar, this.criterio);
+  },
+  updated(){
+    let me = this;
+    //color picker with addon
+    $('.picker-sabor').colorpicker()
+    $('.picker-sabor').on('colorpickerChange', function(event) {
+     // $('.picker-sabor .icon-color').css('color', event.color.toString());
+      me.color=event.color.toString();
+    });
+
   }
 };
 </script>

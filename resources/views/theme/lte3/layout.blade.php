@@ -20,6 +20,8 @@
     <link rel="stylesheet" href="{{asset("assets/$theme/plugins/toastr/toastr.min.css")}}">
     <!-- Select2 -->    
     <link rel="stylesheet" href="{{asset("assets/$theme/plugins/select2/css/select2.min.css")}}">
+    <!-- Bootstrap Color Picker -->
+    <link rel="stylesheet" href="{{asset("assets/$theme/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css")}}">
     
     <!-- OPTIONAL CSS -->
     @yield("css-optional")
@@ -93,6 +95,8 @@ to get the desired effect
     <script src="{{asset("assets/$theme/plugins/select2/js/select2.full.min.js")}}"></script>
     <!-- date-range-picker -->
     <script src="{{asset("assets/$theme/plugins/daterangepicker/daterangepicker.js")}}"></script>
+    <!-- bootstrap color picker -->
+    <script src="{{asset("assets/$theme/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js")}}"></script>
     <!-- ChartJS -->
     <script src="{{asset("assets/$theme/plugins/chart.js/Chart.min.js")}}"></script>
 

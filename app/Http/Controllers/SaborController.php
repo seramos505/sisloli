@@ -15,7 +15,7 @@ class SaborController extends Controller
      */
     public function listar(Request $request)
     {
-        if (!$request->ajax()) return redirect('/');
+        //if (!$request->ajax()) return redirect('/');
 
         $buscar = $request->buscar;
         $criterio = $request->criterio;
@@ -61,6 +61,7 @@ class SaborController extends Controller
         $Sabor = new Sabor();
         $Sabor->nombre = $request->nombre;
         $Sabor->descripcion = $request->descripcion;
+        $Sabor->color = $request->color;
         $Sabor->condicion = '1';
         $Sabor->save();
     }
@@ -72,6 +73,7 @@ class SaborController extends Controller
         $Sabor = Sabor::findOrFail($request->id);
         $Sabor->nombre = $request->nombre;
         $Sabor->descripcion = $request->descripcion;
+        $Sabor->color = $request->color;
         $Sabor->condicion = '1';
         $Sabor->save();
     }

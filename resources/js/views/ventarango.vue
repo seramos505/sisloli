@@ -27,7 +27,7 @@
                   <div class="input-group mr-1">
                     <div class="input-group-prepend">
                       <span class="input-group-text">
-                        <i class="far fa-calendar"></i>
+                        <i class="far fa-calendar-alt"></i>
                       </span>
                     </div>
                     <input type="text" class="form-control float-right" id="fechahora" />
